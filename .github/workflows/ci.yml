@@ -44,7 +44,7 @@ jobs:
       - name: Breaking-change check
         # Skip on the first push to main, when there's no prior main to diff.
         if: github.event_name == 'pull_request'
-        run: buf breaking proto --against '.git#branch=main,subdir=proto'
+        run: buf breaking proto --against '.git#ref=origin/main,subdir=proto'
 
   js:
     name: "JS packages"
