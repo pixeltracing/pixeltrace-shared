@@ -31,7 +31,7 @@ jobs:
         with:
           # buf breaking needs history to diff against the base branch.
           fetch-depth: 0
-      - uses: bufbuild/buf-setup-action@040099d8ce3237379f9ec5e0bff7577475483247 # v1
+      - uses: bufbuild/buf-setup-action@cdbc3bce47997bef0db7f08db0f221c28ce141e8 # v1
         with:
           version: ${{ env.BUF_VERSION }}
           github_token: ${{ github.token }}
@@ -92,7 +92,7 @@ jobs:
         with:
           go-version: ${{ env.GO_VERSION }}
           cache-dependency-path: packages/go/schema/go.sum
-      - uses: bufbuild/buf-setup-action@040099d8ce3237379f9ec5e0bff7577475483247 # v1
+      - uses: bufbuild/buf-setup-action@cdbc3bce47997bef0db7f08db0f221c28ce141e8 # v1
         with:
           version: ${{ env.BUF_VERSION }}
           github_token: ${{ github.token }}
@@ -129,7 +129,7 @@ jobs:
           channel: stable
           cache: true # Flutter SDK
           pub-cache: true # pub package cache
-      - uses: bufbuild/buf-setup-action@040099d8ce3237379f9ec5e0bff7577475483247 # v1
+      - uses: bufbuild/buf-setup-action@cdbc3bce47997bef0db7f08db0f221c28ce141e8 # v1
         with:
           version: ${{ env.BUF_VERSION }}
           github_token: ${{ github.token }}
