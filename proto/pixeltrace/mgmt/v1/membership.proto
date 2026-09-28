@@ -1,0 +1,130 @@
+syntax = "proto3";
+package pixeltrace.mgmt.v1;
+
+import "google/protobuf/field_mask.proto";
+import "pixeltrace/mgmt/v1/types.proto";
+import "pixeltrace/types/v1/types.proto";
+
+// Provides data plane functionality related to memberships. A membership is the
+// edge that grants a user a role within an organization.
+service MembershipService {
+    // Creates a membership (an edge between org <-> user).
+    rpc CreateMembership(CreateMembershipRequest) returns (CreateMembershipResponse);
+
+    // Fetches a membership.
+    rpc GetMembership(GetMembershipRequest) returns (GetMembershipResponse);
+
+    // Updates a membership's mutable properties, e.g. the user's role.
+    rpc UpdateMembership(UpdateMembershipRequest) returns (UpdateMembershipResponse);
+
+    // Deletes a membership, removing the user from the organization.
+    rpc DeleteMembership(DeleteMembershipRequest) returns (DeleteMembershipResponse);
+
+    // Lists the memberships of an organization.
+    rpc ListMemberships(ListMembershipsRequest) returns (ListMembershipsResponse);
+}
+
+// Identifies a membership: the (org, user) edge.
+message MembershipKey {
+    // The organization endpoint of the edge.
+    pixeltrace.types.v1.OrganizationId org_id = 1;
+
+    // The user endpoint of the edge.
+    pixeltrace.types.v1.UserId user_id = 2;
+}
+
+// A membership: the edge granting a user a role within an organization.
+message Membership {
+    // The (org, user) edge this membership represents.
+    MembershipKey key = 1;
+
+    // Mutable membership properties.
+    MembershipProps props = 2;
+}
+
+// Request to create a membership.
+message CreateMembershipRequest {
+    // The org <-> user edge to create.
+    MembershipKey key = 1;
+
+    // Properties for the new membership.
+    MembershipProps props = 2;
+}
+
+// Response to a create-membership request.
+message CreateMembershipResponse {
+    // The newly created membership.
+    Membership membership = 1;
+}
+
+// Request to fetch a membership.
+message GetMembershipRequest {
+    // The membership to fetch.
+    MembershipKey key = 1;
+}
+
+// Response to a get-membership request.
+message GetMembershipResponse {
+    // The requested membership.
+    Membership membership = 1;
+}
+
+// Request to update a membership's properties.
+message UpdateMembershipRequest {
+    // The membership to update.
+    MembershipKey key = 1;
+
+    // The new property values. Only fields named in update_mask are applied.
+    MembershipProps props = 2;
+
+    // Which fields of props to update. If empty, all fields are replaced.
+    google.protobuf.FieldMask update_mask = 3;
+}
+
+// Response to an update-membership request.
+message UpdateMembershipResponse {
+    // The membership after the update.
+    Membership membership = 1;
+}
+
+// Request to delete a membership.
+message DeleteMembershipRequest {
+    // The membership to delete.
+    MembershipKey key = 1;
+}
+
+// Response to a delete-membership request.
+message DeleteMembershipResponse {}
+
+// Request to list an organization's memberships.
+message ListMembershipsRequest {
+    // The organization whose memberships to list.
+    pixeltrace.types.v1.OrganizationId org_id = 1;
+
+    // Pagination parameters. Omit for the first page.
+    PageRequest page = 2;
+}
+
+// Response to a list-memberships request.
+message ListMembershipsResponse {
+    // A page of the organization's memberships.
+    repeated Membership memberships = 1;
+
+    // Pagination cursor for fetching the next page.
+    PageResponse page = 2;
+}
+
+// The mutable properties of a membership.
+message MembershipProps {
+    // The role granted to the user within the organization.
+    Role role = 1;
+}
+
+// A role granted to a user within an organization.
+enum Role {
+    ROLE_UNSPECIFIED = 0;
+    ROLE_VIEWER = 1;
+    ROLE_MEMBER = 2;
+    ROLE_ADMIN = 3;
+    ROLE_OWNER = 4;
+}

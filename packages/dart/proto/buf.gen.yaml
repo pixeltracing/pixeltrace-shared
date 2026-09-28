@@ -1,0 +1,11 @@
+# Generates Dart protobuf bindings and Connect clients from the shared proto
+# module (../../../proto) into lib/.
+
+version: v2
+inputs:
+  - directory: ../../../proto
+plugins:
+  - local: [dart, run, protoc_plugin:protoc_plugin]
+    out: lib
+  - local: [dart, run, connectrpc:protoc-gen-connect-dart]
+    out: lib

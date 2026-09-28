@@ -1,0 +1,21 @@
+# pnpm workspace for the Pixeltrace JS packages. Each package keeps its own
+# package.json and scripts; pnpm resolves cross-package deps (e.g. service ->
+# schema, declared as "workspace:*") to the local sources and builds them in
+# topological order.
+packages:
+  - schema
+  - authz
+  - service
+
+# Build scripts that must be allowed to run during install:
+# - @bufbuild/buf's postinstall downloads the buf CLI binary, used by schema's
+#   `pnpm run generate`.
+# - esbuild's postinstall fetches its platform binary (pulled in via vitest).
+allowBuilds:
+  "@bufbuild/buf": true
+  esbuild: true
+
+# Keep the content-addressable store inside the workspace rather than letting
+# pnpm fall back to the mount root. The store must share a filesystem with
+# node_modules for hard-linking, so it lives here, not under $HOME.
+storeDir: .pnpm-store

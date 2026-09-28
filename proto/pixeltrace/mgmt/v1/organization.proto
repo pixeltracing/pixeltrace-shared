@@ -1,0 +1,115 @@
+syntax = "proto3";
+package pixeltrace.mgmt.v1;
+
+import "google/protobuf/field_mask.proto";
+import "pixeltrace/mgmt/v1/project.proto";
+import "pixeltrace/mgmt/v1/types.proto";
+import "pixeltrace/types/v1/types.proto";
+
+// Provides data plane functionality related to organizations.
+service OrganizationService {
+    // Creates an organization.
+    rpc CreateOrganization(CreateOrganizationRequest) returns (CreateOrganizationResponse);
+
+    // Fetches an organization.
+    rpc GetOrganization(GetOrganizationRequest) returns (GetOrganizationResponse);
+
+    // Updates an organization's mutable properties.
+    rpc UpdateOrganization(UpdateOrganizationRequest) returns (UpdateOrganizationResponse);
+
+    // Deletes an organization.
+    rpc DeleteOrganization(DeleteOrganizationRequest) returns (DeleteOrganizationResponse);
+
+    // Lists the projects belonging to an organization.
+    rpc ListProjects(ListProjectsRequest) returns (ListProjectsResponse);
+}
+
+// Request to create an organization.
+message CreateOrganizationRequest {
+    OrganizationProps props = 1;
+}
+
+// Response to a create-org request.
+message CreateOrganizationResponse {
+    // Id of the newly created organization.
+    pixeltrace.types.v1.OrganizationId id = 1;
+
+    // Props of the organization.
+    OrganizationProps props = 2;
+}
+
+// Request to fetch an organization.
+message GetOrganizationRequest {
+    // Id of the organization to fetch.
+    pixeltrace.types.v1.OrganizationId id = 1;
+}
+
+// Response to a get-organization request.
+message GetOrganizationResponse {
+    // The requested organization.
+    Organization organization = 1;
+}
+
+// Request to update an organization's properties.
+message UpdateOrganizationRequest {
+    // Id of the organization to update.
+    pixeltrace.types.v1.OrganizationId id = 1;
+
+    // The new property values. Only fields named in update_mask are applied.
+    OrganizationProps props = 2;
+
+    // Which fields of props to update. If empty, all fields are replaced.
+    google.protobuf.FieldMask update_mask = 3;
+}
+
+// Response to an update-organization request.
+message UpdateOrganizationResponse {
+    // The organization after the update.
+    Organization organization = 1;
+}
+
+// Request to delete an organization.
+message DeleteOrganizationRequest {
+    // Id of the organization to delete.
+    pixeltrace.types.v1.OrganizationId id = 1;
+
+    // Cascade-delete every project and its data in the organization, instead of
+    // rejecting the delete while projects remain.
+    bool dangerously_allow_project_deletion = 2;
+}
+
+// Response to a delete-organization request.
+message DeleteOrganizationResponse {}
+
+// Request to list the projects belonging to an organization.
+message ListProjectsRequest {
+    // The organization whose projects to list.
+    pixeltrace.types.v1.OrganizationId org_id = 1;
+
+    // Pagination parameters. Omit for the first page.
+    PageRequest page = 2;
+}
+
+// Response to a list-projects request.
+message ListProjectsResponse {
+    // A page of the organization's projects. May be empty if none exist.
+    repeated Project projects = 1;
+
+    // Pagination cursor for fetching the next page.
+    PageResponse page = 2;
+}
+
+// A tenant organization. The top-level owner of projects and billing.
+message Organization {
+    // Id of this organization.
+    pixeltrace.types.v1.OrganizationId id = 1;
+
+    // Mutable org properties.
+    OrganizationProps props = 2;
+}
+
+// The mutable properties of an organization.
+message OrganizationProps {
+    // Human-readable display name.
+    string name = 1;
+}

@@ -1,0 +1,7 @@
+include: package:lints/recommended.yaml
+
+analyzer:
+  # The entire package is generated from ../../proto; don't lint it.
+  exclude:
+    - lib/google/**
+    - lib/pixeltrace/**

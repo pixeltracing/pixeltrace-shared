@@ -1,0 +1,7 @@
+node_modules/
+dist/
+# Generated protobuf bindings — produced by `pnpm run generate`, not committed.
+src/gen/
+# Copy of /proto shipped in the package, so consumers can compile their own
+# protos against it.
+proto/

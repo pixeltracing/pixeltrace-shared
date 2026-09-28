@@ -1,0 +1,128 @@
+syntax = "proto3";
+package pixeltrace.coord.v1;
+
+// The WebSocket envelopes of the upload path. Media bytes are fragmented MP4
+// exactly as the client's muxer emitted them, never repacked.
+//
+// A WebSocket message is capped at 1 MiB, which a single fragment can exceed
+// (a keyframe alone can run to hundreds of KB), so a fragment is split into
+// parts and reassembled by the receiver. Nothing else in this file may exceed
+// the cap: an init segment is a few KB of `ftyp` + `moov`.
+
+// Publisher to server.
+message UploadFrame {
+  oneof frame {
+    InitSegment init = 1;
+    MediaFragment fragment = 2;
+    EndOfUpload end = 3;
+  }
+}
+
+// `ftyp` + `moov`. Sent once, and again on resume or after an encoder rebuild,
+// so it is always a publisher socket's first frame. Also what the server sends
+// a joining viewer.
+message InitSegment {
+  bytes data = 1;
+
+  // RFC 6381 codec string, e.g. "avc1.64001f". The playlist emits it, and a
+  // viewer needs it to open a SourceBuffer. Reported rather than parsed out of
+  // `moov`, which nothing on the server is equipped to do.
+  string codecs = 2;
+
+  // Encoded frame size, in pixels.
+  uint32 width = 3;
+  uint32 height = 4;
+
+  // The envelope version this client speaks. The server refuses one it does
+  // not, which is what stops a stale SDK asset from misreading the protocol.
+  // Unset on the init the server sends a viewer.
+  uint32 protocol_version = 5;
+}
+
+// One `moof` + `mdat` pair, or one part of one.
+message MediaFragment {
+  // Client-assigned, strictly increasing within a session, so a resume can be
+  // reconciled. Every part of a fragment carries the same sequence.
+  uint64 sequence = 1;
+
+  // 0-based position of this part within the fragment, and how many parts the
+  // whole fragment has (1 when it fits in one message). Parts arrive in order,
+  // and `data` concatenated across them is the fragment.
+  uint32 part_index = 2;
+  uint32 part_count = 3;
+
+  // Whether the fragment opens on a keyframe. Set on part 0.
+  bool keyframe = 4;
+
+  // Presentation duration, in ms. Set on part 0.
+  uint32 duration_ms = 5;
+
+  bytes data = 6;
+
+  // The encoded chunks inside the whole fragment, for frame measurements. Set
+  // on part 0, and not populated on the frames relayed to a viewer.
+  repeated ChunkFact chunks = 7;
+}
+
+// One encoded chunk's measurable facts.
+message ChunkFact {
+  // Presentation offset from the fragment's start, in ms.
+  uint32 offset_ms = 1;
+
+  uint32 bytes = 2;
+
+  bool keyframe = 3;
+}
+
+// The publisher has nothing more to send on this socket.
+message EndOfUpload {
+  enum Reason {
+    UNSPECIFIED = 0;
+    // Finalize now: everything this session recorded has been sent.
+    COMPLETE = 1;
+    // The page is going away with fragments still unsent. Flush and sleep, as
+    // for a socket that closed without an end frame; the idle timeout
+    // finalizes if nobody resumes.
+    PAGE_HIDDEN = 2;
+  }
+
+  Reason reason = 1;
+}
+
+// Server to publisher.
+message UploadControlFrame {
+  oneof frame {
+    FragmentAck ack = 1;
+    KeyframeRequest keyframe_request = 2;
+  }
+}
+
+// Every fragment up to and including `sequence` is durably stored.
+message FragmentAck {
+  uint64 sequence = 1;
+}
+
+// The next fragment should open on a keyframe.
+message KeyframeRequest {
+  // Why one was asked for. One mechanism, three triggers; the client reports
+  // the split so the cost of each is measurable.
+  enum Reason {
+    UNSPECIFIED = 0;
+    // A viewer joined and has nothing to decode from.
+    VIEWER_JOINED = 1;
+    // The publisher reconnected, and the next segment must open on one.
+    PUBLISHER_RESUMED = 2;
+    // The open segment hit its ceiling with no keyframe to close on.
+    SEGMENT_OVERDUE = 3;
+  }
+
+  Reason reason = 1;
+}
+
+// Server to viewer.
+message LiveViewFrame {
+  oneof frame {
+    InitSegment init = 1;
+    MediaFragment fragment = 2;
+  }
+}

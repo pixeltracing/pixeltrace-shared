@@ -1,0 +1,14 @@
+{
+  "name": "pixeltrace-js",
+  "private": true,
+  "description": "pnpm workspace root for the Pixeltrace JS packages.",
+  "license": "MIT",
+  "type": "module",
+  "packageManager": "pnpm@11.9.0",
+  "scripts": {
+    "build": "pnpm -r build",
+    "test": "pnpm -r test",
+    "typecheck": "pnpm -r typecheck",
+    "clean": "pnpm -r clean"
+  }
+}

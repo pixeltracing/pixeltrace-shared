@@ -1,0 +1,18 @@
+# Generates Go protobuf bindings from the shared proto module (../../../proto).
+
+version: v2
+inputs:
+  - directory: ../../../proto
+# Managed mode injects go_package without editing the shared .proto files (which
+# are language-neutral and have no go_package option), pointing each at this
+# module's ./gen tree.
+managed:
+  enabled: true
+  override:
+    - file_option: go_package_prefix
+      value: github.com/pixeltracing/pixeltrace-shared/packages/go/schema/gen
+plugins:
+  - local: protoc-gen-go
+    out: gen
+    opt:
+      - paths=source_relative

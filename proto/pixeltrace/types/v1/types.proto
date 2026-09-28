@@ -1,0 +1,39 @@
+syntax = "proto3";
+package pixeltrace.types.v1;
+
+// The public key that identifies a destination for session traffic.
+message SiteKey {
+    string key = 1;
+}
+
+// An opaque identifier for an ingest session: 'sess_*'
+message SessionId {
+    string id = 1;
+}
+
+// An opaque identifier for a user: 'user_*'
+message UserId {
+    string id = 1;
+}
+
+// An opaque identifier for a project: 'proj_*'
+message ProjectId {
+    string id = 1;
+}
+
+// An opaque identifier for a project's tag definition: 'tag_*'
+message ProjectTagId {
+    string id = 1;
+}
+
+// An opaque identifier for an organization: 'org_*'
+message OrganizationId {
+    string id = 1;
+}
+
+// Attributes of a session's publishing client, as reported by the client
+// itself.
+message SessionPublisherInfo {
+    // The document.referrer value at session start.
+    string referrer = 1;
+}

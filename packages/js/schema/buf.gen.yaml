@@ -1,0 +1,17 @@
+# Generates protobuf-es TypeScript bindings from the shared proto module
+# (../../../proto) into src/gen. Run via `pnpm run generate`.
+#
+# protobuf-es output is plain ESM with a single small runtime dependency
+# (@bufbuild/protobuf), no native modules — ideal for Cloudflare Workers and
+# browser bundles alike.
+version: v2
+inputs:
+  - directory: ../../../proto
+plugins:
+  - local: protoc-gen-es
+    out: src/gen
+    opt:
+      - target=ts
+      # Emit `.js` in generated relative imports so the compiled output works
+      # under Node's native ESM resolution (not just bundlers).
+      - import_extension=js

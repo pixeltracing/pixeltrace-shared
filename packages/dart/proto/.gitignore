@@ -1,0 +1,7 @@
+# Dart / Pub
+.dart_tool/
+.packages
+build/
+doc/api/
+# This is a library package (not an app), so the lockfile is not committed.
+pubspec.lock

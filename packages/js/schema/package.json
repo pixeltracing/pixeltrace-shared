@@ -1,0 +1,52 @@
+{
+  "name": "@pixeltrace/schema",
+  "version": "0.0.1",
+  "description": "TypeScript definitions for the Pixeltrace protobuf schema.",
+  "homepage": "https://pixeltrace.dev/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pixeltracing/pixeltrace-shared.git",
+    "directory": "packages/js/schema"
+  },
+  "bugs": {
+    "url": "https://github.com/pixeltracing/pixeltrace-shared/issues"
+  },
+  "license": "MIT",
+  "type": "module",
+  "packageManager": "pnpm@11.9.0",
+  "sideEffects": false,
+  "files": [
+    "dist",
+    "proto"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./pixeltrace/*.js": {
+      "types": "./dist/gen/pixeltrace/*.d.ts",
+      "default": "./dist/gen/pixeltrace/*.js"
+    },
+    "./google/*": {
+      "types": "./dist/gen/google/*_pb.d.ts",
+      "default": "./dist/gen/google/*_pb.js"
+    }
+  },
+  "scripts": {
+    "generate": "buf generate --include-imports",
+    "clean": "rm -rf dist src/gen proto",
+    "build": "pnpm run clean && pnpm run generate && pnpm run copy-proto && tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "prepack": "pnpm run build",
+    "copy-proto": "mkdir -p proto && cp -R ../../../proto/pixeltrace proto/"
+  },
+  "dependencies": {
+    "@bufbuild/protobuf": "^2.12.1"
+  },
+  "devDependencies": {
+    "@bufbuild/buf": "^1.71.0",
+    "@bufbuild/protoc-gen-es": "^2.12.1",
+    "typescript": "^6.0.3"
+  }
+}

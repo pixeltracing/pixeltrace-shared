@@ -1,0 +1,31 @@
+syntax = "proto3";
+package pixeltrace.error.v1;
+
+import "google/protobuf/descriptor.proto";
+import "google/rpc/code.proto";
+
+// Pixeltrace domain error reasons. Adding a value is an API change, reviewed
+// like a new field: clients depend on these.
+enum ErrorReason {
+  UNSPECIFIED = 0;
+
+  // The supplied site key is not a well-formed key.
+  SITE_KEY_MALFORMED = 1 [(canonical_code) = INVALID_ARGUMENT];
+}
+
+// The domain-specific error reasons an RPC may return, attached to a method as
+// an option.
+message MethodErrors {
+  repeated ErrorReason reasons = 1;
+}
+
+// extension field numbers in reserved 50000-99999 range for exts
+
+extend google.protobuf.MethodOptions {
+  MethodErrors errors = 50001;
+}
+
+extend google.protobuf.EnumValueOptions {
+  // The canonical google.rpc.Code an ErrorReason maps to.
+  google.rpc.Code canonical_code = 50002;
+}

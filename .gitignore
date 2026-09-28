@@ -1,0 +1,15 @@
+# Repo-wide rules only. Language/package-specific ignores live in the
+# corresponding package .gitignore.
+
+# Editor / OS noise (can appear in any directory)
+*.swp
+*.log
+.history
+.idea/
+.DS_Store
+
+.pnpm-store/
+
+*.pem
+
+/build/

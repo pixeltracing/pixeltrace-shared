@@ -1,0 +1,51 @@
+{
+  "name": "@pixeltrace/service",
+  "version": "0.0.1",
+  "description": "TypeScript implementation of Pixeltrace service entrypoints.",
+  "homepage": "https://pixeltrace.dev/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pixeltracing/pixeltrace-shared.git",
+    "directory": "packages/js/service"
+  },
+  "bugs": {
+    "url": "https://github.com/pixeltracing/pixeltrace-shared/issues"
+  },
+  "license": "MIT",
+  "type": "module",
+  "packageManager": "pnpm@11.9.0",
+  "sideEffects": false,
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./testing": {
+      "types": "./dist/testing/index.d.ts",
+      "default": "./dist/testing/index.js"
+    }
+  },
+  "scripts": {
+    "clean": "rm -rf dist",
+    "build": "pnpm run clean && tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run",
+    "prepack": "pnpm run build"
+  },
+  "dependencies": {
+    "@bufbuild/protobuf": "^2.12.1",
+    "@connectrpc/connect": "^2.1.2",
+    "@pixeltrace/authz": "workspace:*",
+    "@pixeltrace/schema": "workspace:*",
+    "better-auth": "^1.6.23",
+    "kysely": "^0.29.2"
+  },
+  "devDependencies": {
+    "@types/node": "^26.0.1",
+    "typescript": "^6.0.3",
+    "vitest": "^4.1.9"
+  }
+}

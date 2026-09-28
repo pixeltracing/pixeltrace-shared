@@ -1,0 +1,42 @@
+{
+  "name": "@pixeltrace/authz",
+  "version": "0.0.1",
+  "description": "TypeScript definitions for the Pixeltrace authz surface.",
+  "homepage": "https://pixeltrace.dev/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pixeltracing/pixeltrace-shared.git",
+    "directory": "packages/js/authz"
+  },
+  "bugs": {
+    "url": "https://github.com/pixeltracing/pixeltrace-shared/issues"
+  },
+  "license": "MIT",
+  "type": "module",
+  "packageManager": "pnpm@11.9.0",
+  "sideEffects": false,
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "clean": "rm -rf dist",
+    "build": "pnpm run clean && tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run",
+    "prepack": "pnpm run build"
+  },
+  "devDependencies": {
+    "@types/node": "^26.0.1",
+    "typescript": "^6.0.3",
+    "vitest": "^4.1.9"
+  },
+  "dependencies": {
+    "nanoid": "^5.1.16"
+  }
+}

@@ -1,0 +1,20 @@
+syntax = "proto3";
+package pixeltrace.mgmt.v1;
+
+// Pagination parameters for a list request.
+message PageRequest {
+    // Maximum number of items to return. The server may return fewer.
+    // Zero means the server picks a default page size.
+    int32 page_size = 1;
+
+    // Opaque token from a prior PageResponse's next_page_token. Empty for the
+    // first page.
+    string page_token = 2;
+}
+
+// Pagination cursor returned alongside a page of list results.
+message PageResponse {
+    // Token to pass as PageRequest.page_token to fetch the next page. Empty
+    // when there are no more results.
+    string next_page_token = 1;
+}

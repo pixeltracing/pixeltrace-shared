@@ -1,0 +1,23 @@
+{
+  "name": "pixeltrace-flutter",
+  "dockerFile": "Dockerfile",
+  "remoteUser": "ubuntu",
+  "mounts": [
+    "source=pixeltrace-dart-tool,target=${containerWorkspaceFolder}/../.dart_tool,type=volume",
+    "source=pixeltrace-app-build,target=${containerWorkspaceFolder}/build,type=volume"
+  ],
+  "postCreateCommand": "sudo chown ubuntu:ubuntu ../.dart_tool build",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-vscode.makefile-tools",
+        "stylelint.vscode-stylelint",
+        "anthropic.claude-code",
+        "dart-code.flutter",
+        "golang.go",
+        "bufbuild.vscode-buf",
+        "dbaeumer.vscode-eslint"
+      ]
+    }
+  }
+}

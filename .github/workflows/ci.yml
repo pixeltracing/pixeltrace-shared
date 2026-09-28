@@ -1,0 +1,230 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+# Cancel in-progress runs for the same ref (e.g. new push to a PR).
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+# CI only reads the repo (no publishing currently).
+permissions:
+  contents: read
+
+env:
+  GO_VERSION: "1.26"
+  NODE_VERSION: "22"
+  BUF_VERSION: "1.71.0"
+  PROTOC_GEN_GO_VERSION: "v1.36.11"
+
+jobs:
+  proto:
+    name: "Schema: proto"
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+        with:
+          # buf breaking needs history to diff against the base branch.
+          fetch-depth: 0
+      - uses: bufbuild/buf-setup-action@040099d8ce3237379f9ec5e0bff7577475483247 # v1
+        with:
+          version: ${{ env.BUF_VERSION }}
+          github_token: ${{ github.token }}
+
+      - name: Lint
+        run: buf lint proto
+
+      # A wire-incompatible change to a message (reused field number, changed
+      # type, etc) should block deploy.
+      - name: Breaking-change check
+        # Skip on the first push to main, when there's no prior main to diff.
+        if: github.event_name == 'pull_request'
+        run: buf breaking proto --against '.git#branch=main,subdir=proto'
+
+  js:
+    name: "JS packages"
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: packages/js
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+      - uses: pnpm/action-setup@b0f76dfb45f55f8421693e4803ac7bb65143bd34 # v6
+        with:
+          package_json_file: packages/js/package.json
+      - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: pnpm
+          cache-dependency-path: packages/js/pnpm-lock.yaml
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Audit dependencies
+        run: pnpm audit --audit-level=high
+
+      # `pnpm -r` builds/tests every package in topological order, so a
+      # cross-package dep like service's "workspace:*" on schema is built first.
+      # schema's build pulls buf in via npm, so no extra toolchain is needed.
+      - name: Build
+        run: pnpm -r build
+
+      - name: Test
+        run: pnpm -r test
+
+  go:
+    name: "Schema: Go"
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: packages/go/schema
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+      - uses: actions/setup-go@924ae3a1cded613372ab5595356fb5720e22ba16 # v6
+        with:
+          go-version: ${{ env.GO_VERSION }}
+          cache-dependency-path: packages/go/schema/go.sum
+      - uses: bufbuild/buf-setup-action@040099d8ce3237379f9ec5e0bff7577475483247 # v1
+        with:
+          version: ${{ env.BUF_VERSION }}
+          github_token: ${{ github.token }}
+
+      # buf invokes protoc-gen-go from PATH; install the pinned plugin.
+      - name: Install protoc-gen-go
+        run: go install google.golang.org/protobuf/cmd/protoc-gen-go@${{ env.PROTOC_GEN_GO_VERSION }}
+
+      - name: Generate
+        run: ./generate.sh
+
+      - name: Build
+        run: go build ./...
+
+      - name: Vet
+        run: go vet ./...
+
+      - name: Vulncheck
+        run: |
+          go install golang.org/x/vuln/cmd/govulncheck@latest
+          govulncheck ./...
+
+  dart-proto:
+    name: "Dart: proto"
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: packages/dart/proto
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+      - uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2 # v2
+        with:
+          channel: stable
+          cache: true # Flutter SDK
+          pub-cache: true # pub package cache
+      - uses: bufbuild/buf-setup-action@040099d8ce3237379f9ec5e0bff7577475483247 # v1
+        with:
+          version: ${{ env.BUF_VERSION }}
+          github_token: ${{ github.token }}
+
+      - name: Install dependencies
+        run: dart pub get
+
+      # The generated bindings are checked in (consumers shouldn't need to run
+      # codegen), so regeneration here should produce no diff.
+      - name: Check generated proto
+        run: |
+          ./generate.sh
+          git add -N lib
+          git diff --exit-code -- lib
+
+      - name: Analyze
+        run: dart analyze
+
+  dart-rtc:
+    name: "Dart: rtc"
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: packages/dart/rtc
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+      - uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2 # v2
+        with:
+          channel: stable
+          cache: true # Flutter SDK
+          pub-cache: true # pub package cache
+
+      - name: Install dependencies
+        run: dart pub get
+
+      - name: Analyze
+        run: dart analyze
+
+  flutter:
+    name: Flutter package
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: packages/flutter
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+      - uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2 # v2
+        with:
+          channel: stable
+          cache: true # Flutter SDK
+          pub-cache: true # pub package cache
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Analyze
+        run: dart analyze
+
+      - name: Test
+        run: flutter test
+
+      - name: Test (browser)
+        run: flutter test --platform chrome test/web
+
+      - name: Build example (web + wasm)
+        run: flutter build web --wasm
+        working-directory: packages/flutter/example
+
+  hosted-verify:
+    name: Hosted build (private)
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    # Only bother the private build if the parts it consumes are green.
+    needs: [proto, js, go]
+    # Skip for fork PRs: they get no secret (so no token), and we don't want to
+    # gate external contributions on a private downstream.
+    if: >-
+      github.event_name == 'push' ||
+      github.event.pull_request.head.repo.full_name == github.repository
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+      - name: Mint downstream token
+        id: app-token
+        uses: actions/create-github-app-token@fee1f7d63c2ff003460e3d139729b119787bc349 # v2.2.2
+        with:
+          app-id: ${{ secrets.HOSTED_APP_ID }}
+          private-key: ${{ secrets.HOSTED_APP_PRIVATE_KEY }}
+          owner: ${{ github.repository_owner }}
+      - name: Verify hosted build against this change
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+          HOSTED_REPO_NAME: ${{ secrets.HOSTED_REPO_NAME }}
+          # PR head SHA (the actual change), or the pushed commit on main.
+          SHARED_REF: ${{ github.event.pull_request.head.sha || github.sha }}
+          CORRELATION_ID: ${{ github.run_id }}-${{ github.run_attempt }}
+        run: .github/workflows/scripts/hosted-build.sh

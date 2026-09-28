@@ -1,0 +1,18 @@
+syntax = "proto3";
+package pixeltrace.data.v1;
+
+// Where a project's data lives. Fixed at creation.
+enum DataResidency {
+    DATA_RESIDENCY_UNSPECIFIED = 0;
+    // United States.
+    DATA_RESIDENCY_US = 1;
+}
+
+// Which backend holds a project's captured data. Fixed at creation.
+enum StorageBackend {
+    STORAGE_BACKEND_UNSPECIFIED = 0;
+    // Pixeltrace-hosted bucket.
+    STORAGE_BACKEND_MANAGED = 1;
+    // Customer-owned bucket (bring your own bucket).
+    STORAGE_BACKEND_BYOB = 2;
+}

@@ -1,0 +1,890 @@
+syntax = "proto3";
+package pixeltrace.mgmt.v1;
+
+import "google/protobuf/duration.proto";
+import "google/protobuf/field_mask.proto";
+import "google/protobuf/timestamp.proto";
+import "pixeltrace/data/v1/types.proto";
+import "pixeltrace/mgmt/v1/membership.proto";
+import "pixeltrace/mgmt/v1/types.proto";
+import "pixeltrace/types/v1/types.proto";
+
+// Provides data plane functionality related to projects.
+service ProjectService {
+    // Creates a new project within an organization.
+    rpc CreateProject(CreateProjectRequest) returns (CreateProjectResponse);
+
+    // Fetches a project.
+    rpc GetProject(GetProjectRequest) returns (GetProjectResponse);
+
+    // Updates a project's mutable properties.
+    rpc UpdateProject(UpdateProjectRequest) returns (UpdateProjectResponse);
+
+    // Deletes a project.
+    rpc DeleteProject(DeleteProjectRequest) returns (DeleteProjectResponse);
+
+    // Issues a new site key for a project.
+    rpc CreateSiteKey(CreateSiteKeyRequest) returns (CreateSiteKeyResponse);
+
+    // Fetches a single site key belonging to a project.
+    rpc GetSiteKey(GetSiteKeyRequest) returns (GetSiteKeyResponse);
+
+    // Lists the site keys issued for a project.
+    rpc ListSiteKeys(ListSiteKeysRequest) returns (ListSiteKeysResponse);
+
+    // Updates a site key's mutable properties.
+    rpc UpdateSiteKey(UpdateSiteKeyRequest) returns (UpdateSiteKeyResponse);
+
+    // Revokes an existing site key.
+    rpc RevokeSiteKey(RevokeSiteKeyRequest) returns (RevokeSiteKeyResponse);
+
+    // Defines a new tag for a project.
+    rpc CreateProjectTag(CreateProjectTagRequest) returns (CreateProjectTagResponse);
+
+    // Lists the tags defined for a project.
+    rpc ListProjectTags(ListProjectTagsRequest) returns (ListProjectTagsResponse);
+
+    // Updates a project tag's mutable properties.
+    rpc UpdateProjectTag(UpdateProjectTagRequest) returns (UpdateProjectTagResponse);
+
+    // Deletes a project tag, removing it from every session carrying it.
+    rpc DeleteProjectTag(DeleteProjectTagRequest) returns (DeleteProjectTagResponse);
+
+    // Assigns a user a role on a project (creates the edge).
+    rpc AssignProjectMember(AssignProjectMemberRequest) returns (AssignProjectMemberResponse);
+
+    // Fetches a user's role on a project.
+    rpc GetProjectMember(GetProjectMemberRequest) returns (GetProjectMemberResponse);
+
+    // Updates a project member's role.
+    rpc UpdateProjectMember(UpdateProjectMemberRequest) returns (UpdateProjectMemberResponse);
+
+    // Removes a user's role on a project (deletes the edge).
+    rpc RemoveProjectMember(RemoveProjectMemberRequest) returns (RemoveProjectMemberResponse);
+
+    // Lists the members (role overrides) of a project.
+    rpc ListProjectMembers(ListProjectMembersRequest) returns (ListProjectMembersResponse);
+
+    // Lists the recorded sessions belonging to a project.
+    rpc ListSessions(ListSessionsRequest) returns (ListSessionsResponse);
+
+    // Lists the project's sessions that are currently being recorded ("live").
+    rpc ListLiveSessions(ListLiveSessionsRequest) returns (ListLiveSessionsResponse);
+
+    // Fetches a single recorded session belonging to a project.
+    rpc GetSession(GetSessionRequest) returns (GetSessionResponse);
+
+    // Updates a session's mutable properties.
+    rpc UpdateSession(UpdateSessionRequest) returns (UpdateSessionResponse);
+
+    // Deletes a recorded session and its captured media.
+    rpc DeleteSession(DeleteSessionRequest) returns (DeleteSessionResponse);
+
+    // Lists the deleted sessions of a project that can still be restored.
+    rpc ListDeletedSessions(ListDeletedSessionsRequest) returns (ListDeletedSessionsResponse);
+
+    // Undoes a session's deletion, before its captured media is deleted.
+    rpc RestoreSession(RestoreSessionRequest) returns (RestoreSessionResponse);
+
+    // Marks sessions seen, or unseen, by the calling user.
+    rpc MarkSessionsSeen(MarkSessionsSeenRequest) returns (MarkSessionsSeenResponse);
+
+    // Marks every one of a project's sessions seen by the calling user.
+    rpc MarkAllSessionsSeen(MarkAllSessionsSeenRequest) returns (MarkAllSessionsSeenResponse);
+
+    // Counts the project's sessions the calling user has not seen.
+    rpc GetUnseenSessionCount(GetUnseenSessionCountRequest) returns (GetUnseenSessionCountResponse);
+
+    // Deletes every recorded session of a project and their captured media.
+    rpc ClearSessions(ClearSessionsRequest) returns (ClearSessionsResponse);
+
+    // Returns a URL for playing back a session's recording.
+    rpc GetSessionPlaybackUrl(GetSessionPlaybackUrlRequest) returns (GetSessionPlaybackUrlResponse);
+
+    // Attaches a viewer to a session that is currently recording, so it can
+    // watch the capture live.
+    rpc WatchLiveSession(WatchLiveSessionRequest) returns (WatchLiveSessionResponse);
+}
+
+// Request to create a project.
+message CreateProjectRequest {
+    // The organization to create the project under.
+    pixeltrace.types.v1.OrganizationId org_id = 1;
+
+    // Where the project's data must reside.
+    pixeltrace.data.v1.DataResidency data_residency = 2;
+
+    // Which storage backend the project uses.
+    pixeltrace.data.v1.StorageBackend storage_backend = 3;
+
+    // Properties for the new project.
+    ProjectProps props = 4;
+}
+
+// Response to a create-project request.
+message CreateProjectResponse {
+    // The newly created project, including its assigned id.
+    Project project = 1;
+}
+
+// Request to fetch a project.
+message GetProjectRequest {
+    // Id of the project to fetch.
+    pixeltrace.types.v1.ProjectId id = 1;
+}
+
+// Response to a get-project request.
+message GetProjectResponse {
+    // The requested project.
+    Project project = 1;
+}
+
+// Request to update a project's properties.
+message UpdateProjectRequest {
+    // Id of the project to update.
+    pixeltrace.types.v1.ProjectId id = 1;
+
+    // The new property values. Only fields named in update_mask are applied.
+    ProjectProps props = 2;
+
+    // Which fields of props to update. If empty, all fields are replaced.
+    google.protobuf.FieldMask update_mask = 3;
+}
+
+// Response to an update-project request.
+message UpdateProjectResponse {
+    // The project after the update.
+    Project project = 1;
+}
+
+// Request to delete a project.
+message DeleteProjectRequest {
+    // Id of the project to delete.
+    pixeltrace.types.v1.ProjectId id = 1;
+}
+
+// Response to a delete-project request.
+message DeleteProjectResponse {}
+
+// Request to issue a new site key for a project.
+message CreateSiteKeyRequest {
+    // The project to issue the key for.
+    pixeltrace.types.v1.ProjectId project_id = 1;
+
+    // Properties for the new site key.
+    ProjectSiteKeyProps props = 2;
+}
+
+// Response to a create-site-key request.
+message CreateSiteKeyResponse {
+    // The newly issued site key.
+    ProjectSiteKey site_key = 1;
+}
+
+// Request to fetch a single site key.
+message GetSiteKeyRequest {
+    // The project the key belongs to.
+    pixeltrace.types.v1.ProjectId project_id = 1;
+
+    // The site key to fetch.
+    pixeltrace.types.v1.SiteKey key = 2;
+}
+
+// Response to a get-site-key request.
+message GetSiteKeyResponse {
+    // The requested site key.
+    ProjectSiteKey site_key = 1;
+}
+
+// Request to list a project's site keys.
+message ListSiteKeysRequest {
+    // The project whose site keys to list.
+    pixeltrace.types.v1.ProjectId project_id = 1;
+
+    // Pagination parameters. Omit for the first page.
+    PageRequest page = 2;
+}
+
+// Response to a list-site-keys request.
+message ListSiteKeysResponse {
+    // A page of the project's site keys. May be empty before any key is issued.
+    repeated ProjectSiteKey site_keys = 1;
+
+    // Pagination cursor for fetching the next page.
+    PageResponse page = 2;
+}
+
+// Request to update a site key's mutable properties.
+message UpdateSiteKeyRequest {
+    // The project the key belongs to.
+    pixeltrace.types.v1.ProjectId project_id = 1;
+
+    // The site key to update.
+    pixeltrace.types.v1.SiteKey key = 2;
+
+    // The new property values. Only fields named in update_mask are applied.
+    ProjectSiteKeyProps props = 3;
+
+    // Which fields of props to update. If empty, all fields are replaced.
+    google.protobuf.FieldMask update_mask = 4;
+}
+
+// Response to an update-site-key request.
+message UpdateSiteKeyResponse {
+    // The site key after the update.
+    ProjectSiteKey site_key = 1;
+}
+
+// Request to revoke a project's site key.
+message RevokeSiteKeyRequest {
+    // The project the key belongs to.
+    pixeltrace.types.v1.ProjectId project_id = 1;
+
+    // The site key to revoke.
+    pixeltrace.types.v1.SiteKey key = 2;
+}
+
+// Response to a revoke-site-key request.
+message RevokeSiteKeyResponse {}
+
+// Request to define a new tag for a project.
+message CreateProjectTagRequest {
+    // The project to define the tag for.
+    pixeltrace.types.v1.ProjectId project_id = 1;
+
+    // Properties for the new tag.
+    ProjectTagProps props = 2;
+}
+
+// Response to a create-project-tag request.
+message CreateProjectTagResponse {
+    // The newly defined tag, including its assigned id.
+    ProjectTag tag = 1;
+}
+
+// Request to list a project's tag definitions.
+message ListProjectTagsRequest {
+    // The project whose tags to list.
+    pixeltrace.types.v1.ProjectId project_id = 1;
+
+    // Include session_counts in the response.
+    bool include_session_counts = 2;
+}
+
+// Response to a list-project-tags request.
+message ListProjectTagsResponse {
+    // The project's tags, ordered by label. May be empty if none are defined.
+    repeated ProjectTag tags = 1;
+
+    // How many of the project's sessions carry each tag. Keyed by the raw id
+    // string of a ProjectTagId, since a proto map key cannot be a message.
+    // Empty unless the request asked for counts, which is not the same as every
+    // tag being unused.
+    map<string, uint32> session_counts = 2;
+}
+
+// Request to update a project tag's mutable properties.
+message UpdateProjectTagRequest {
+    // The project the tag belongs to.
+    pixeltrace.types.v1.ProjectId project_id = 1;
+
+    // The tag to update.
+    pixeltrace.types.v1.ProjectTagId id = 2;
+
+    // The new property values. Only fields named in update_mask are applied.
+    ProjectTagProps props = 3;
+
+    // Which fields of props to update. If empty, all fields are replaced.
+    google.protobuf.FieldMask update_mask = 4;
+}
+
+// Response to an update-project-tag request.
+message UpdateProjectTagResponse {
+    // The tag after the update.
+    ProjectTag tag = 1;
+}
+
+// Request to delete a project tag.
+message DeleteProjectTagRequest {
+    // The project the tag belongs to.
+    pixeltrace.types.v1.ProjectId project_id = 1;
+
+    // The tag to delete.
+    pixeltrace.types.v1.ProjectTagId id = 2;
+}
+
+// Response to a delete-project-tag request.
+message DeleteProjectTagResponse {
+    // How many sessions the tag was removed from.
+    uint32 sessions_untagged = 1;
+}
+
+// A project within an organization. The unit that owns ingest traffic.
+message Project {
+    // Id for this project.
+    pixeltrace.types.v1.ProjectId id = 1;
+
+    // The organization that owns this project.
+    pixeltrace.types.v1.OrganizationId org_id = 2;
+
+    // Where this project's data resides. Fixed at creation.
+    pixeltrace.data.v1.DataResidency data_residency = 3;
+
+    // Which backend holds this project's data. Fixed at creation.
+    pixeltrace.data.v1.StorageBackend storage_backend = 4;
+
+    // Mutable project properties.
+    ProjectProps props = 5;
+}
+
+// The mutable properties of a project.
+message ProjectProps {
+    // Human-readable display name.
+    string name = 1;
+
+    // When true, the ingest plane refuses to start new recording sessions for
+    // this project. Sessions already in flight run to completion. The field is
+    // inverted ("disabled") so the zero value means recording is on.
+    bool recording_disabled = 2;
+
+    // Recordings whose captured duration is shorter than this are discarded
+    // automatically.
+    optional uint32 discard_under_seconds = 3;
+
+    // How long a session of this project may go without media before it is
+    // finalized.
+    optional uint32 idle_timeout_seconds = 4;
+
+    // How long a recording is kept before it is deleted automatically, counted
+    // from when it stopped recording.
+    optional uint32 retention_days = 5;
+}
+
+// A site key issued for a project.
+message ProjectSiteKey {
+    // Lifecycle state of a site key.
+    enum Status {
+        UNSPECIFIED = 0;
+        // The key may be used to authorize ingest traffic.
+        ACTIVE = 1;
+        // The key has been revoked and must be rejected.
+        REVOKED = 2;
+    }
+
+    // The public site key value.
+    pixeltrace.types.v1.SiteKey key = 1;
+
+    // Current lifecycle state of the key.
+    Status status = 2;
+
+    // When the key was issued.
+    google.protobuf.Timestamp created_at = 3;
+
+    // When the key was revoked, if it has been.
+    google.protobuf.Timestamp revoked_at = 4;
+
+    // Caller-mutable properties.
+    ProjectSiteKeyProps props = 5;
+}
+
+// The mutable properties of a site key.
+message ProjectSiteKeyProps {
+    // Human-readable display name.
+    string label = 1;
+}
+
+// A tag defined for a project.
+message ProjectTag {
+    // Id for this tag.
+    pixeltrace.types.v1.ProjectTagId id = 1;
+
+    // The project that defines this tag.
+    pixeltrace.types.v1.ProjectId project_id = 2;
+
+    // When the tag was defined.
+    google.protobuf.Timestamp created_at = 3;
+
+    // Caller-mutable properties.
+    ProjectTagProps props = 4;
+
+    // What kind the tag is. Assigned by the server.
+    ProjectTagKind kind = 5;
+}
+
+// Distinguishes user-created tags from the builtin/"system" tags.
+enum ProjectTagKind {
+    PROJECT_TAG_KIND_UNSPECIFIED = 0;
+    PROJECT_TAG_KIND_CUSTOM = 1;
+    PROJECT_TAG_KIND_PINNED = 2;
+    PROJECT_TAG_KIND_FLAGGED = 3;
+}
+
+// The mutable properties of a project tag.
+message ProjectTagProps {
+    // Human-readable label, as displayed. Non-empty, trimmed, and unique within
+    // the project when compared case-insensitively.
+    string label = 1;
+
+    // The color this tag renders in. Required, even if custom_hex.
+    ProjectTagColor color = 2;
+
+    // An exact color to render instead of the palette slot, as lowercase
+    // "#rrggbb". Unset means the slot is used. A client that cannot honor an
+    // arbitrary color falls back to color, which is why that stays required.
+    optional string custom_hex = 3;
+}
+
+// The palette a project tag renders in.
+enum ProjectTagColor {
+    PROJECT_TAG_COLOR_UNSPECIFIED = 0;
+    PROJECT_TAG_COLOR_NONE = 1;
+    PROJECT_TAG_COLOR_BLACK = 2;
+    PROJECT_TAG_COLOR_WHITE = 3;
+    PROJECT_TAG_COLOR_GRAY = 4;
+    PROJECT_TAG_COLOR_RED = 5;
+    PROJECT_TAG_COLOR_ORANGE = 6;
+    PROJECT_TAG_COLOR_YELLOW = 7;
+    PROJECT_TAG_COLOR_GREEN = 8;
+    PROJECT_TAG_COLOR_CYAN = 9;
+    PROJECT_TAG_COLOR_BLUE = 10;
+    PROJECT_TAG_COLOR_INDIGO = 11;
+    PROJECT_TAG_COLOR_PURPLE = 12;
+    PROJECT_TAG_COLOR_MAGENTA = 13;
+}
+
+// Identifies a project membership: the (project, user) edge.
+message ProjectMemberKey {
+    // The project endpoint of the edge.
+    pixeltrace.types.v1.ProjectId project_id = 1;
+
+    // The user endpoint of the edge.
+    pixeltrace.types.v1.UserId user_id = 2;
+}
+
+// A project membership: the edge granting a user a role scoped to a project.
+message ProjectMember {
+    // The (project, user) edge this membership represents.
+    ProjectMemberKey key = 1;
+
+    // Mutable membership properties.
+    ProjectMemberProps props = 2;
+}
+
+// The mutable properties of a project membership.
+message ProjectMemberProps {
+    // The role granted to the user on the project.
+    Role role = 1;
+}
+
+// Request to assign a user a role on a project.
+message AssignProjectMemberRequest {
+    // The project <-> user edge to create.
+    ProjectMemberKey key = 1;
+
+    // Properties for the new project membership.
+    ProjectMemberProps props = 2;
+}
+
+// Response to an assign-project-member request.
+message AssignProjectMemberResponse {
+    // The newly created project membership.
+    ProjectMember member = 1;
+}
+
+// Request to fetch a project membership.
+message GetProjectMemberRequest {
+    // The project membership to fetch.
+    ProjectMemberKey key = 1;
+}
+
+// Response to a get-project-member request.
+message GetProjectMemberResponse {
+    // The requested project membership.
+    ProjectMember member = 1;
+}
+
+// Request to update a project membership's properties.
+message UpdateProjectMemberRequest {
+    // The project membership to update.
+    ProjectMemberKey key = 1;
+
+    // The new property values. Only fields named in update_mask are applied.
+    ProjectMemberProps props = 2;
+
+    // Which fields of props to update. If empty, all fields are replaced.
+    google.protobuf.FieldMask update_mask = 3;
+}
+
+// Response to an update-project-member request.
+message UpdateProjectMemberResponse {
+    // The project membership after the update.
+    ProjectMember member = 1;
+}
+
+// Request to remove a user's role on a project.
+message RemoveProjectMemberRequest {
+    // The project membership to remove.
+    ProjectMemberKey key = 1;
+}
+
+// Response to a remove-project-member request.
+message RemoveProjectMemberResponse {}
+
+// Request to list a project's members.
+message ListProjectMembersRequest {
+    // The project whose members to list.
+    pixeltrace.types.v1.ProjectId project_id = 1;
+
+    // Pagination parameters. Omit for the first page.
+    PageRequest page = 2;
+}
+
+// Response to a list-project-members request.
+message ListProjectMembersResponse {
+    // A page of the project's members. May be empty if no role overrides are set.
+    repeated ProjectMember members = 1;
+
+    // Pagination cursor for fetching the next page.
+    PageResponse page = 2;
+}
+
+// A recorded session (a "recording") captured for a project.
+message Session {
+    // Lifecycle state of a session's recording.
+    enum Status {
+        UNSPECIFIED = 0;
+        // Media is still being captured; the recording is not yet complete.
+        RECORDING = 1;
+        // Capture finished and the recording is available for playback.
+        READY = 2;
+    }
+
+    // Id for this session.
+    pixeltrace.types.v1.SessionId id = 1;
+
+    // The project this session was captured for.
+    pixeltrace.types.v1.ProjectId project_id = 2;
+
+    // The site key the session was ingested with.
+    pixeltrace.types.v1.SiteKey site_key = 3;
+
+    // Current lifecycle state of the recording.
+    Status status = 4;
+
+    // Caller-mutable properties.
+    SessionProps props = 5;
+
+    // Client-reported attributes of the publishing client.
+    pixeltrace.types.v1.SessionPublisherInfo publisher_info = 6;
+
+    // Immutable attributes of this session.
+    SessionAttributes attributes = 7;
+
+    // Whether the calling user has seen this session. Per-user state, since one
+    // user's "seen" state does not influence another's.
+    bool seen = 8;
+
+    // How the session's media reaches a live viewer.
+    LiveTransport live_transport = 9;
+}
+
+// Which path a session's live media travels, and so which viewer the app opens.
+enum LiveTransport {
+    LIVE_TRANSPORT_UNSPECIFIED = 0;
+    // Published into the media relay (SFU); watched over WebRTC.
+    LIVE_TRANSPORT_SFU = 1;
+    // Uploaded over a WebSocket; watched over a WebSocket relay.
+    LIVE_TRANSPORT_UPLOAD = 2;
+}
+
+message SessionProps {
+    repeated pixeltrace.types.v1.ProjectTagId tag_ids = 1;
+}
+
+message SessionTagUpdate {
+    repeated pixeltrace.types.v1.ProjectTagId add = 1;
+
+    repeated pixeltrace.types.v1.ProjectTagId remove = 2;
+}
+
+// The non-mutable bag of attributes associated with a particular session.
+message SessionAttributes {
+    // When the session began recording.
+    google.protobuf.Timestamp started_at = 1;
+
+    // When the session stopped recording, if it has. Unset while RECORDING.
+    google.protobuf.Timestamp ended_at = 2;
+
+    // Duration of the captured media. Unset until the recording is READY.
+    google.protobuf.Duration duration = 3;
+
+    // Total size of the captured media in bytes. Zero until parts are written.
+    uint64 size_bytes = 4;
+
+    // ISO 3166-1 alpha-2 country code of the publisher. "T1" means Tor.
+    string country = 5;
+
+    // Browser family parsed from the User-Agent, e.g. "Chrome".
+    string browser = 6;
+
+    // OS family parsed from the User-Agent, e.g. "macOS".
+    string os = 7;
+
+    // Coarse form factor: "desktop", "mobile", or "tablet".
+    string device_type = 8;
+
+    // The raw User-Agent header, kept verbatim.
+    string user_agent = 9;
+
+    // [One sample of] the client-to-edge TCP round-trip time in milliseconds.
+    optional uint32 client_tcp_rtt_ms = 10;
+
+    // When the session was deleted, if it has been.
+    optional google.protobuf.Timestamp deleted_at = 11;
+
+    // How active the recording was over its length. Unset when it was never
+    // measured, which is not the same as measured and found still.
+    Sparkline activity = 12;
+}
+
+// A coarse activity curve over a recording, for display as a sparkline.
+//
+// Relative by construction: it says where a recording was busy compared with its
+// own quietest and busiest moments, and carries no meaning between one recording
+// and another.
+message Sparkline {
+    // One sample per point, scaled 0..255 against the recording's own peak,
+    // evenly spaced over its presentation timeline.
+    bytes points = 1;
+}
+
+// Request to list a project's recorded sessions.
+message ListSessionsRequest {
+    // The project whose sessions to list.
+    pixeltrace.types.v1.ProjectId project_id = 1;
+
+    // Pagination parameters. Omit for the first page.
+    PageRequest page = 2;
+
+    // Return only the sessions the calling user has not seen. The default
+    // returns every session, each annotated with Session.seen.
+    bool unseen_only = 3;
+
+    repeated pixeltrace.types.v1.ProjectTagId tag_ids = 4;
+}
+
+// Response to a list-sessions request.
+message ListSessionsResponse {
+    // A page of the project's sessions. May be empty if none have been recorded,
+    // and may be shorter than the page size requested.
+    repeated Session sessions = 1;
+
+    // Pagination cursor for fetching the next page. Check page.next_page_token
+    // to determine if the listing is finished (keep paging while it is set).
+    PageResponse page = 2;
+}
+
+// Request to list a project's live (still-recording) sessions.
+message ListLiveSessionsRequest {
+    // The project whose live sessions to list.
+    pixeltrace.types.v1.ProjectId project_id = 1;
+}
+
+// Response to a list-live-sessions request. Not paginated: live sessions are
+// bounded by how many recordings run at once, so every one is returned.
+message ListLiveSessionsResponse {
+    // The project's live sessions, newest started first. Each has status
+    // RECORDING, so ended_at and duration are unset.
+    repeated Session sessions = 1;
+}
+
+// Request to fetch a single session.
+message GetSessionRequest {
+    // The project the session belongs to.
+    pixeltrace.types.v1.ProjectId project_id = 1;
+
+    // The session to fetch.
+    pixeltrace.types.v1.SessionId id = 2;
+}
+
+// Response to a get-session request.
+message GetSessionResponse {
+    // The requested session.
+    Session session = 1;
+}
+
+// Request to update a session's mutable properties.
+message UpdateSessionRequest {
+    // The project the session belongs to.
+    pixeltrace.types.v1.ProjectId project_id = 1;
+
+    // The session to update.
+    pixeltrace.types.v1.SessionId id = 2;
+
+    SessionTagUpdate tags = 3;
+}
+
+// Response to an update-session request.
+message UpdateSessionResponse {
+    // The session after the update.
+    Session session = 1;
+}
+
+// Request to delete a session and its captured media.
+message DeleteSessionRequest {
+    // The project the session belongs to.
+    pixeltrace.types.v1.ProjectId project_id = 1;
+
+    // The session to delete.
+    pixeltrace.types.v1.SessionId id = 2;
+}
+
+// Response to a delete-session request.
+message DeleteSessionResponse {}
+
+// Request to list a project's deleted-but-restorable sessions.
+message ListDeletedSessionsRequest {
+    // The project whose deleted sessions to list.
+    pixeltrace.types.v1.ProjectId project_id = 1;
+
+    // Pagination parameters. Omit for the first page.
+    PageRequest page = 2;
+}
+
+// Response to a list-deleted-sessions request.
+message ListDeletedSessionsResponse {
+    // A page of the project's deleted sessions, most recently deleted first.
+    repeated Session sessions = 1;
+
+    // Pagination cursor for fetching the next page.
+    PageResponse page = 2;
+}
+
+// Request to undo a session's deletion.
+message RestoreSessionRequest {
+    // The project the session belongs to.
+    pixeltrace.types.v1.ProjectId project_id = 1;
+
+    // The session to restore.
+    pixeltrace.types.v1.SessionId id = 2;
+}
+
+// Response to a restore-session request.
+message RestoreSessionResponse {
+    // The restored session, as it now reads.
+    Session session = 1;
+}
+
+// How many of a project's sessions the calling user has not seen.
+message UnseenSessionCount {
+    // The number of unseen sessions, or the server's display cap when capped.
+    uint32 count = 1;
+
+    // True when the count stopped at the server's display cap: there are at
+    // least count unseen sessions, and the caller should render "count+".
+    bool capped = 2;
+}
+
+// Request to mark sessions seen, or unseen, by the calling user.
+message MarkSessionsSeenRequest {
+    // The project the sessions belong to.
+    pixeltrace.types.v1.ProjectId project_id = 1;
+
+    // The sessions to mark. Ids naming a session that does not exist are
+    // ignored. The server rejects a request carrying more than 1000 ids.
+    repeated pixeltrace.types.v1.SessionId ids = 2;
+
+    // Mark the sessions seen, or unseen when false.
+    bool seen = 3;
+}
+
+// Response to a mark-sessions-seen request.
+message MarkSessionsSeenResponse {
+    // The unseen count after the marks were applied, so a caller that updated
+    // its view optimistically can reconcile without a second round trip.
+    UnseenSessionCount unseen = 1;
+}
+
+// Request to mark every one of a project's sessions seen by the calling user.
+message MarkAllSessionsSeenRequest {
+    // The project whose sessions to mark seen.
+    pixeltrace.types.v1.ProjectId project_id = 1;
+}
+
+// Response to a mark-all-sessions-seen request. There is deliberately no
+// mark-all-unseen: seen state is stored as a per-user bitset over the project's
+// sessions, in which "all seen" is a constant-size run but "all unseen" is not.
+message MarkAllSessionsSeenResponse {
+    // The unseen count after the mark. Zero, absent a concurrent recording.
+    UnseenSessionCount unseen = 1;
+}
+
+// Request for the calling user's unseen count in a project.
+message GetUnseenSessionCountRequest {
+    // The project to count unseen sessions in.
+    pixeltrace.types.v1.ProjectId project_id = 1;
+}
+
+// Response to a get-unseen-session-count request.
+message GetUnseenSessionCountResponse {
+    // The calling user's unseen count.
+    UnseenSessionCount unseen = 1;
+}
+
+// Request to delete every session of a project.
+message ClearSessionsRequest {
+    // The project whose sessions to delete.
+    pixeltrace.types.v1.ProjectId project_id = 1;
+}
+
+// Response to a clear-sessions request.
+message ClearSessionsResponse {}
+
+// Request for a playback URL for a session's recording.
+message GetSessionPlaybackUrlRequest {
+    // The project the session belongs to.
+    pixeltrace.types.v1.ProjectId project_id = 1;
+
+    // The session to play back. Must have finished recording.
+    pixeltrace.types.v1.SessionId session_id = 2;
+}
+
+// Response to a get-session-playback-url request.
+message GetSessionPlaybackUrlResponse {
+    // Fully-qualified playlist URL.
+    string playlist_url = 1;
+
+    // When playlist_url stops working.
+    google.protobuf.Timestamp expires_at = 2;
+}
+
+// Request to watch a session that is currently recording.
+message WatchLiveSessionRequest {
+    // The project the session belongs to.
+    pixeltrace.types.v1.ProjectId project_id = 1;
+
+    // The session to watch. Must still be recording.
+    pixeltrace.types.v1.SessionId session_id = 2;
+
+    // The viewer's SDP offer, from a peer connection carrying one recvonly
+    // video transceiver and with ICE gathering complete. Required for a
+    // LIVE_TRANSPORT_SFU session, ignored otherwise.
+    string sdp_offer = 3;
+}
+
+// Response to a watch-live-session request. Exactly one of the two is set,
+// according to the session's live_transport.
+message WatchLiveSessionResponse {
+    // The SDP answer to apply as the viewer's remote description.
+    string sdp_answer = 1;
+
+    // Where to open a WebSocket for a LIVE_TRANSPORT_UPLOAD session.
+    LiveView live_view = 2;
+}
+
+// A viewer's attachment to an uploading session's live relay. The relay socket
+// carries no credential; session.read on WatchLiveSession is the whole
+// authorization decision.
+message LiveView {
+    string relay_url = 1;
+}

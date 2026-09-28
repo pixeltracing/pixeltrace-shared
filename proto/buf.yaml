@@ -1,0 +1,22 @@
+# Buf module definition for the Pixeltrace protobuf schema.
+
+version: v2
+modules:
+  - path: .
+deps:
+  - buf.build/googleapis/googleapis
+lint:
+  use:
+    - STANDARD
+  except:
+    # We don't prefix enum values with the enum name (CODE_UNSPECIFIED). That
+    # rule guards against proto3's C++ scope-leak collision, but we only target
+    # TS/Go/Dart (no such hazard), and the prefix uglifies the generated
+    # identifiers in those languages. This also subsumes ENUM_ZERO_VALUE_SUFFIX,
+    # whose only remaining ask is the same prefix — our zero values already
+    # carry the UNSPECIFIED intent (e.g. `UNSPECIFIED = 0`).
+    - ENUM_VALUE_PREFIX
+    - ENUM_ZERO_VALUE_SUFFIX
+breaking:
+  use:
+    - PACKAGE

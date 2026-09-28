@@ -1,0 +1,4 @@
+# Workspace-root install artifacts. Per-package build output (dist/, src/gen/)
+# is ignored by each package's own .gitignore.
+node_modules/
+.pnpm-store/

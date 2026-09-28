@@ -1,0 +1,159 @@
+syntax = "proto3";
+package pixeltrace.coord.v1;
+
+import "pixeltrace/types/v1/types.proto";
+
+// Provides the public interface related to ingestion sessions.
+//
+// The ingest handshake is three steps: Prepare (pre-offer config), Establish
+// (exchange SDP and provision the session), then StartRecording once the
+// client's media path is connected. Close stops the recording and closes the
+// connection.
+service SessionService {
+  rpc Prepare(PrepareRequest) returns (PrepareResponse);
+  rpc Establish(EstablishRequest) returns (EstablishResponse);
+  rpc StartRecording(StartRecordingRequest) returns (StartRecordingResponse);
+  rpc Close(CloseRequest) returns (CloseResponse);
+
+  // The WebCodecs upload path: BeginUpload authorizes and provisions a session,
+  // the client then streams fragments over the returned upload URL.
+  rpc BeginUpload(BeginUploadRequest) returns (BeginUploadResponse);
+  rpc FinishUpload(FinishUploadRequest) returns (FinishUploadResponse);
+}
+
+// Request for any pre-offer configuration a client may need before it can build
+// an SDP offer.
+message PrepareRequest {
+  // Identifier of project this traffic will belong to.
+  pixeltrace.types.v1.SiteKey site_key = 1;
+}
+
+// Response carrying the pre-offer configuration for the ingest handshake.
+message PrepareResponse {
+  // STUN/TURN servers the client should apply to its peer connection before
+  // gathering ICE candidates and building the SDP offer it sends to Establish.
+  repeated IceServer ice_servers = 1;
+}
+
+// A STUN/TURN server the client configures for ICE, shaped like a WebRTC
+// RTCIceServer entry.
+message IceServer {
+  // One or more STUN/TURN URLs for this server (e.g. stun:, turn:, turns:).
+  repeated string urls = 1;
+
+  // Username for TURN authentication. Empty for STUN-only servers.
+  string username = 2;
+
+  // Credential for TURN authentication. Empty for STUN-only servers.
+  string credential = 3;
+}
+
+// Request to establish a connection to the tracing endpoint.
+message EstablishRequest {
+  // Identifier of project to receive this traffic.
+  pixeltrace.types.v1.SiteKey site_key = 1;
+
+  // The client's WebRTC SDP offer.
+  SessionDescription sdp_offer = 2;
+
+  // The ingest session this offer should resume, if any.
+  pixeltrace.types.v1.SessionId session_id = 3;
+
+  // Any info available about the client initiating the session.
+  pixeltrace.types.v1.SessionPublisherInfo client_info = 4;
+}
+
+// Response to a tracing establish request.
+message EstablishResponse {
+  // The established ingest session.
+  IngestSession session = 1;
+}
+
+// A WebRTC SDP, used for both offers and answers in the ingest handshake.
+message SessionDescription {
+  string sdp = 1;
+}
+
+// An established ingest session.
+message IngestSession {
+  // The SDP answer to apply as the remote description.
+  SessionDescription sdp_answer = 1;
+
+  // Opaque id correlating this ingest session backend-side.
+  pixeltrace.types.v1.SessionId session_id = 2;
+}
+
+// Request to begin recording a session whose media path is now connected.
+message StartRecordingRequest {
+  // The session_id returned in IngestSession.
+  pixeltrace.types.v1.SessionId session_id = 1;
+
+  // The site key the session was established with.
+  pixeltrace.types.v1.SiteKey site_key = 2;
+}
+
+// Response to a start-recording request.
+message StartRecordingResponse {}
+
+// Request to tear down a previously established session.
+message CloseRequest {
+  // The session_id returned in IngestSession.
+  pixeltrace.types.v1.SessionId session_id = 1;
+
+  // The site key the session was established with.
+  pixeltrace.types.v1.SiteKey site_key = 2;
+}
+
+// Response to a close request.
+message CloseResponse {}
+
+// Request to begin, or resume, an upload session.
+message BeginUploadRequest {
+  pixeltrace.types.v1.SiteKey site_key = 1;
+
+  // The upload session to resume, if any.
+  pixeltrace.types.v1.SessionId session_id = 2;
+
+  pixeltrace.types.v1.SessionPublisherInfo client_info = 3;
+}
+
+// Response to a begin-upload request.
+message BeginUploadResponse {
+  pixeltrace.types.v1.SessionId session_id = 1;
+
+  // WebSocket URL the client streams fragments to.
+  string upload_url = 2;
+
+  // The limits the session runs under, so the client knows its own deadline.
+  SessionLimits limits = 3;
+}
+
+// Request to finalize an upload session whose socket is gone.
+message FinishUploadRequest {
+  pixeltrace.types.v1.SessionId session_id = 1;
+  pixeltrace.types.v1.SiteKey site_key = 2;
+}
+
+// Response to a finish-upload request.
+message FinishUploadResponse {}
+
+// The limits a capture session runs under.
+//
+// Resolved numbers only, not plan or tier names: the data plane enforces limits
+// and has no concept of plans, so pricing and packaging changes never reach it.
+message SessionLimits {
+  // How long the session may record before it is finalized.
+  //
+  // 0 means unset, which resolves to the most restrictive system default, not
+  // "unlimited". A session with no deadline would never be guaranteed to
+  // finalize.
+  uint32 max_session_seconds = 1;
+
+  // How long the session may go without media before it is finalized. 0 means
+  // unset, resolving to the system default as above.
+  uint32 idle_timeout_seconds = 2;
+
+  // Recordings whose captured duration ends up shorter than this are
+  // discarded at finalize instead of being kept. 0 means no minimum.
+  uint32 discard_under_seconds = 3;
+}
