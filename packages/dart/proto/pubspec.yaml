@@ -12,10 +12,10 @@ environment:
   sdk: ^3.11.4
 
 dependencies:
-  connectrpc: ^1.0.0
+  connectrpc: ^2.0.0
   fixnum: ^1.1.1
-  protobuf: ^4.2.0
+  protobuf: ^6.1.0
 
 dev_dependencies:
   lints: ^6.1.0
-  protoc_plugin: ^22.5.0
+  protoc_plugin: ^25.1.0
