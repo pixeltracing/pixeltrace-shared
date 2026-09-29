@@ -41,7 +41,7 @@
     "@pixeltrace/authz": "workspace:*",
     "@pixeltrace/schema": "workspace:*",
     "better-auth": "^1.6.23",
-    "kysely": "^0.29.2"
+    "kysely": "^0.29.6"
   },
   "devDependencies": {
     "@types/node": "^26.0.1",
