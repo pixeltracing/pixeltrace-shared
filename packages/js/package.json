@@ -2,7 +2,7 @@
   "name": "pixeltrace-js",
   "private": true,
   "description": "pnpm workspace root for the Pixeltrace JS packages.",
-  "license": "MIT",
+  "license": "Apache-2.0",
   "type": "module",
   "packageManager": "pnpm@11.9.0",
   "scripts": {

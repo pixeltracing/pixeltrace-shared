@@ -11,7 +11,7 @@
   "bugs": {
     "url": "https://github.com/pixeltracing/pixeltrace-shared/issues"
   },
-  "license": "MIT",
+  "license": "Apache-2.0",
   "type": "module",
   "packageManager": "pnpm@11.9.0",
   "sideEffects": false,
