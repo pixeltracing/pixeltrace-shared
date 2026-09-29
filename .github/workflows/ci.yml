@@ -206,11 +206,14 @@ jobs:
     timeout-minutes: 15
     # Only bother the private build if the parts it consumes are green.
     needs: [proto, js, go]
-    # Skip for fork PRs: they get no secret (so no token), and we don't want to
-    # gate external contributions on a private downstream.
+    # Skip for fork PRs and Dependabot: neither gets these secrets (Dependabot
+    # only sees Dependabot secrets), and we don't want to gate external
+    # contributions on a private downstream.
     if: >-
-      github.event_name == 'push' ||
-      github.event.pull_request.head.repo.full_name == github.repository
+      github.actor != 'dependabot[bot]' && (
+        github.event_name == 'push' ||
+        github.event.pull_request.head.repo.full_name == github.repository
+      )
     steps:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
       - name: Mint downstream token
