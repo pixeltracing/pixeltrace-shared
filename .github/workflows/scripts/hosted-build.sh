@@ -37,7 +37,7 @@ if [ -z "${run_id}" ]; then
   exit 1
 fi
 
-run_url="https://github.com/pixeltracing/REDACTED/actions/runs/${run_id}"
+run_url="https://github.com/$repo/actions/runs/${run_id}"
 echo "hosted verify: tracking run: ${run_url}"
 
 # Block on gh exit status (non-zero on run failure)
