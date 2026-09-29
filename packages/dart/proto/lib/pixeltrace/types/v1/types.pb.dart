@@ -130,6 +130,65 @@ class SessionId extends $pb.GeneratedMessage {
   void clearId() => $_clearField(1);
 }
 
+/// The secret that authorizes calls naming an existing ingest session.
+class SessionToken extends $pb.GeneratedMessage {
+  factory SessionToken({
+    $core.String? token,
+  }) {
+    final result = SessionToken._();
+    if (token != null) result.token = token;
+    return result;
+  }
+
+  SessionToken._();
+
+  factory SessionToken.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      SessionToken()..mergeFromBuffer(data, registry);
+  factory SessionToken.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      SessionToken()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'SessionToken',
+      package:
+          const $pb.PackageName(_omitMessageNames ? '' : 'pixeltrace.types.v1'),
+      createEmptyInstance: SessionToken.$_createMessage)
+    ..aOS(1, _omitFieldNames ? '' : 'token')
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  SessionToken clone() => deepCopy();
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  SessionToken copyWith(void Function(SessionToken) updates) =>
+      super.copyWith((message) => updates(message as SessionToken))
+          as SessionToken;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  @$core.Deprecated('Use SessionToken() / SessionToken.new instead')
+  static SessionToken create() => SessionToken._();
+  static $pb.GeneratedMessage $_createMessage() => SessionToken._();
+  @$core.override
+  SessionToken createEmptyInstance() => SessionToken._();
+  @$core.pragma('dart2js:noInline')
+  static SessionToken getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<SessionToken>(
+          SessionToken.$_createMessage);
+  static SessionToken? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get token => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set token($core.String value) => $_setString(0, value);
+  @$pb.TagNumber(1)
+  $core.bool hasToken() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearToken() => $_clearField(1);
+}
+
 /// An opaque identifier for a user: 'user_*'
 class UserId extends $pb.GeneratedMessage {
   factory UserId({

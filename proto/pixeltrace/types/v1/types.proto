@@ -11,6 +11,11 @@ message SessionId {
     string id = 1;
 }
 
+// The secret that authorizes calls naming an existing ingest session.
+message SessionToken {
+    string token = 1;
+}
+
 // An opaque identifier for a user: 'user_*'
 message UserId {
     string id = 1;

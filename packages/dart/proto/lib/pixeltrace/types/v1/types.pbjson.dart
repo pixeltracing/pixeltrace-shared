@@ -39,6 +39,18 @@ const SessionId$json = {
 final $typed_data.Uint8List sessionIdDescriptor =
     $convert.base64Decode('CglTZXNzaW9uSWQSDgoCaWQYASABKAlSAmlk');
 
+@$core.Deprecated('Use sessionTokenDescriptor instead')
+const SessionToken$json = {
+  '1': 'SessionToken',
+  '2': [
+    {'1': 'token', '3': 1, '4': 1, '5': 9, '10': 'token'},
+  ],
+};
+
+/// Descriptor for `SessionToken`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List sessionTokenDescriptor =
+    $convert.base64Decode('CgxTZXNzaW9uVG9rZW4SFAoFdG9rZW4YASABKAlSBXRva2Vu');
+
 @$core.Deprecated('Use userIdDescriptor instead')
 const UserId$json = {
   '1': 'UserId',

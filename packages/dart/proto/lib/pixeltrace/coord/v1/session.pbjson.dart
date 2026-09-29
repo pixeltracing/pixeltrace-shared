@@ -108,6 +108,14 @@ const EstablishRequest$json = {
       '6': '.pixeltrace.types.v1.SessionPublisherInfo',
       '10': 'clientInfo'
     },
+    {
+      '1': 'session_token',
+      '3': 5,
+      '4': 1,
+      '5': 11,
+      '6': '.pixeltrace.types.v1.SessionToken',
+      '10': 'sessionToken'
+    },
   ],
 };
 
@@ -118,7 +126,8 @@ final $typed_data.Uint8List establishRequestDescriptor = $convert.base64Decode(
     'cmQudjEuU2Vzc2lvbkRlc2NyaXB0aW9uUghzZHBPZmZlchI9CgpzZXNzaW9uX2lkGAMgASgLMh'
     '4ucGl4ZWx0cmFjZS50eXBlcy52MS5TZXNzaW9uSWRSCXNlc3Npb25JZBJKCgtjbGllbnRfaW5m'
     'bxgEIAEoCzIpLnBpeGVsdHJhY2UudHlwZXMudjEuU2Vzc2lvblB1Ymxpc2hlckluZm9SCmNsaW'
-    'VudEluZm8=');
+    'VudEluZm8SRgoNc2Vzc2lvbl90b2tlbhgFIAEoCzIhLnBpeGVsdHJhY2UudHlwZXMudjEuU2Vz'
+    'c2lvblRva2VuUgxzZXNzaW9uVG9rZW4=');
 
 @$core.Deprecated('Use establishResponseDescriptor instead')
 const EstablishResponse$json = {
@@ -172,6 +181,14 @@ const IngestSession$json = {
       '6': '.pixeltrace.types.v1.SessionId',
       '10': 'sessionId'
     },
+    {
+      '1': 'session_token',
+      '3': 3,
+      '4': 1,
+      '5': 11,
+      '6': '.pixeltrace.types.v1.SessionToken',
+      '10': 'sessionToken'
+    },
   ],
 };
 
@@ -179,7 +196,8 @@ const IngestSession$json = {
 final $typed_data.Uint8List ingestSessionDescriptor = $convert.base64Decode(
     'Cg1Jbmdlc3RTZXNzaW9uEkYKCnNkcF9hbnN3ZXIYASABKAsyJy5waXhlbHRyYWNlLmNvb3JkLn'
     'YxLlNlc3Npb25EZXNjcmlwdGlvblIJc2RwQW5zd2VyEj0KCnNlc3Npb25faWQYAiABKAsyHi5w'
-    'aXhlbHRyYWNlLnR5cGVzLnYxLlNlc3Npb25JZFIJc2Vzc2lvbklk');
+    'aXhlbHRyYWNlLnR5cGVzLnYxLlNlc3Npb25JZFIJc2Vzc2lvbklkEkYKDXNlc3Npb25fdG9rZW'
+    '4YAyABKAsyIS5waXhlbHRyYWNlLnR5cGVzLnYxLlNlc3Npb25Ub2tlblIMc2Vzc2lvblRva2Vu');
 
 @$core.Deprecated('Use startRecordingRequestDescriptor instead')
 const StartRecordingRequest$json = {
@@ -201,6 +219,14 @@ const StartRecordingRequest$json = {
       '6': '.pixeltrace.types.v1.SiteKey',
       '10': 'siteKey'
     },
+    {
+      '1': 'session_token',
+      '3': 3,
+      '4': 1,
+      '5': 11,
+      '6': '.pixeltrace.types.v1.SessionToken',
+      '10': 'sessionToken'
+    },
   ],
 };
 
@@ -208,7 +234,8 @@ const StartRecordingRequest$json = {
 final $typed_data.Uint8List startRecordingRequestDescriptor = $convert.base64Decode(
     'ChVTdGFydFJlY29yZGluZ1JlcXVlc3QSPQoKc2Vzc2lvbl9pZBgBIAEoCzIeLnBpeGVsdHJhY2'
     'UudHlwZXMudjEuU2Vzc2lvbklkUglzZXNzaW9uSWQSNwoIc2l0ZV9rZXkYAiABKAsyHC5waXhl'
-    'bHRyYWNlLnR5cGVzLnYxLlNpdGVLZXlSB3NpdGVLZXk=');
+    'bHRyYWNlLnR5cGVzLnYxLlNpdGVLZXlSB3NpdGVLZXkSRgoNc2Vzc2lvbl90b2tlbhgDIAEoCz'
+    'IhLnBpeGVsdHJhY2UudHlwZXMudjEuU2Vzc2lvblRva2VuUgxzZXNzaW9uVG9rZW4=');
 
 @$core.Deprecated('Use startRecordingResponseDescriptor instead')
 const StartRecordingResponse$json = {
@@ -239,6 +266,14 @@ const CloseRequest$json = {
       '6': '.pixeltrace.types.v1.SiteKey',
       '10': 'siteKey'
     },
+    {
+      '1': 'session_token',
+      '3': 3,
+      '4': 1,
+      '5': 11,
+      '6': '.pixeltrace.types.v1.SessionToken',
+      '10': 'sessionToken'
+    },
   ],
 };
 
@@ -246,7 +281,8 @@ const CloseRequest$json = {
 final $typed_data.Uint8List closeRequestDescriptor = $convert.base64Decode(
     'CgxDbG9zZVJlcXVlc3QSPQoKc2Vzc2lvbl9pZBgBIAEoCzIeLnBpeGVsdHJhY2UudHlwZXMudj'
     'EuU2Vzc2lvbklkUglzZXNzaW9uSWQSNwoIc2l0ZV9rZXkYAiABKAsyHC5waXhlbHRyYWNlLnR5'
-    'cGVzLnYxLlNpdGVLZXlSB3NpdGVLZXk=');
+    'cGVzLnYxLlNpdGVLZXlSB3NpdGVLZXkSRgoNc2Vzc2lvbl90b2tlbhgDIAEoCzIhLnBpeGVsdH'
+    'JhY2UudHlwZXMudjEuU2Vzc2lvblRva2VuUgxzZXNzaW9uVG9rZW4=');
 
 @$core.Deprecated('Use closeResponseDescriptor instead')
 const CloseResponse$json = {
@@ -445,6 +481,7 @@ const $core.Map<$core.String, $core.Map<$core.String, $core.dynamic>>
   '.pixeltrace.coord.v1.SessionDescription': SessionDescription$json,
   '.pixeltrace.types.v1.SessionId': $0.SessionId$json,
   '.pixeltrace.types.v1.SessionPublisherInfo': $0.SessionPublisherInfo$json,
+  '.pixeltrace.types.v1.SessionToken': $0.SessionToken$json,
   '.pixeltrace.coord.v1.EstablishResponse': EstablishResponse$json,
   '.pixeltrace.coord.v1.IngestSession': IngestSession$json,
   '.pixeltrace.coord.v1.StartRecordingRequest': StartRecordingRequest$json,

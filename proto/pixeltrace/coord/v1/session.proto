@@ -61,6 +61,9 @@ message EstablishRequest {
 
   // Any info available about the client initiating the session.
   pixeltrace.types.v1.SessionPublisherInfo client_info = 4;
+
+  // The session_token returned with session_id. Required when resuming.
+  pixeltrace.types.v1.SessionToken session_token = 5;
 }
 
 // Response to an establish request.
@@ -81,6 +84,9 @@ message IngestSession {
 
   // Opaque id correlating this ingest session backend-side.
   pixeltrace.types.v1.SessionId session_id = 2;
+
+  // Required on every later call naming session_id.
+  pixeltrace.types.v1.SessionToken session_token = 3;
 }
 
 // Request to begin recording a session whose media path is now connected.
@@ -90,6 +96,9 @@ message StartRecordingRequest {
 
   // The site key the session was established with.
   pixeltrace.types.v1.SiteKey site_key = 2;
+
+  // The session_token returned in IngestSession.
+  pixeltrace.types.v1.SessionToken session_token = 3;
 }
 
 // Response to a start-recording request.
@@ -102,6 +111,9 @@ message CloseRequest {
 
   // The site key the session was established with.
   pixeltrace.types.v1.SiteKey site_key = 2;
+
+  // The session_token returned in IngestSession.
+  pixeltrace.types.v1.SessionToken session_token = 3;
 }
 
 // Response to a close request.

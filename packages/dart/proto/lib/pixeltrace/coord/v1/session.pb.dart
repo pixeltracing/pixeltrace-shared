@@ -225,12 +225,14 @@ class EstablishRequest extends $pb.GeneratedMessage {
     SessionDescription? sdpOffer,
     $0.SessionId? sessionId,
     $0.SessionPublisherInfo? clientInfo,
+    $0.SessionToken? sessionToken,
   }) {
     final result = EstablishRequest._();
     if (siteKey != null) result.siteKey = siteKey;
     if (sdpOffer != null) result.sdpOffer = sdpOffer;
     if (sessionId != null) result.sessionId = sessionId;
     if (clientInfo != null) result.clientInfo = clientInfo;
+    if (sessionToken != null) result.sessionToken = sessionToken;
     return result;
   }
 
@@ -256,6 +258,8 @@ class EstablishRequest extends $pb.GeneratedMessage {
         subBuilder: $0.SessionId.$_createMessage)
     ..aOM<$0.SessionPublisherInfo>(4, _omitFieldNames ? '' : 'clientInfo',
         subBuilder: $0.SessionPublisherInfo.$_createMessage)
+    ..aOM<$0.SessionToken>(5, _omitFieldNames ? '' : 'sessionToken',
+        subBuilder: $0.SessionToken.$_createMessage)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -327,6 +331,18 @@ class EstablishRequest extends $pb.GeneratedMessage {
   void clearClientInfo() => $_clearField(4);
   @$pb.TagNumber(4)
   $0.SessionPublisherInfo ensureClientInfo() => $_ensure(3);
+
+  /// The session_token returned with session_id. Required when resuming.
+  @$pb.TagNumber(5)
+  $0.SessionToken get sessionToken => $_getN(4);
+  @$pb.TagNumber(5)
+  set sessionToken($0.SessionToken value) => $_setField(5, value);
+  @$pb.TagNumber(5)
+  $core.bool hasSessionToken() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearSessionToken() => $_clearField(5);
+  @$pb.TagNumber(5)
+  $0.SessionToken ensureSessionToken() => $_ensure(4);
 }
 
 /// Response to an establish request.
@@ -456,10 +472,12 @@ class IngestSession extends $pb.GeneratedMessage {
   factory IngestSession({
     SessionDescription? sdpAnswer,
     $0.SessionId? sessionId,
+    $0.SessionToken? sessionToken,
   }) {
     final result = IngestSession._();
     if (sdpAnswer != null) result.sdpAnswer = sdpAnswer;
     if (sessionId != null) result.sessionId = sessionId;
+    if (sessionToken != null) result.sessionToken = sessionToken;
     return result;
   }
 
@@ -481,6 +499,8 @@ class IngestSession extends $pb.GeneratedMessage {
         subBuilder: SessionDescription.$_createMessage)
     ..aOM<$0.SessionId>(2, _omitFieldNames ? '' : 'sessionId',
         subBuilder: $0.SessionId.$_createMessage)
+    ..aOM<$0.SessionToken>(3, _omitFieldNames ? '' : 'sessionToken',
+        subBuilder: $0.SessionToken.$_createMessage)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -528,6 +548,18 @@ class IngestSession extends $pb.GeneratedMessage {
   void clearSessionId() => $_clearField(2);
   @$pb.TagNumber(2)
   $0.SessionId ensureSessionId() => $_ensure(1);
+
+  /// Required on every later call naming session_id.
+  @$pb.TagNumber(3)
+  $0.SessionToken get sessionToken => $_getN(2);
+  @$pb.TagNumber(3)
+  set sessionToken($0.SessionToken value) => $_setField(3, value);
+  @$pb.TagNumber(3)
+  $core.bool hasSessionToken() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearSessionToken() => $_clearField(3);
+  @$pb.TagNumber(3)
+  $0.SessionToken ensureSessionToken() => $_ensure(2);
 }
 
 /// Request to begin recording a session whose media path is now connected.
@@ -535,10 +567,12 @@ class StartRecordingRequest extends $pb.GeneratedMessage {
   factory StartRecordingRequest({
     $0.SessionId? sessionId,
     $0.SiteKey? siteKey,
+    $0.SessionToken? sessionToken,
   }) {
     final result = StartRecordingRequest._();
     if (sessionId != null) result.sessionId = sessionId;
     if (siteKey != null) result.siteKey = siteKey;
+    if (sessionToken != null) result.sessionToken = sessionToken;
     return result;
   }
 
@@ -560,6 +594,8 @@ class StartRecordingRequest extends $pb.GeneratedMessage {
         subBuilder: $0.SessionId.$_createMessage)
     ..aOM<$0.SiteKey>(2, _omitFieldNames ? '' : 'siteKey',
         subBuilder: $0.SiteKey.$_createMessage)
+    ..aOM<$0.SessionToken>(3, _omitFieldNames ? '' : 'sessionToken',
+        subBuilder: $0.SessionToken.$_createMessage)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -609,6 +645,18 @@ class StartRecordingRequest extends $pb.GeneratedMessage {
   void clearSiteKey() => $_clearField(2);
   @$pb.TagNumber(2)
   $0.SiteKey ensureSiteKey() => $_ensure(1);
+
+  /// The session_token returned in IngestSession.
+  @$pb.TagNumber(3)
+  $0.SessionToken get sessionToken => $_getN(2);
+  @$pb.TagNumber(3)
+  set sessionToken($0.SessionToken value) => $_setField(3, value);
+  @$pb.TagNumber(3)
+  $core.bool hasSessionToken() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearSessionToken() => $_clearField(3);
+  @$pb.TagNumber(3)
+  $0.SessionToken ensureSessionToken() => $_ensure(2);
 }
 
 /// Response to a start-recording request.
@@ -661,10 +709,12 @@ class CloseRequest extends $pb.GeneratedMessage {
   factory CloseRequest({
     $0.SessionId? sessionId,
     $0.SiteKey? siteKey,
+    $0.SessionToken? sessionToken,
   }) {
     final result = CloseRequest._();
     if (sessionId != null) result.sessionId = sessionId;
     if (siteKey != null) result.siteKey = siteKey;
+    if (sessionToken != null) result.sessionToken = sessionToken;
     return result;
   }
 
@@ -686,6 +736,8 @@ class CloseRequest extends $pb.GeneratedMessage {
         subBuilder: $0.SessionId.$_createMessage)
     ..aOM<$0.SiteKey>(2, _omitFieldNames ? '' : 'siteKey',
         subBuilder: $0.SiteKey.$_createMessage)
+    ..aOM<$0.SessionToken>(3, _omitFieldNames ? '' : 'sessionToken',
+        subBuilder: $0.SessionToken.$_createMessage)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -733,6 +785,18 @@ class CloseRequest extends $pb.GeneratedMessage {
   void clearSiteKey() => $_clearField(2);
   @$pb.TagNumber(2)
   $0.SiteKey ensureSiteKey() => $_ensure(1);
+
+  /// The session_token returned in IngestSession.
+  @$pb.TagNumber(3)
+  $0.SessionToken get sessionToken => $_getN(2);
+  @$pb.TagNumber(3)
+  set sessionToken($0.SessionToken value) => $_setField(3, value);
+  @$pb.TagNumber(3)
+  $core.bool hasSessionToken() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearSessionToken() => $_clearField(3);
+  @$pb.TagNumber(3)
+  $0.SessionToken ensureSessionToken() => $_ensure(2);
 }
 
 /// Response to a close request.
