@@ -15,14 +15,14 @@ importers:
         version: 5.1.16
     devDependencies:
       '@types/node':
-        specifier: ^26.0.1
-        version: 26.0.1
+        specifier: ^26.6.3
+        version: 26.6.3
       typescript:
         specifier: ^6.0.3
         version: 6.0.3
       vitest:
         specifier: ^4.1.9
-        version: 4.1.9(@types/node@26.0.1)(vite@8.1.0(@types/node@26.0.1))
+        version: 4.1.9(@types/node@26.6.3)(vite@8.1.0(@types/node@26.6.3))
 
   schema:
     dependencies:
@@ -56,20 +56,20 @@ importers:
         version: link:../schema
       better-auth:
         specifier: ^1.6.23
-        version: 1.6.23(vitest@4.1.9(@types/node@26.0.1)(vite@8.1.0(@types/node@26.0.1)))
+        version: 1.6.23(vitest@4.1.9(@types/node@26.6.3)(vite@8.1.0(@types/node@26.6.3)))
       kysely:
         specifier: ^0.29.2
         version: 0.29.2
     devDependencies:
       '@types/node':
-        specifier: ^26.0.1
-        version: 26.0.1
+        specifier: ^26.6.3
+        version: 26.6.3
       typescript:
         specifier: ^6.0.3
         version: 6.0.3
       vitest:
         specifier: ^4.1.9
-        version: 4.1.9(@types/node@26.0.1)(vite@8.1.0(@types/node@26.0.1))
+        version: 4.1.9(@types/node@26.6.3)(vite@8.1.0(@types/node@26.6.3))
 
 packages:
 
@@ -367,8 +367,8 @@ packages:
   '@types/estree@1.0.9':
     resolution: {integrity: sha512-GhdPgy1el4/ImP05X05Uw4cw2/M93BCUmnEvWZNStlCzEKME4Fkk+YpoA5OiHNQmoS7Cafb8Xa3Pya8m1Qrzeg==}
 
-  '@types/node@26.0.1':
-    resolution: {integrity: sha512-fc3KiUoBt6kie0N9bIW3E47vZsuaMf0PM2AaUpLCLT0s/LvX1nxAim6Fc049cNxODPpGm6qRAuUOB86SkRuPQw==}
+  '@types/node@26.6.3':
+    resolution: {integrity: sha512-dsqMQQoeTLqu9wynDD00q573mNzso3IdQOAfHRJqLCcmCFPoGo9A1bDpUcv/9tnKpErQWv9uKeGfl37EIS02Yg==}
 
   '@typescript/vfs@1.6.4':
     resolution: {integrity: sha512-PJFXFS4ZJKiJ9Qiuix6Dz/OwEIqHD7Dme1UwZhTK11vR+5dqW2ACbdndWQexBzCx+CPuMe5WBYQWCsFyGlQLlQ==}
@@ -700,8 +700,8 @@ packages:
     engines: {node: '>=14.17'}
     hasBin: true
 
-  undici-types@8.3.0:
-    resolution: {integrity: sha512-j375ScV60dom+YkPFIfTLcOiPxkN/buHz5GobjLhixFuANaNs3C9l4GmrWqejgXWJ7BbJcFYpTEUkS1Ge8bpZQ==}
+  undici-types@8.9.0:
+    resolution: {integrity: sha512-KTDyRTYX8sWmKXAikPHHSyc63CRPETMctyjKFupcC6OBLXT3xsN0e9aF7m+mIXutFWpUXuedtowG7iLOzp0kQg==}
 
   vite@8.1.0:
     resolution: {integrity: sha512-BuJcQK/56NQTWDGn4ABea3q4SSBdNPWwNZKTkkUpcMPnLoquSYH8llRtSUIgoL1KSCpHt5eghLShn50mH36y7Q==}
@@ -1001,9 +1001,9 @@ snapshots:
 
   '@types/estree@1.0.9': {}
 
-  '@types/node@26.0.1':
+  '@types/node@26.6.3':
     dependencies:
-      undici-types: 8.3.0
+      undici-types: 8.9.0
 
   '@typescript/vfs@1.6.4(typescript@5.4.5)':
     dependencies:
@@ -1021,13 +1021,13 @@ snapshots:
       chai: 6.2.2
       tinyrainbow: 3.1.0
 
-  '@vitest/mocker@4.1.9(vite@8.1.0(@types/node@26.0.1))':
+  '@vitest/mocker@4.1.9(vite@8.1.0(@types/node@26.6.3))':
     dependencies:
       '@vitest/spy': 4.1.9
       estree-walker: 3.0.3
       magic-string: 0.30.21
     optionalDependencies:
-      vite: 8.1.0(@types/node@26.0.1)
+      vite: 8.1.0(@types/node@26.6.3)
 
   '@vitest/pretty-format@4.1.9':
     dependencies:
@@ -1055,7 +1055,7 @@ snapshots:
 
   assertion-error@2.0.1: {}
 
-  better-auth@1.6.23(vitest@4.1.9(@types/node@26.0.1)(vite@8.1.0(@types/node@26.0.1))):
+  better-auth@1.6.23(vitest@4.1.9(@types/node@26.6.3)(vite@8.1.0(@types/node@26.6.3))):
     dependencies:
       '@better-auth/core': 1.6.23(@better-auth/utils@0.4.2)(@better-fetch/fetch@1.3.1)(better-call@1.3.7(zod@4.4.3))(jose@6.2.3)(kysely@0.29.2)(nanostores@1.4.0)
       '@better-auth/drizzle-adapter': 1.6.23(@better-auth/core@1.6.23(@better-auth/utils@0.4.2)(@better-fetch/fetch@1.3.1)(better-call@1.3.7(zod@4.4.3))(jose@6.2.3)(kysely@0.29.2)(nanostores@1.4.0))(@better-auth/utils@0.4.2)
@@ -1075,7 +1075,7 @@ snapshots:
       nanostores: 1.4.0
       zod: 4.4.3
     optionalDependencies:
-      vitest: 4.1.9(@types/node@26.0.1)(vite@8.1.0(@types/node@26.0.1))
+      vitest: 4.1.9(@types/node@26.6.3)(vite@8.1.0(@types/node@26.6.3))
     transitivePeerDependencies:
       - '@cloudflare/workers-types'
       - '@opentelemetry/api'
@@ -1248,9 +1248,9 @@ snapshots:
 
   typescript@6.0.3: {}
 
-  undici-types@8.3.0: {}
+  undici-types@8.9.0: {}
 
-  vite@8.1.0(@types/node@26.0.1):
+  vite@8.1.0(@types/node@26.6.3):
     dependencies:
       lightningcss: 1.33.0
       picomatch: 4.0.7
@@ -1258,13 +1258,13 @@ snapshots:
       rolldown: 1.1.5
       tinyglobby: 0.2.17
     optionalDependencies:
-      '@types/node': 26.0.1
+      '@types/node': 26.6.3
       fsevents: 2.3.3
 
-  vitest@4.1.9(@types/node@26.0.1)(vite@8.1.0(@types/node@26.0.1)):
+  vitest@4.1.9(@types/node@26.6.3)(vite@8.1.0(@types/node@26.6.3)):
     dependencies:
       '@vitest/expect': 4.1.9
-      '@vitest/mocker': 4.1.9(vite@8.1.0(@types/node@26.0.1))
+      '@vitest/mocker': 4.1.9(vite@8.1.0(@types/node@26.6.3))
       '@vitest/pretty-format': 4.1.9
       '@vitest/runner': 4.1.9
       '@vitest/snapshot': 4.1.9
@@ -1281,10 +1281,10 @@ snapshots:
       tinyexec: 1.2.4
       tinyglobby: 0.2.17
       tinyrainbow: 3.1.0
-      vite: 8.1.0(@types/node@26.0.1)
+      vite: 8.1.0(@types/node@26.6.3)
       why-is-node-running: 2.3.0
     optionalDependencies:
-      '@types/node': 26.0.1
+      '@types/node': 26.6.3
     transitivePeerDependencies:
       - msw
 
