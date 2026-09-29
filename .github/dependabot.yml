@@ -6,9 +6,10 @@ updates:
     schedule:
       interval: weekly
 
-  # TS schema package (npm / pnpm).
+  # pnpm workspace root (schema, authz, service). Must point at the root, where
+  # pnpm-lock.yaml lives, or Dependabot bumps package.json without the lockfile.
   - package-ecosystem: npm
-    directory: /packages/js/schema
+    directory: /packages/js
     schedule:
       interval: weekly
 
