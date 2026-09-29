@@ -37,7 +37,7 @@
   },
   "dependencies": {
     "@bufbuild/protobuf": "^2.12.1",
-    "@connectrpc/connect": "^2.1.2",
+    "@connectrpc/connect": "^2.2.0",
     "@pixeltrace/authz": "workspace:*",
     "@pixeltrace/schema": "workspace:*",
     "better-auth": "^1.6.23",

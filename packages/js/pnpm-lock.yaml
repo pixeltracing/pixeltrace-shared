@@ -46,8 +46,8 @@ importers:
         specifier: ^2.12.1
         version: 2.12.1
       '@connectrpc/connect':
-        specifier: ^2.1.2
-        version: 2.1.2(@bufbuild/protobuf@2.12.1)
+        specifier: ^2.2.0
+        version: 2.2.0(@bufbuild/protobuf@2.12.1)
       '@pixeltrace/authz':
         specifier: workspace:*
         version: link:../authz
@@ -215,8 +215,8 @@ packages:
   '@bufbuild/protoplugin@2.12.1':
     resolution: {integrity: sha512-PY58KxQVAD1BnnKtStOctsMoegEVGfBnY5AOqVQOIu711nA13oYtTqJM8df5lUQg2J1DR3XxUXptE+fWX5oLdA==}
 
-  '@connectrpc/connect@2.1.2':
-    resolution: {integrity: sha512-MXkBijtcX09R10Eb6sFeIetc6w6746eio6xtfuyVOH7oQAacT1X0GzMIQFux6Qy8cq3W/T5qX5Bei8YbFtmRGA==}
+  '@connectrpc/connect@2.2.0':
+    resolution: {integrity: sha512-M63OQ1ZFcPUm85CuewJ9G9CMV8LjzGR9935xOnXNQGSazAbwMb3x2W7vXBYM1zqrP7XFD8uxp/dUAhirclgwnQ==}
     peerDependencies:
       '@bufbuild/protobuf': ^2.7.0
 
@@ -897,7 +897,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@connectrpc/connect@2.1.2(@bufbuild/protobuf@2.12.1)':
+  '@connectrpc/connect@2.2.0(@bufbuild/protobuf@2.12.1)':
     dependencies:
       '@bufbuild/protobuf': 2.12.1
 
