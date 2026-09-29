@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:js_interop';
 
+import 'package:connectrpc/connect.dart' show Code, ConnectException;
 import 'package:connectrpc/protobuf.dart';
 import 'package:connectrpc/protocol/connect.dart';
 import 'package:connectrpc/web.dart';
@@ -122,7 +123,15 @@ class WebrtcConnection implements PixeltraceConnection {
 
     // If this throws, _connected still carries the session id, so the caller can
     // attempt another resume.
-    final resumed = await _openSession(source, resume: sess.sessionId);
+    _Session resumed;
+    try {
+      resumed = await _openSession(source, resume: sess.sessionId);
+    } on _SessionEnded {
+      // The server already finalized it (e.g. it sat idle past the timeout), so
+      // there is nothing to rejoin: carry on as a new session instead.
+      log.fine('ingest session ${sess.sessionId.id} ended; starting a new one');
+      resumed = await _openSession(source);
+    }
     _connected = resumed;
 
     try {
@@ -334,6 +343,11 @@ class WebrtcConnection implements PixeltraceConnection {
           clientInfo: SessionPublisherInfo(referrer: web.document.referrer),
         ),
       );
+    } on ConnectException catch (e) {
+      if (resume != null && e.code == Code.notFound) {
+        throw const _SessionEnded();
+      }
+      throw PixeltraceServiceException(message: 'establish failed: $e');
     } catch (e) {
       throw PixeltraceServiceException(message: 'establish failed: $e');
     }
@@ -547,4 +561,9 @@ class _UnloadBinding {
   final String type;
   final JSFunction listener;
   _UnloadBinding(this.type, this.listener);
+}
+
+/// The session a resume named has already been finalized server-side.
+class _SessionEnded implements Exception {
+  const _SessionEnded();
 }
