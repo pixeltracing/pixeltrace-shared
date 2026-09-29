@@ -128,12 +128,26 @@ class MediaLink extends EventWorkQueue<MediaLinkState, MediaLinkEvent> {
       case ((MediaLinkState.paused, Drop())):
         return null;
 
-      // The one place a media path is rebuilt.
-      case ((MediaLinkState.reconnecting || MediaLinkState.paused, Resume())):
+      // A scheduled attempt that landed after we had already recovered, or a
+      // wake that found the media path healthy - ignore
+      case ((MediaLinkState.connected, Resume()))
+          when !(_connection?.stalled ?? false):
+        return null;
+
+      // The one place a media path is rebuilt. A wake that finds the session
+      // stalled also lands here: the stall watcher would force a rebuild once
+      // frames resume anyway, but this gets it done before the user interacts
+      // rather than after.
+      case ((
+        MediaLinkState.reconnecting ||
+            MediaLinkState.paused ||
+            MediaLinkState.connected,
+        Resume(),
+      )):
         _retry.cancel();
         final source = _surface.source;
         if (source == null) {
-          // unreachable: both states imply a Connect that set the source
+          // unreachable: all these states imply a Connect that set the source
           assert(false, 'resume with no source to recapture');
           return null;
         }
@@ -149,10 +163,6 @@ class MediaLink extends EventWorkQueue<MediaLinkState, MediaLinkEvent> {
         }
         _retry.reset(); // success: reset retry counter
         return MediaLinkState.connected;
-
-      // A scheduled attempt that landed after we had already recovered - ignore
-      case ((MediaLinkState.connected, Resume())):
-        return null;
 
       // A new source for the live session: the platform swapped our surface
       // out, or the host changed capture config.

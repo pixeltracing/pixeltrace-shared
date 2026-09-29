@@ -63,6 +63,10 @@ class WebcodecsConnection implements PixeltraceConnection {
   @override
   String? get sessionId => _sessionId?.id;
 
+  // No relay track on this path to expire.
+  @override
+  bool get stalled => false;
+
   WebcodecsConnection(this.config, this.sink);
 
   /// Checks that the browser can encode what we are about to hand it.

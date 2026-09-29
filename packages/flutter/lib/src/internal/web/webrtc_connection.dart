@@ -66,6 +66,10 @@ class WebrtcConnection implements PixeltraceConnection {
   @override
   String? get sessionId => _connected?.sessionId.id;
 
+  @override
+  bool get stalled =>
+      _connected?.stallDetector?.isStalled(DateTime.now()) ?? false;
+
   WebrtcConnection(this.config, this.sink)
     : _transport = Transport(
         baseUrl: config.endpoint,
@@ -392,7 +396,7 @@ class WebrtcConnection implements PixeltraceConnection {
   /// after a stall. The peer connection stays connected through a stall, so
   /// nothing else here should notice.
   void _watchForStall(_Session sess) {
-    final detector = StallDetector();
+    final detector = sess.stallDetector = StallDetector();
     bool polling = false;
     sess.stallPoll = Timer.periodic(_kStallPollInterval, (timer) async {
       if (polling) {
@@ -583,6 +587,7 @@ class _Session {
   final web.RTCRtpSender sender;
 
   web.MediaStream stream;
+  StallDetector? stallDetector;
   Timer? stallPoll;
 
   _Session({

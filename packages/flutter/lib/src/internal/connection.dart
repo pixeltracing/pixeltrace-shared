@@ -18,6 +18,11 @@ abstract class PixeltraceConnection {
   /// The established session's id, or null if nothing is established.
   String? get sessionId;
 
+  /// Whether the established session has gone without sending media long
+  /// enough that the relay has likely discarded its track. [reestablish]
+  /// recovers from this.
+  bool get stalled;
+
   /// Performs handshake with the ingest server, required before attempting to
   /// [establish].
   Future<void> prepare();

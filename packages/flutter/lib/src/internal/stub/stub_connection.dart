@@ -13,6 +13,9 @@ class StubConnection implements PixeltraceConnection {
   @override
   String? get sessionId => null;
 
+  @override
+  bool get stalled => false;
+
   StubConnection(PixeltraceServiceConfig config, PixeltraceErrorSink sink);
 
   @override

@@ -343,6 +343,57 @@ void main() {
       expect(conn.calls, contains('reestablish'));
     });
 
+    test('a wake finding the session stalled rebuilds it at once', () async {
+      final link = await connected();
+      addTearDown(link.dispose);
+
+      watchers.page.signals.visibilityChanged(visible: false);
+      conn.stalled = true;
+      watchers.page.signals.visibilityChanged(visible: true);
+      await pumpEventQueue();
+      expect(conn.calls, ['prepare', 'establish', 'reestablish']);
+      expect(link.state, MediaLinkState.connected);
+      expect(conn.stalled, isFalse);
+    });
+
+    test('a wake with the session still sending leaves it alone', () async {
+      final link = await connected();
+      addTearDown(link.dispose);
+
+      watchers.page.signals.visibilityChanged(visible: false);
+      watchers.page.signals.visibilityChanged(visible: true);
+      await pumpEventQueue();
+      expect(conn.calls, ['prepare', 'establish']);
+      expect(link.state, MediaLinkState.connected);
+    });
+
+    test(
+      'restored connectivity finding the session stalled rebuilds it',
+      () async {
+        final link = await connected();
+        addTearDown(link.dispose);
+
+        conn.stalled = true;
+        watchers.page.signals.connectivityRestored();
+        await pumpEventQueue();
+        expect(conn.calls, ['prepare', 'establish', 'reestablish']);
+        expect(link.state, MediaLinkState.connected);
+      },
+    );
+
+    test('a failed rebuild on wake falls back to the retries', () async {
+      final link = await connected();
+      addTearDown(link.dispose);
+
+      conn.stalled = true;
+      conn.reestablishError = const PixeltraceServiceException(
+        message: 'reestablish blew up',
+      );
+      watchers.page.signals.connectivityRestored();
+      await pumpEventQueue();
+      expect(link.state, MediaLinkState.reconnecting);
+    });
+
     test('backgrounding a live page keeps it streaming', () async {
       final link = await connected();
       addTearDown(link.dispose);

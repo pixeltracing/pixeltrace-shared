@@ -53,6 +53,9 @@ class FakeConnection implements PixeltraceConnection {
   String? get sessionId => _live ? 'fake-session' : null;
 
   @override
+  bool stalled = false;
+
+  @override
   Future<void> prepare() async {
     _calls.add('prepare');
   }
@@ -77,6 +80,7 @@ class FakeConnection implements PixeltraceConnection {
     }
     _source = source;
     _live = true;
+    stalled = false;
   }
 
   @override
