@@ -15,6 +15,8 @@ import '../../video_source.dart';
 import '../config.dart';
 import '../connection.dart';
 import '../errors.dart';
+import '../stall_detector.dart';
+import 'sender_stats.dart';
 import 'web_video_source.dart';
 
 /// Maps a browser `RTCPeerConnection.connectionState` into
@@ -34,6 +36,9 @@ PixeltraceConnectionState _mapRtcConnState(String pcState) => switch (pcState) {
 /// that detailed app content stays crisp at typical capture resolutions.
 const _kMaxBitrate = 8 * _kMBits;
 const _kMBits = 1000000;
+
+/// How often the sender's frame count is sampled for stalls.
+const _kStallPollInterval = Duration(seconds: 1);
 
 class WebrtcConnection implements PixeltraceConnection {
   final Transport _transport;
@@ -107,6 +112,7 @@ class WebrtcConnection implements PixeltraceConnection {
       rethrow;
     }
 
+    _watchForStall(session);
     log.fine('recording ingest session ${session.sessionId.id}');
   }
 
@@ -119,7 +125,7 @@ class WebrtcConnection implements PixeltraceConnection {
 
     // Retire the dead media path first. Its remote session is deliberately left
     // open — rejoining it is the whole point — so this is not a close().
-    _releaseMedia(sess.stream, sess.pc);
+    sess.close();
 
     // If this throws, _connected still carries the session id, so the caller can
     // attempt another resume.
@@ -140,10 +146,11 @@ class WebrtcConnection implements PixeltraceConnection {
       // Unlike a first connect, this must not close the session: it is the
       // recording being rejoined, and closing would finalize it. Drop the media
       // path and leave the session for another attempt, or the idle timeout.
-      _releaseMedia(resumed.stream, resumed.pc);
+      resumed.close();
       rethrow;
     }
 
+    _watchForStall(resumed);
     log.fine('resumed ingest session ${resumed.sessionId.id}');
   }
 
@@ -203,7 +210,7 @@ class WebrtcConnection implements PixeltraceConnection {
     _removeJsListeners();
     log.fine('closing ingest session ${sess.sessionId.id}');
     try {
-      _releaseMedia(sess.stream, sess.pc);
+      sess.close();
       await _closeRemote(sess.sessionId);
     } catch (_) {
       // close is always best-effort
@@ -224,7 +231,7 @@ class WebrtcConnection implements PixeltraceConnection {
     // Release media but do not close: the remote session is left open and can
     // be resumed via reestablish.
     log.fine('pausing ingest session ${sess.sessionId.id}');
-    _releaseMedia(sess.stream, sess.pc);
+    sess.close();
   }
 
   @override
@@ -381,6 +388,41 @@ class WebrtcConnection implements PixeltraceConnection {
     }
   }
 
+  /// Fails [sess], so that it is rebuilt, when it starts sending frames again
+  /// after a stall. The peer connection stays connected through a stall, so
+  /// nothing else here should notice.
+  void _watchForStall(_Session sess) {
+    final detector = StallDetector();
+    bool polling = false;
+    sess.stallPoll = Timer.periodic(_kStallPollInterval, (timer) async {
+      if (polling) {
+        return;
+      }
+
+      polling = true;
+      try {
+        final frames = await framesSent(sess.sender);
+        if (!timer.isActive) {
+          return;
+        }
+
+        final now = DateTime.now();
+        final wasStalled = detector.isStalled(now);
+        detector.record(frames ?? 0, now);
+        if (!wasStalled || detector.isStalled(now)) {
+          return;
+        }
+
+        timer.cancel();
+        _notifyConnectionChange(PixeltraceConnectionState.failed);
+      } catch (e) {
+        log.fine('stall poll failed: $e');
+      } finally {
+        polling = false;
+      }
+    });
+  }
+
   Future<void> _startRecording(SessionId sessionId) async {
     try {
       await _rpc.startRecording(
@@ -445,13 +487,6 @@ class WebrtcConnection implements PixeltraceConnection {
     /// Our content is currently always assumed to be as sharp, detail-heavy.
     track.contentHint = 'detail';
     return track;
-  }
-
-  /// Releases resources held for a previously established session and stops the
-  /// stream.
-  static void _releaseMedia(web.MediaStream stream, web.RTCPeerConnection pc) {
-    _stopTracks(stream);
-    pc.close();
   }
 
   static void _stopTracks(web.MediaStream stream) {
@@ -548,6 +583,7 @@ class _Session {
   final web.RTCRtpSender sender;
 
   web.MediaStream stream;
+  Timer? stallPoll;
 
   _Session({
     required this.sessionId,
@@ -555,6 +591,14 @@ class _Session {
     required this.sender,
     required this.stream,
   });
+
+  /// Stops the media and closes the peer connection. The remote session is
+  /// untouched.
+  void close() {
+    stallPoll?.cancel();
+    WebrtcConnection._stopTracks(stream);
+    pc.close();
+  }
 }
 
 class _UnloadBinding {

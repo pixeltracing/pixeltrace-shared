@@ -108,7 +108,8 @@ class MediaLink extends EventWorkQueue<MediaLinkState, MediaLinkEvent> {
       // we can try resuming it.
       //
       // What reaches here differs by transport, and deliberately so. A WebRTC
-      // peer connection that fails has lost frames, so rebuilding is the right
+      // peer connection that fails has lost frames, as has one whose track the
+      // relay discarded after a long still stretch, so rebuilding is the right
       // response. The upload path reports failed only for the genuinely
       // unrecoverable, and handles a stalled socket by retrying inside itself;
       // rebuilding there would cost a keyframe and save nothing.
