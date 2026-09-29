@@ -8,14 +8,15 @@
 // ignore_for_file: constant_identifier_names
 // ignore_for_file: curly_braces_in_flow_control_structures
 // ignore_for_file: deprecated_member_use_from_same_package, library_prefixes
-// ignore_for_file: non_constant_identifier_names
+// ignore_for_file: non_constant_identifier_names, prefer_relative_imports
 
 import 'dart:async' as $async;
 import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
+import 'package:protobuf/well_known_types/google/protobuf/field_mask.pb.dart'
+    as $1;
 
-import '../../../google/protobuf/field_mask.pb.dart' as $1;
 import '../../types/v1/types.pb.dart' as $0;
 import 'membership.pbenum.dart';
 import 'types.pb.dart' as $2;
@@ -30,7 +31,7 @@ class MembershipKey extends $pb.GeneratedMessage {
     $0.OrganizationId? orgId,
     $0.UserId? userId,
   }) {
-    final result = create();
+    final result = MembershipKey._();
     if (orgId != null) result.orgId = orgId;
     if (userId != null) result.userId = userId;
     return result;
@@ -40,24 +41,24 @@ class MembershipKey extends $pb.GeneratedMessage {
 
   factory MembershipKey.fromBuffer($core.List<$core.int> data,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(data, registry);
+      MembershipKey()..mergeFromBuffer(data, registry);
   factory MembershipKey.fromJson($core.String json,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(json, registry);
+      MembershipKey()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'MembershipKey',
       package:
           const $pb.PackageName(_omitMessageNames ? '' : 'pixeltrace.mgmt.v1'),
-      createEmptyInstance: create)
+      createEmptyInstance: MembershipKey.$_createMessage)
     ..aOM<$0.OrganizationId>(1, _omitFieldNames ? '' : 'orgId',
-        subBuilder: $0.OrganizationId.create)
+        subBuilder: $0.OrganizationId.$_createMessage)
     ..aOM<$0.UserId>(2, _omitFieldNames ? '' : 'userId',
-        subBuilder: $0.UserId.create)
+        subBuilder: $0.UserId.$_createMessage)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  MembershipKey clone() => MembershipKey()..mergeFromMessage(this);
+  MembershipKey clone() => deepCopy();
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   MembershipKey copyWith(void Function(MembershipKey) updates) =>
       super.copyWith((message) => updates(message as MembershipKey))
@@ -67,14 +68,15 @@ class MembershipKey extends $pb.GeneratedMessage {
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
+  @$core.Deprecated('Use MembershipKey() / MembershipKey.new instead')
   static MembershipKey create() => MembershipKey._();
+  static $pb.GeneratedMessage $_createMessage() => MembershipKey._();
   @$core.override
-  MembershipKey createEmptyInstance() => create();
-  static $pb.PbList<MembershipKey> createRepeated() =>
-      $pb.PbList<MembershipKey>();
+  MembershipKey createEmptyInstance() => MembershipKey._();
   @$core.pragma('dart2js:noInline')
-  static MembershipKey getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<MembershipKey>(create);
+  static MembershipKey getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<MembershipKey>(
+          MembershipKey.$_createMessage);
   static MembershipKey? _defaultInstance;
 
   /// The organization endpoint of the edge.
@@ -108,7 +110,7 @@ class Membership extends $pb.GeneratedMessage {
     MembershipKey? key,
     MembershipProps? props,
   }) {
-    final result = create();
+    final result = Membership._();
     if (key != null) result.key = key;
     if (props != null) result.props = props;
     return result;
@@ -118,24 +120,24 @@ class Membership extends $pb.GeneratedMessage {
 
   factory Membership.fromBuffer($core.List<$core.int> data,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(data, registry);
+      Membership()..mergeFromBuffer(data, registry);
   factory Membership.fromJson($core.String json,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(json, registry);
+      Membership()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'Membership',
       package:
           const $pb.PackageName(_omitMessageNames ? '' : 'pixeltrace.mgmt.v1'),
-      createEmptyInstance: create)
+      createEmptyInstance: Membership.$_createMessage)
     ..aOM<MembershipKey>(1, _omitFieldNames ? '' : 'key',
-        subBuilder: MembershipKey.create)
+        subBuilder: MembershipKey.$_createMessage)
     ..aOM<MembershipProps>(2, _omitFieldNames ? '' : 'props',
-        subBuilder: MembershipProps.create)
+        subBuilder: MembershipProps.$_createMessage)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  Membership clone() => Membership()..mergeFromMessage(this);
+  Membership clone() => deepCopy();
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   Membership copyWith(void Function(Membership) updates) =>
       super.copyWith((message) => updates(message as Membership)) as Membership;
@@ -144,13 +146,14 @@ class Membership extends $pb.GeneratedMessage {
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
+  @$core.Deprecated('Use Membership() / Membership.new instead')
   static Membership create() => Membership._();
+  static $pb.GeneratedMessage $_createMessage() => Membership._();
   @$core.override
-  Membership createEmptyInstance() => create();
-  static $pb.PbList<Membership> createRepeated() => $pb.PbList<Membership>();
+  Membership createEmptyInstance() => Membership._();
   @$core.pragma('dart2js:noInline')
   static Membership getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<Membership>(create);
+      $pb.GeneratedMessage.$_defaultFor<Membership>(Membership.$_createMessage);
   static Membership? _defaultInstance;
 
   /// The (org, user) edge this membership represents.
@@ -184,7 +187,7 @@ class CreateMembershipRequest extends $pb.GeneratedMessage {
     MembershipKey? key,
     MembershipProps? props,
   }) {
-    final result = create();
+    final result = CreateMembershipRequest._();
     if (key != null) result.key = key;
     if (props != null) result.props = props;
     return result;
@@ -194,25 +197,24 @@ class CreateMembershipRequest extends $pb.GeneratedMessage {
 
   factory CreateMembershipRequest.fromBuffer($core.List<$core.int> data,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(data, registry);
+      CreateMembershipRequest()..mergeFromBuffer(data, registry);
   factory CreateMembershipRequest.fromJson($core.String json,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(json, registry);
+      CreateMembershipRequest()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'CreateMembershipRequest',
       package:
           const $pb.PackageName(_omitMessageNames ? '' : 'pixeltrace.mgmt.v1'),
-      createEmptyInstance: create)
+      createEmptyInstance: CreateMembershipRequest.$_createMessage)
     ..aOM<MembershipKey>(1, _omitFieldNames ? '' : 'key',
-        subBuilder: MembershipKey.create)
+        subBuilder: MembershipKey.$_createMessage)
     ..aOM<MembershipProps>(2, _omitFieldNames ? '' : 'props',
-        subBuilder: MembershipProps.create)
+        subBuilder: MembershipProps.$_createMessage)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  CreateMembershipRequest clone() =>
-      CreateMembershipRequest()..mergeFromMessage(this);
+  CreateMembershipRequest clone() => deepCopy();
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   CreateMembershipRequest copyWith(
           void Function(CreateMembershipRequest) updates) =>
@@ -223,14 +225,16 @@ class CreateMembershipRequest extends $pb.GeneratedMessage {
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
+  @$core.Deprecated(
+      'Use CreateMembershipRequest() / CreateMembershipRequest.new instead')
   static CreateMembershipRequest create() => CreateMembershipRequest._();
+  static $pb.GeneratedMessage $_createMessage() => CreateMembershipRequest._();
   @$core.override
-  CreateMembershipRequest createEmptyInstance() => create();
-  static $pb.PbList<CreateMembershipRequest> createRepeated() =>
-      $pb.PbList<CreateMembershipRequest>();
+  CreateMembershipRequest createEmptyInstance() => CreateMembershipRequest._();
   @$core.pragma('dart2js:noInline')
   static CreateMembershipRequest getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<CreateMembershipRequest>(create);
+      $pb.GeneratedMessage.$_defaultFor<CreateMembershipRequest>(
+          CreateMembershipRequest.$_createMessage);
   static CreateMembershipRequest? _defaultInstance;
 
   /// The org <-> user edge to create.
@@ -263,7 +267,7 @@ class CreateMembershipResponse extends $pb.GeneratedMessage {
   factory CreateMembershipResponse({
     Membership? membership,
   }) {
-    final result = create();
+    final result = CreateMembershipResponse._();
     if (membership != null) result.membership = membership;
     return result;
   }
@@ -272,23 +276,22 @@ class CreateMembershipResponse extends $pb.GeneratedMessage {
 
   factory CreateMembershipResponse.fromBuffer($core.List<$core.int> data,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(data, registry);
+      CreateMembershipResponse()..mergeFromBuffer(data, registry);
   factory CreateMembershipResponse.fromJson($core.String json,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(json, registry);
+      CreateMembershipResponse()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'CreateMembershipResponse',
       package:
           const $pb.PackageName(_omitMessageNames ? '' : 'pixeltrace.mgmt.v1'),
-      createEmptyInstance: create)
+      createEmptyInstance: CreateMembershipResponse.$_createMessage)
     ..aOM<Membership>(1, _omitFieldNames ? '' : 'membership',
-        subBuilder: Membership.create)
+        subBuilder: Membership.$_createMessage)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  CreateMembershipResponse clone() =>
-      CreateMembershipResponse()..mergeFromMessage(this);
+  CreateMembershipResponse clone() => deepCopy();
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   CreateMembershipResponse copyWith(
           void Function(CreateMembershipResponse) updates) =>
@@ -299,14 +302,17 @@ class CreateMembershipResponse extends $pb.GeneratedMessage {
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
+  @$core.Deprecated(
+      'Use CreateMembershipResponse() / CreateMembershipResponse.new instead')
   static CreateMembershipResponse create() => CreateMembershipResponse._();
+  static $pb.GeneratedMessage $_createMessage() => CreateMembershipResponse._();
   @$core.override
-  CreateMembershipResponse createEmptyInstance() => create();
-  static $pb.PbList<CreateMembershipResponse> createRepeated() =>
-      $pb.PbList<CreateMembershipResponse>();
+  CreateMembershipResponse createEmptyInstance() =>
+      CreateMembershipResponse._();
   @$core.pragma('dart2js:noInline')
   static CreateMembershipResponse getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<CreateMembershipResponse>(create);
+      $pb.GeneratedMessage.$_defaultFor<CreateMembershipResponse>(
+          CreateMembershipResponse.$_createMessage);
   static CreateMembershipResponse? _defaultInstance;
 
   /// The newly created membership.
@@ -327,7 +333,7 @@ class GetMembershipRequest extends $pb.GeneratedMessage {
   factory GetMembershipRequest({
     MembershipKey? key,
   }) {
-    final result = create();
+    final result = GetMembershipRequest._();
     if (key != null) result.key = key;
     return result;
   }
@@ -336,23 +342,22 @@ class GetMembershipRequest extends $pb.GeneratedMessage {
 
   factory GetMembershipRequest.fromBuffer($core.List<$core.int> data,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(data, registry);
+      GetMembershipRequest()..mergeFromBuffer(data, registry);
   factory GetMembershipRequest.fromJson($core.String json,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(json, registry);
+      GetMembershipRequest()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'GetMembershipRequest',
       package:
           const $pb.PackageName(_omitMessageNames ? '' : 'pixeltrace.mgmt.v1'),
-      createEmptyInstance: create)
+      createEmptyInstance: GetMembershipRequest.$_createMessage)
     ..aOM<MembershipKey>(1, _omitFieldNames ? '' : 'key',
-        subBuilder: MembershipKey.create)
+        subBuilder: MembershipKey.$_createMessage)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  GetMembershipRequest clone() =>
-      GetMembershipRequest()..mergeFromMessage(this);
+  GetMembershipRequest clone() => deepCopy();
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   GetMembershipRequest copyWith(void Function(GetMembershipRequest) updates) =>
       super.copyWith((message) => updates(message as GetMembershipRequest))
@@ -362,14 +367,16 @@ class GetMembershipRequest extends $pb.GeneratedMessage {
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
+  @$core.Deprecated(
+      'Use GetMembershipRequest() / GetMembershipRequest.new instead')
   static GetMembershipRequest create() => GetMembershipRequest._();
+  static $pb.GeneratedMessage $_createMessage() => GetMembershipRequest._();
   @$core.override
-  GetMembershipRequest createEmptyInstance() => create();
-  static $pb.PbList<GetMembershipRequest> createRepeated() =>
-      $pb.PbList<GetMembershipRequest>();
+  GetMembershipRequest createEmptyInstance() => GetMembershipRequest._();
   @$core.pragma('dart2js:noInline')
   static GetMembershipRequest getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<GetMembershipRequest>(create);
+      $pb.GeneratedMessage.$_defaultFor<GetMembershipRequest>(
+          GetMembershipRequest.$_createMessage);
   static GetMembershipRequest? _defaultInstance;
 
   /// The membership to fetch.
@@ -390,7 +397,7 @@ class GetMembershipResponse extends $pb.GeneratedMessage {
   factory GetMembershipResponse({
     Membership? membership,
   }) {
-    final result = create();
+    final result = GetMembershipResponse._();
     if (membership != null) result.membership = membership;
     return result;
   }
@@ -399,23 +406,22 @@ class GetMembershipResponse extends $pb.GeneratedMessage {
 
   factory GetMembershipResponse.fromBuffer($core.List<$core.int> data,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(data, registry);
+      GetMembershipResponse()..mergeFromBuffer(data, registry);
   factory GetMembershipResponse.fromJson($core.String json,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(json, registry);
+      GetMembershipResponse()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'GetMembershipResponse',
       package:
           const $pb.PackageName(_omitMessageNames ? '' : 'pixeltrace.mgmt.v1'),
-      createEmptyInstance: create)
+      createEmptyInstance: GetMembershipResponse.$_createMessage)
     ..aOM<Membership>(1, _omitFieldNames ? '' : 'membership',
-        subBuilder: Membership.create)
+        subBuilder: Membership.$_createMessage)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  GetMembershipResponse clone() =>
-      GetMembershipResponse()..mergeFromMessage(this);
+  GetMembershipResponse clone() => deepCopy();
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   GetMembershipResponse copyWith(
           void Function(GetMembershipResponse) updates) =>
@@ -426,14 +432,16 @@ class GetMembershipResponse extends $pb.GeneratedMessage {
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
+  @$core.Deprecated(
+      'Use GetMembershipResponse() / GetMembershipResponse.new instead')
   static GetMembershipResponse create() => GetMembershipResponse._();
+  static $pb.GeneratedMessage $_createMessage() => GetMembershipResponse._();
   @$core.override
-  GetMembershipResponse createEmptyInstance() => create();
-  static $pb.PbList<GetMembershipResponse> createRepeated() =>
-      $pb.PbList<GetMembershipResponse>();
+  GetMembershipResponse createEmptyInstance() => GetMembershipResponse._();
   @$core.pragma('dart2js:noInline')
   static GetMembershipResponse getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<GetMembershipResponse>(create);
+      $pb.GeneratedMessage.$_defaultFor<GetMembershipResponse>(
+          GetMembershipResponse.$_createMessage);
   static GetMembershipResponse? _defaultInstance;
 
   /// The requested membership.
@@ -456,7 +464,7 @@ class UpdateMembershipRequest extends $pb.GeneratedMessage {
     MembershipProps? props,
     $1.FieldMask? updateMask,
   }) {
-    final result = create();
+    final result = UpdateMembershipRequest._();
     if (key != null) result.key = key;
     if (props != null) result.props = props;
     if (updateMask != null) result.updateMask = updateMask;
@@ -467,27 +475,26 @@ class UpdateMembershipRequest extends $pb.GeneratedMessage {
 
   factory UpdateMembershipRequest.fromBuffer($core.List<$core.int> data,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(data, registry);
+      UpdateMembershipRequest()..mergeFromBuffer(data, registry);
   factory UpdateMembershipRequest.fromJson($core.String json,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(json, registry);
+      UpdateMembershipRequest()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'UpdateMembershipRequest',
       package:
           const $pb.PackageName(_omitMessageNames ? '' : 'pixeltrace.mgmt.v1'),
-      createEmptyInstance: create)
+      createEmptyInstance: UpdateMembershipRequest.$_createMessage)
     ..aOM<MembershipKey>(1, _omitFieldNames ? '' : 'key',
-        subBuilder: MembershipKey.create)
+        subBuilder: MembershipKey.$_createMessage)
     ..aOM<MembershipProps>(2, _omitFieldNames ? '' : 'props',
-        subBuilder: MembershipProps.create)
+        subBuilder: MembershipProps.$_createMessage)
     ..aOM<$1.FieldMask>(3, _omitFieldNames ? '' : 'updateMask',
-        subBuilder: $1.FieldMask.create)
+        subBuilder: $1.FieldMask.$_createMessage)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  UpdateMembershipRequest clone() =>
-      UpdateMembershipRequest()..mergeFromMessage(this);
+  UpdateMembershipRequest clone() => deepCopy();
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   UpdateMembershipRequest copyWith(
           void Function(UpdateMembershipRequest) updates) =>
@@ -498,14 +505,16 @@ class UpdateMembershipRequest extends $pb.GeneratedMessage {
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
+  @$core.Deprecated(
+      'Use UpdateMembershipRequest() / UpdateMembershipRequest.new instead')
   static UpdateMembershipRequest create() => UpdateMembershipRequest._();
+  static $pb.GeneratedMessage $_createMessage() => UpdateMembershipRequest._();
   @$core.override
-  UpdateMembershipRequest createEmptyInstance() => create();
-  static $pb.PbList<UpdateMembershipRequest> createRepeated() =>
-      $pb.PbList<UpdateMembershipRequest>();
+  UpdateMembershipRequest createEmptyInstance() => UpdateMembershipRequest._();
   @$core.pragma('dart2js:noInline')
   static UpdateMembershipRequest getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<UpdateMembershipRequest>(create);
+      $pb.GeneratedMessage.$_defaultFor<UpdateMembershipRequest>(
+          UpdateMembershipRequest.$_createMessage);
   static UpdateMembershipRequest? _defaultInstance;
 
   /// The membership to update.
@@ -550,7 +559,7 @@ class UpdateMembershipResponse extends $pb.GeneratedMessage {
   factory UpdateMembershipResponse({
     Membership? membership,
   }) {
-    final result = create();
+    final result = UpdateMembershipResponse._();
     if (membership != null) result.membership = membership;
     return result;
   }
@@ -559,23 +568,22 @@ class UpdateMembershipResponse extends $pb.GeneratedMessage {
 
   factory UpdateMembershipResponse.fromBuffer($core.List<$core.int> data,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(data, registry);
+      UpdateMembershipResponse()..mergeFromBuffer(data, registry);
   factory UpdateMembershipResponse.fromJson($core.String json,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(json, registry);
+      UpdateMembershipResponse()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'UpdateMembershipResponse',
       package:
           const $pb.PackageName(_omitMessageNames ? '' : 'pixeltrace.mgmt.v1'),
-      createEmptyInstance: create)
+      createEmptyInstance: UpdateMembershipResponse.$_createMessage)
     ..aOM<Membership>(1, _omitFieldNames ? '' : 'membership',
-        subBuilder: Membership.create)
+        subBuilder: Membership.$_createMessage)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  UpdateMembershipResponse clone() =>
-      UpdateMembershipResponse()..mergeFromMessage(this);
+  UpdateMembershipResponse clone() => deepCopy();
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   UpdateMembershipResponse copyWith(
           void Function(UpdateMembershipResponse) updates) =>
@@ -586,14 +594,17 @@ class UpdateMembershipResponse extends $pb.GeneratedMessage {
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
+  @$core.Deprecated(
+      'Use UpdateMembershipResponse() / UpdateMembershipResponse.new instead')
   static UpdateMembershipResponse create() => UpdateMembershipResponse._();
+  static $pb.GeneratedMessage $_createMessage() => UpdateMembershipResponse._();
   @$core.override
-  UpdateMembershipResponse createEmptyInstance() => create();
-  static $pb.PbList<UpdateMembershipResponse> createRepeated() =>
-      $pb.PbList<UpdateMembershipResponse>();
+  UpdateMembershipResponse createEmptyInstance() =>
+      UpdateMembershipResponse._();
   @$core.pragma('dart2js:noInline')
   static UpdateMembershipResponse getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<UpdateMembershipResponse>(create);
+      $pb.GeneratedMessage.$_defaultFor<UpdateMembershipResponse>(
+          UpdateMembershipResponse.$_createMessage);
   static UpdateMembershipResponse? _defaultInstance;
 
   /// The membership after the update.
@@ -614,7 +625,7 @@ class DeleteMembershipRequest extends $pb.GeneratedMessage {
   factory DeleteMembershipRequest({
     MembershipKey? key,
   }) {
-    final result = create();
+    final result = DeleteMembershipRequest._();
     if (key != null) result.key = key;
     return result;
   }
@@ -623,23 +634,22 @@ class DeleteMembershipRequest extends $pb.GeneratedMessage {
 
   factory DeleteMembershipRequest.fromBuffer($core.List<$core.int> data,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(data, registry);
+      DeleteMembershipRequest()..mergeFromBuffer(data, registry);
   factory DeleteMembershipRequest.fromJson($core.String json,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(json, registry);
+      DeleteMembershipRequest()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'DeleteMembershipRequest',
       package:
           const $pb.PackageName(_omitMessageNames ? '' : 'pixeltrace.mgmt.v1'),
-      createEmptyInstance: create)
+      createEmptyInstance: DeleteMembershipRequest.$_createMessage)
     ..aOM<MembershipKey>(1, _omitFieldNames ? '' : 'key',
-        subBuilder: MembershipKey.create)
+        subBuilder: MembershipKey.$_createMessage)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  DeleteMembershipRequest clone() =>
-      DeleteMembershipRequest()..mergeFromMessage(this);
+  DeleteMembershipRequest clone() => deepCopy();
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   DeleteMembershipRequest copyWith(
           void Function(DeleteMembershipRequest) updates) =>
@@ -650,14 +660,16 @@ class DeleteMembershipRequest extends $pb.GeneratedMessage {
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
+  @$core.Deprecated(
+      'Use DeleteMembershipRequest() / DeleteMembershipRequest.new instead')
   static DeleteMembershipRequest create() => DeleteMembershipRequest._();
+  static $pb.GeneratedMessage $_createMessage() => DeleteMembershipRequest._();
   @$core.override
-  DeleteMembershipRequest createEmptyInstance() => create();
-  static $pb.PbList<DeleteMembershipRequest> createRepeated() =>
-      $pb.PbList<DeleteMembershipRequest>();
+  DeleteMembershipRequest createEmptyInstance() => DeleteMembershipRequest._();
   @$core.pragma('dart2js:noInline')
   static DeleteMembershipRequest getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<DeleteMembershipRequest>(create);
+      $pb.GeneratedMessage.$_defaultFor<DeleteMembershipRequest>(
+          DeleteMembershipRequest.$_createMessage);
   static DeleteMembershipRequest? _defaultInstance;
 
   /// The membership to delete.
@@ -675,27 +687,26 @@ class DeleteMembershipRequest extends $pb.GeneratedMessage {
 
 /// Response to a delete-membership request.
 class DeleteMembershipResponse extends $pb.GeneratedMessage {
-  factory DeleteMembershipResponse() => create();
+  factory DeleteMembershipResponse() => DeleteMembershipResponse._();
 
   DeleteMembershipResponse._();
 
   factory DeleteMembershipResponse.fromBuffer($core.List<$core.int> data,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(data, registry);
+      DeleteMembershipResponse()..mergeFromBuffer(data, registry);
   factory DeleteMembershipResponse.fromJson($core.String json,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(json, registry);
+      DeleteMembershipResponse()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'DeleteMembershipResponse',
       package:
           const $pb.PackageName(_omitMessageNames ? '' : 'pixeltrace.mgmt.v1'),
-      createEmptyInstance: create)
+      createEmptyInstance: DeleteMembershipResponse.$_createMessage)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  DeleteMembershipResponse clone() =>
-      DeleteMembershipResponse()..mergeFromMessage(this);
+  DeleteMembershipResponse clone() => deepCopy();
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   DeleteMembershipResponse copyWith(
           void Function(DeleteMembershipResponse) updates) =>
@@ -706,14 +717,17 @@ class DeleteMembershipResponse extends $pb.GeneratedMessage {
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
+  @$core.Deprecated(
+      'Use DeleteMembershipResponse() / DeleteMembershipResponse.new instead')
   static DeleteMembershipResponse create() => DeleteMembershipResponse._();
+  static $pb.GeneratedMessage $_createMessage() => DeleteMembershipResponse._();
   @$core.override
-  DeleteMembershipResponse createEmptyInstance() => create();
-  static $pb.PbList<DeleteMembershipResponse> createRepeated() =>
-      $pb.PbList<DeleteMembershipResponse>();
+  DeleteMembershipResponse createEmptyInstance() =>
+      DeleteMembershipResponse._();
   @$core.pragma('dart2js:noInline')
   static DeleteMembershipResponse getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<DeleteMembershipResponse>(create);
+      $pb.GeneratedMessage.$_defaultFor<DeleteMembershipResponse>(
+          DeleteMembershipResponse.$_createMessage);
   static DeleteMembershipResponse? _defaultInstance;
 }
 
@@ -723,7 +737,7 @@ class ListMembershipsRequest extends $pb.GeneratedMessage {
     $0.OrganizationId? orgId,
     $2.PageRequest? page,
   }) {
-    final result = create();
+    final result = ListMembershipsRequest._();
     if (orgId != null) result.orgId = orgId;
     if (page != null) result.page = page;
     return result;
@@ -733,25 +747,24 @@ class ListMembershipsRequest extends $pb.GeneratedMessage {
 
   factory ListMembershipsRequest.fromBuffer($core.List<$core.int> data,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(data, registry);
+      ListMembershipsRequest()..mergeFromBuffer(data, registry);
   factory ListMembershipsRequest.fromJson($core.String json,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(json, registry);
+      ListMembershipsRequest()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'ListMembershipsRequest',
       package:
           const $pb.PackageName(_omitMessageNames ? '' : 'pixeltrace.mgmt.v1'),
-      createEmptyInstance: create)
+      createEmptyInstance: ListMembershipsRequest.$_createMessage)
     ..aOM<$0.OrganizationId>(1, _omitFieldNames ? '' : 'orgId',
-        subBuilder: $0.OrganizationId.create)
+        subBuilder: $0.OrganizationId.$_createMessage)
     ..aOM<$2.PageRequest>(2, _omitFieldNames ? '' : 'page',
-        subBuilder: $2.PageRequest.create)
+        subBuilder: $2.PageRequest.$_createMessage)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  ListMembershipsRequest clone() =>
-      ListMembershipsRequest()..mergeFromMessage(this);
+  ListMembershipsRequest clone() => deepCopy();
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   ListMembershipsRequest copyWith(
           void Function(ListMembershipsRequest) updates) =>
@@ -762,14 +775,16 @@ class ListMembershipsRequest extends $pb.GeneratedMessage {
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
+  @$core.Deprecated(
+      'Use ListMembershipsRequest() / ListMembershipsRequest.new instead')
   static ListMembershipsRequest create() => ListMembershipsRequest._();
+  static $pb.GeneratedMessage $_createMessage() => ListMembershipsRequest._();
   @$core.override
-  ListMembershipsRequest createEmptyInstance() => create();
-  static $pb.PbList<ListMembershipsRequest> createRepeated() =>
-      $pb.PbList<ListMembershipsRequest>();
+  ListMembershipsRequest createEmptyInstance() => ListMembershipsRequest._();
   @$core.pragma('dart2js:noInline')
   static ListMembershipsRequest getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<ListMembershipsRequest>(create);
+      $pb.GeneratedMessage.$_defaultFor<ListMembershipsRequest>(
+          ListMembershipsRequest.$_createMessage);
   static ListMembershipsRequest? _defaultInstance;
 
   /// The organization whose memberships to list.
@@ -803,7 +818,7 @@ class ListMembershipsResponse extends $pb.GeneratedMessage {
     $core.Iterable<Membership>? memberships,
     $2.PageResponse? page,
   }) {
-    final result = create();
+    final result = ListMembershipsResponse._();
     if (memberships != null) result.memberships.addAll(memberships);
     if (page != null) result.page = page;
     return result;
@@ -813,26 +828,24 @@ class ListMembershipsResponse extends $pb.GeneratedMessage {
 
   factory ListMembershipsResponse.fromBuffer($core.List<$core.int> data,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(data, registry);
+      ListMembershipsResponse()..mergeFromBuffer(data, registry);
   factory ListMembershipsResponse.fromJson($core.String json,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(json, registry);
+      ListMembershipsResponse()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'ListMembershipsResponse',
       package:
           const $pb.PackageName(_omitMessageNames ? '' : 'pixeltrace.mgmt.v1'),
-      createEmptyInstance: create)
-    ..pc<Membership>(
-        1, _omitFieldNames ? '' : 'memberships', $pb.PbFieldType.PM,
-        subBuilder: Membership.create)
+      createEmptyInstance: ListMembershipsResponse.$_createMessage)
+    ..pPM<Membership>(1, _omitFieldNames ? '' : 'memberships',
+        subBuilder: Membership.$_createMessage)
     ..aOM<$2.PageResponse>(2, _omitFieldNames ? '' : 'page',
-        subBuilder: $2.PageResponse.create)
+        subBuilder: $2.PageResponse.$_createMessage)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  ListMembershipsResponse clone() =>
-      ListMembershipsResponse()..mergeFromMessage(this);
+  ListMembershipsResponse clone() => deepCopy();
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   ListMembershipsResponse copyWith(
           void Function(ListMembershipsResponse) updates) =>
@@ -843,14 +856,16 @@ class ListMembershipsResponse extends $pb.GeneratedMessage {
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
+  @$core.Deprecated(
+      'Use ListMembershipsResponse() / ListMembershipsResponse.new instead')
   static ListMembershipsResponse create() => ListMembershipsResponse._();
+  static $pb.GeneratedMessage $_createMessage() => ListMembershipsResponse._();
   @$core.override
-  ListMembershipsResponse createEmptyInstance() => create();
-  static $pb.PbList<ListMembershipsResponse> createRepeated() =>
-      $pb.PbList<ListMembershipsResponse>();
+  ListMembershipsResponse createEmptyInstance() => ListMembershipsResponse._();
   @$core.pragma('dart2js:noInline')
   static ListMembershipsResponse getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<ListMembershipsResponse>(create);
+      $pb.GeneratedMessage.$_defaultFor<ListMembershipsResponse>(
+          ListMembershipsResponse.$_createMessage);
   static ListMembershipsResponse? _defaultInstance;
 
   /// A page of the organization's memberships.
@@ -875,7 +890,7 @@ class MembershipProps extends $pb.GeneratedMessage {
   factory MembershipProps({
     Role? role,
   }) {
-    final result = create();
+    final result = MembershipProps._();
     if (role != null) result.role = role;
     return result;
   }
@@ -884,24 +899,21 @@ class MembershipProps extends $pb.GeneratedMessage {
 
   factory MembershipProps.fromBuffer($core.List<$core.int> data,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(data, registry);
+      MembershipProps()..mergeFromBuffer(data, registry);
   factory MembershipProps.fromJson($core.String json,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(json, registry);
+      MembershipProps()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'MembershipProps',
       package:
           const $pb.PackageName(_omitMessageNames ? '' : 'pixeltrace.mgmt.v1'),
-      createEmptyInstance: create)
-    ..e<Role>(1, _omitFieldNames ? '' : 'role', $pb.PbFieldType.OE,
-        defaultOrMaker: Role.ROLE_UNSPECIFIED,
-        valueOf: Role.valueOf,
-        enumValues: Role.values)
+      createEmptyInstance: MembershipProps.$_createMessage)
+    ..aE<Role>(1, _omitFieldNames ? '' : 'role', enumValues: Role.values)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  MembershipProps clone() => MembershipProps()..mergeFromMessage(this);
+  MembershipProps clone() => deepCopy();
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   MembershipProps copyWith(void Function(MembershipProps) updates) =>
       super.copyWith((message) => updates(message as MembershipProps))
@@ -911,14 +923,15 @@ class MembershipProps extends $pb.GeneratedMessage {
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
+  @$core.Deprecated('Use MembershipProps() / MembershipProps.new instead')
   static MembershipProps create() => MembershipProps._();
+  static $pb.GeneratedMessage $_createMessage() => MembershipProps._();
   @$core.override
-  MembershipProps createEmptyInstance() => create();
-  static $pb.PbList<MembershipProps> createRepeated() =>
-      $pb.PbList<MembershipProps>();
+  MembershipProps createEmptyInstance() => MembershipProps._();
   @$core.pragma('dart2js:noInline')
-  static MembershipProps getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<MembershipProps>(create);
+  static MembershipProps getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<MembershipProps>(
+          MembershipProps.$_createMessage);
   static MembershipProps? _defaultInstance;
 
   /// The role granted to the user within the organization.

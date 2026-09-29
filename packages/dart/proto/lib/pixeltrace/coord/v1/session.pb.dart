@@ -8,7 +8,7 @@
 // ignore_for_file: constant_identifier_names
 // ignore_for_file: curly_braces_in_flow_control_structures
 // ignore_for_file: deprecated_member_use_from_same_package, library_prefixes
-// ignore_for_file: non_constant_identifier_names
+// ignore_for_file: non_constant_identifier_names, prefer_relative_imports
 
 import 'dart:async' as $async;
 import 'dart:core' as $core;
@@ -25,7 +25,7 @@ class PrepareRequest extends $pb.GeneratedMessage {
   factory PrepareRequest({
     $0.SiteKey? siteKey,
   }) {
-    final result = create();
+    final result = PrepareRequest._();
     if (siteKey != null) result.siteKey = siteKey;
     return result;
   }
@@ -34,22 +34,22 @@ class PrepareRequest extends $pb.GeneratedMessage {
 
   factory PrepareRequest.fromBuffer($core.List<$core.int> data,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(data, registry);
+      PrepareRequest()..mergeFromBuffer(data, registry);
   factory PrepareRequest.fromJson($core.String json,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(json, registry);
+      PrepareRequest()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'PrepareRequest',
       package:
           const $pb.PackageName(_omitMessageNames ? '' : 'pixeltrace.coord.v1'),
-      createEmptyInstance: create)
+      createEmptyInstance: PrepareRequest.$_createMessage)
     ..aOM<$0.SiteKey>(1, _omitFieldNames ? '' : 'siteKey',
-        subBuilder: $0.SiteKey.create)
+        subBuilder: $0.SiteKey.$_createMessage)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  PrepareRequest clone() => PrepareRequest()..mergeFromMessage(this);
+  PrepareRequest clone() => deepCopy();
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   PrepareRequest copyWith(void Function(PrepareRequest) updates) =>
       super.copyWith((message) => updates(message as PrepareRequest))
@@ -59,14 +59,15 @@ class PrepareRequest extends $pb.GeneratedMessage {
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
+  @$core.Deprecated('Use PrepareRequest() / PrepareRequest.new instead')
   static PrepareRequest create() => PrepareRequest._();
+  static $pb.GeneratedMessage $_createMessage() => PrepareRequest._();
   @$core.override
-  PrepareRequest createEmptyInstance() => create();
-  static $pb.PbList<PrepareRequest> createRepeated() =>
-      $pb.PbList<PrepareRequest>();
+  PrepareRequest createEmptyInstance() => PrepareRequest._();
   @$core.pragma('dart2js:noInline')
-  static PrepareRequest getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<PrepareRequest>(create);
+  static PrepareRequest getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<PrepareRequest>(
+          PrepareRequest.$_createMessage);
   static PrepareRequest? _defaultInstance;
 
   /// Identifier of project this traffic will belong to.
@@ -87,7 +88,7 @@ class PrepareResponse extends $pb.GeneratedMessage {
   factory PrepareResponse({
     $core.Iterable<IceServer>? iceServers,
   }) {
-    final result = create();
+    final result = PrepareResponse._();
     if (iceServers != null) result.iceServers.addAll(iceServers);
     return result;
   }
@@ -96,22 +97,22 @@ class PrepareResponse extends $pb.GeneratedMessage {
 
   factory PrepareResponse.fromBuffer($core.List<$core.int> data,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(data, registry);
+      PrepareResponse()..mergeFromBuffer(data, registry);
   factory PrepareResponse.fromJson($core.String json,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(json, registry);
+      PrepareResponse()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'PrepareResponse',
       package:
           const $pb.PackageName(_omitMessageNames ? '' : 'pixeltrace.coord.v1'),
-      createEmptyInstance: create)
-    ..pc<IceServer>(1, _omitFieldNames ? '' : 'iceServers', $pb.PbFieldType.PM,
-        subBuilder: IceServer.create)
+      createEmptyInstance: PrepareResponse.$_createMessage)
+    ..pPM<IceServer>(1, _omitFieldNames ? '' : 'iceServers',
+        subBuilder: IceServer.$_createMessage)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  PrepareResponse clone() => PrepareResponse()..mergeFromMessage(this);
+  PrepareResponse clone() => deepCopy();
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   PrepareResponse copyWith(void Function(PrepareResponse) updates) =>
       super.copyWith((message) => updates(message as PrepareResponse))
@@ -121,14 +122,15 @@ class PrepareResponse extends $pb.GeneratedMessage {
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
+  @$core.Deprecated('Use PrepareResponse() / PrepareResponse.new instead')
   static PrepareResponse create() => PrepareResponse._();
+  static $pb.GeneratedMessage $_createMessage() => PrepareResponse._();
   @$core.override
-  PrepareResponse createEmptyInstance() => create();
-  static $pb.PbList<PrepareResponse> createRepeated() =>
-      $pb.PbList<PrepareResponse>();
+  PrepareResponse createEmptyInstance() => PrepareResponse._();
   @$core.pragma('dart2js:noInline')
-  static PrepareResponse getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<PrepareResponse>(create);
+  static PrepareResponse getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<PrepareResponse>(
+          PrepareResponse.$_createMessage);
   static PrepareResponse? _defaultInstance;
 
   /// STUN/TURN servers the client should apply to its peer connection before
@@ -145,7 +147,7 @@ class IceServer extends $pb.GeneratedMessage {
     $core.String? username,
     $core.String? credential,
   }) {
-    final result = create();
+    final result = IceServer._();
     if (urls != null) result.urls.addAll(urls);
     if (username != null) result.username = username;
     if (credential != null) result.credential = credential;
@@ -156,23 +158,23 @@ class IceServer extends $pb.GeneratedMessage {
 
   factory IceServer.fromBuffer($core.List<$core.int> data,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(data, registry);
+      IceServer()..mergeFromBuffer(data, registry);
   factory IceServer.fromJson($core.String json,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(json, registry);
+      IceServer()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'IceServer',
       package:
           const $pb.PackageName(_omitMessageNames ? '' : 'pixeltrace.coord.v1'),
-      createEmptyInstance: create)
+      createEmptyInstance: IceServer.$_createMessage)
     ..pPS(1, _omitFieldNames ? '' : 'urls')
     ..aOS(2, _omitFieldNames ? '' : 'username')
     ..aOS(3, _omitFieldNames ? '' : 'credential')
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  IceServer clone() => IceServer()..mergeFromMessage(this);
+  IceServer clone() => deepCopy();
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   IceServer copyWith(void Function(IceServer) updates) =>
       super.copyWith((message) => updates(message as IceServer)) as IceServer;
@@ -181,13 +183,14 @@ class IceServer extends $pb.GeneratedMessage {
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
+  @$core.Deprecated('Use IceServer() / IceServer.new instead')
   static IceServer create() => IceServer._();
+  static $pb.GeneratedMessage $_createMessage() => IceServer._();
   @$core.override
-  IceServer createEmptyInstance() => create();
-  static $pb.PbList<IceServer> createRepeated() => $pb.PbList<IceServer>();
+  IceServer createEmptyInstance() => IceServer._();
   @$core.pragma('dart2js:noInline')
-  static IceServer getDefault() =>
-      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<IceServer>(create);
+  static IceServer getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<IceServer>(IceServer.$_createMessage);
   static IceServer? _defaultInstance;
 
   /// One or more STUN/TURN URLs for this server (e.g. stun:, turn:, turns:).
@@ -223,7 +226,7 @@ class EstablishRequest extends $pb.GeneratedMessage {
     $0.SessionId? sessionId,
     $0.SessionPublisherInfo? clientInfo,
   }) {
-    final result = create();
+    final result = EstablishRequest._();
     if (siteKey != null) result.siteKey = siteKey;
     if (sdpOffer != null) result.sdpOffer = sdpOffer;
     if (sessionId != null) result.sessionId = sessionId;
@@ -235,28 +238,28 @@ class EstablishRequest extends $pb.GeneratedMessage {
 
   factory EstablishRequest.fromBuffer($core.List<$core.int> data,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(data, registry);
+      EstablishRequest()..mergeFromBuffer(data, registry);
   factory EstablishRequest.fromJson($core.String json,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(json, registry);
+      EstablishRequest()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'EstablishRequest',
       package:
           const $pb.PackageName(_omitMessageNames ? '' : 'pixeltrace.coord.v1'),
-      createEmptyInstance: create)
+      createEmptyInstance: EstablishRequest.$_createMessage)
     ..aOM<$0.SiteKey>(1, _omitFieldNames ? '' : 'siteKey',
-        subBuilder: $0.SiteKey.create)
+        subBuilder: $0.SiteKey.$_createMessage)
     ..aOM<SessionDescription>(2, _omitFieldNames ? '' : 'sdpOffer',
-        subBuilder: SessionDescription.create)
+        subBuilder: SessionDescription.$_createMessage)
     ..aOM<$0.SessionId>(3, _omitFieldNames ? '' : 'sessionId',
-        subBuilder: $0.SessionId.create)
+        subBuilder: $0.SessionId.$_createMessage)
     ..aOM<$0.SessionPublisherInfo>(4, _omitFieldNames ? '' : 'clientInfo',
-        subBuilder: $0.SessionPublisherInfo.create)
+        subBuilder: $0.SessionPublisherInfo.$_createMessage)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  EstablishRequest clone() => EstablishRequest()..mergeFromMessage(this);
+  EstablishRequest clone() => deepCopy();
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   EstablishRequest copyWith(void Function(EstablishRequest) updates) =>
       super.copyWith((message) => updates(message as EstablishRequest))
@@ -266,14 +269,15 @@ class EstablishRequest extends $pb.GeneratedMessage {
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
+  @$core.Deprecated('Use EstablishRequest() / EstablishRequest.new instead')
   static EstablishRequest create() => EstablishRequest._();
+  static $pb.GeneratedMessage $_createMessage() => EstablishRequest._();
   @$core.override
-  EstablishRequest createEmptyInstance() => create();
-  static $pb.PbList<EstablishRequest> createRepeated() =>
-      $pb.PbList<EstablishRequest>();
+  EstablishRequest createEmptyInstance() => EstablishRequest._();
   @$core.pragma('dart2js:noInline')
-  static EstablishRequest getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<EstablishRequest>(create);
+  static EstablishRequest getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<EstablishRequest>(
+          EstablishRequest.$_createMessage);
   static EstablishRequest? _defaultInstance;
 
   /// Identifier of project to receive this traffic.
@@ -330,7 +334,7 @@ class EstablishResponse extends $pb.GeneratedMessage {
   factory EstablishResponse({
     IngestSession? session,
   }) {
-    final result = create();
+    final result = EstablishResponse._();
     if (session != null) result.session = session;
     return result;
   }
@@ -339,22 +343,22 @@ class EstablishResponse extends $pb.GeneratedMessage {
 
   factory EstablishResponse.fromBuffer($core.List<$core.int> data,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(data, registry);
+      EstablishResponse()..mergeFromBuffer(data, registry);
   factory EstablishResponse.fromJson($core.String json,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(json, registry);
+      EstablishResponse()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'EstablishResponse',
       package:
           const $pb.PackageName(_omitMessageNames ? '' : 'pixeltrace.coord.v1'),
-      createEmptyInstance: create)
+      createEmptyInstance: EstablishResponse.$_createMessage)
     ..aOM<IngestSession>(1, _omitFieldNames ? '' : 'session',
-        subBuilder: IngestSession.create)
+        subBuilder: IngestSession.$_createMessage)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  EstablishResponse clone() => EstablishResponse()..mergeFromMessage(this);
+  EstablishResponse clone() => deepCopy();
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   EstablishResponse copyWith(void Function(EstablishResponse) updates) =>
       super.copyWith((message) => updates(message as EstablishResponse))
@@ -364,14 +368,15 @@ class EstablishResponse extends $pb.GeneratedMessage {
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
+  @$core.Deprecated('Use EstablishResponse() / EstablishResponse.new instead')
   static EstablishResponse create() => EstablishResponse._();
+  static $pb.GeneratedMessage $_createMessage() => EstablishResponse._();
   @$core.override
-  EstablishResponse createEmptyInstance() => create();
-  static $pb.PbList<EstablishResponse> createRepeated() =>
-      $pb.PbList<EstablishResponse>();
+  EstablishResponse createEmptyInstance() => EstablishResponse._();
   @$core.pragma('dart2js:noInline')
-  static EstablishResponse getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<EstablishResponse>(create);
+  static EstablishResponse getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<EstablishResponse>(
+          EstablishResponse.$_createMessage);
   static EstablishResponse? _defaultInstance;
 
   /// The established ingest session.
@@ -392,7 +397,7 @@ class SessionDescription extends $pb.GeneratedMessage {
   factory SessionDescription({
     $core.String? sdp,
   }) {
-    final result = create();
+    final result = SessionDescription._();
     if (sdp != null) result.sdp = sdp;
     return result;
   }
@@ -401,21 +406,21 @@ class SessionDescription extends $pb.GeneratedMessage {
 
   factory SessionDescription.fromBuffer($core.List<$core.int> data,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(data, registry);
+      SessionDescription()..mergeFromBuffer(data, registry);
   factory SessionDescription.fromJson($core.String json,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(json, registry);
+      SessionDescription()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'SessionDescription',
       package:
           const $pb.PackageName(_omitMessageNames ? '' : 'pixeltrace.coord.v1'),
-      createEmptyInstance: create)
+      createEmptyInstance: SessionDescription.$_createMessage)
     ..aOS(1, _omitFieldNames ? '' : 'sdp')
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  SessionDescription clone() => SessionDescription()..mergeFromMessage(this);
+  SessionDescription clone() => deepCopy();
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   SessionDescription copyWith(void Function(SessionDescription) updates) =>
       super.copyWith((message) => updates(message as SessionDescription))
@@ -425,14 +430,15 @@ class SessionDescription extends $pb.GeneratedMessage {
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
+  @$core.Deprecated('Use SessionDescription() / SessionDescription.new instead')
   static SessionDescription create() => SessionDescription._();
+  static $pb.GeneratedMessage $_createMessage() => SessionDescription._();
   @$core.override
-  SessionDescription createEmptyInstance() => create();
-  static $pb.PbList<SessionDescription> createRepeated() =>
-      $pb.PbList<SessionDescription>();
+  SessionDescription createEmptyInstance() => SessionDescription._();
   @$core.pragma('dart2js:noInline')
   static SessionDescription getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<SessionDescription>(create);
+      $pb.GeneratedMessage.$_defaultFor<SessionDescription>(
+          SessionDescription.$_createMessage);
   static SessionDescription? _defaultInstance;
 
   @$pb.TagNumber(1)
@@ -451,7 +457,7 @@ class IngestSession extends $pb.GeneratedMessage {
     SessionDescription? sdpAnswer,
     $0.SessionId? sessionId,
   }) {
-    final result = create();
+    final result = IngestSession._();
     if (sdpAnswer != null) result.sdpAnswer = sdpAnswer;
     if (sessionId != null) result.sessionId = sessionId;
     return result;
@@ -461,24 +467,24 @@ class IngestSession extends $pb.GeneratedMessage {
 
   factory IngestSession.fromBuffer($core.List<$core.int> data,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(data, registry);
+      IngestSession()..mergeFromBuffer(data, registry);
   factory IngestSession.fromJson($core.String json,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(json, registry);
+      IngestSession()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'IngestSession',
       package:
           const $pb.PackageName(_omitMessageNames ? '' : 'pixeltrace.coord.v1'),
-      createEmptyInstance: create)
+      createEmptyInstance: IngestSession.$_createMessage)
     ..aOM<SessionDescription>(1, _omitFieldNames ? '' : 'sdpAnswer',
-        subBuilder: SessionDescription.create)
+        subBuilder: SessionDescription.$_createMessage)
     ..aOM<$0.SessionId>(2, _omitFieldNames ? '' : 'sessionId',
-        subBuilder: $0.SessionId.create)
+        subBuilder: $0.SessionId.$_createMessage)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  IngestSession clone() => IngestSession()..mergeFromMessage(this);
+  IngestSession clone() => deepCopy();
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   IngestSession copyWith(void Function(IngestSession) updates) =>
       super.copyWith((message) => updates(message as IngestSession))
@@ -488,14 +494,15 @@ class IngestSession extends $pb.GeneratedMessage {
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
+  @$core.Deprecated('Use IngestSession() / IngestSession.new instead')
   static IngestSession create() => IngestSession._();
+  static $pb.GeneratedMessage $_createMessage() => IngestSession._();
   @$core.override
-  IngestSession createEmptyInstance() => create();
-  static $pb.PbList<IngestSession> createRepeated() =>
-      $pb.PbList<IngestSession>();
+  IngestSession createEmptyInstance() => IngestSession._();
   @$core.pragma('dart2js:noInline')
-  static IngestSession getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<IngestSession>(create);
+  static IngestSession getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<IngestSession>(
+          IngestSession.$_createMessage);
   static IngestSession? _defaultInstance;
 
   /// The SDP answer to apply as the remote description.
@@ -529,7 +536,7 @@ class StartRecordingRequest extends $pb.GeneratedMessage {
     $0.SessionId? sessionId,
     $0.SiteKey? siteKey,
   }) {
-    final result = create();
+    final result = StartRecordingRequest._();
     if (sessionId != null) result.sessionId = sessionId;
     if (siteKey != null) result.siteKey = siteKey;
     return result;
@@ -539,25 +546,24 @@ class StartRecordingRequest extends $pb.GeneratedMessage {
 
   factory StartRecordingRequest.fromBuffer($core.List<$core.int> data,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(data, registry);
+      StartRecordingRequest()..mergeFromBuffer(data, registry);
   factory StartRecordingRequest.fromJson($core.String json,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(json, registry);
+      StartRecordingRequest()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'StartRecordingRequest',
       package:
           const $pb.PackageName(_omitMessageNames ? '' : 'pixeltrace.coord.v1'),
-      createEmptyInstance: create)
+      createEmptyInstance: StartRecordingRequest.$_createMessage)
     ..aOM<$0.SessionId>(1, _omitFieldNames ? '' : 'sessionId',
-        subBuilder: $0.SessionId.create)
+        subBuilder: $0.SessionId.$_createMessage)
     ..aOM<$0.SiteKey>(2, _omitFieldNames ? '' : 'siteKey',
-        subBuilder: $0.SiteKey.create)
+        subBuilder: $0.SiteKey.$_createMessage)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  StartRecordingRequest clone() =>
-      StartRecordingRequest()..mergeFromMessage(this);
+  StartRecordingRequest clone() => deepCopy();
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   StartRecordingRequest copyWith(
           void Function(StartRecordingRequest) updates) =>
@@ -568,14 +574,16 @@ class StartRecordingRequest extends $pb.GeneratedMessage {
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
+  @$core.Deprecated(
+      'Use StartRecordingRequest() / StartRecordingRequest.new instead')
   static StartRecordingRequest create() => StartRecordingRequest._();
+  static $pb.GeneratedMessage $_createMessage() => StartRecordingRequest._();
   @$core.override
-  StartRecordingRequest createEmptyInstance() => create();
-  static $pb.PbList<StartRecordingRequest> createRepeated() =>
-      $pb.PbList<StartRecordingRequest>();
+  StartRecordingRequest createEmptyInstance() => StartRecordingRequest._();
   @$core.pragma('dart2js:noInline')
   static StartRecordingRequest getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<StartRecordingRequest>(create);
+      $pb.GeneratedMessage.$_defaultFor<StartRecordingRequest>(
+          StartRecordingRequest.$_createMessage);
   static StartRecordingRequest? _defaultInstance;
 
   /// The session_id returned in IngestSession.
@@ -605,27 +613,26 @@ class StartRecordingRequest extends $pb.GeneratedMessage {
 
 /// Response to a start-recording request.
 class StartRecordingResponse extends $pb.GeneratedMessage {
-  factory StartRecordingResponse() => create();
+  factory StartRecordingResponse() => StartRecordingResponse._();
 
   StartRecordingResponse._();
 
   factory StartRecordingResponse.fromBuffer($core.List<$core.int> data,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(data, registry);
+      StartRecordingResponse()..mergeFromBuffer(data, registry);
   factory StartRecordingResponse.fromJson($core.String json,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(json, registry);
+      StartRecordingResponse()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'StartRecordingResponse',
       package:
           const $pb.PackageName(_omitMessageNames ? '' : 'pixeltrace.coord.v1'),
-      createEmptyInstance: create)
+      createEmptyInstance: StartRecordingResponse.$_createMessage)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  StartRecordingResponse clone() =>
-      StartRecordingResponse()..mergeFromMessage(this);
+  StartRecordingResponse clone() => deepCopy();
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   StartRecordingResponse copyWith(
           void Function(StartRecordingResponse) updates) =>
@@ -636,14 +643,16 @@ class StartRecordingResponse extends $pb.GeneratedMessage {
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
+  @$core.Deprecated(
+      'Use StartRecordingResponse() / StartRecordingResponse.new instead')
   static StartRecordingResponse create() => StartRecordingResponse._();
+  static $pb.GeneratedMessage $_createMessage() => StartRecordingResponse._();
   @$core.override
-  StartRecordingResponse createEmptyInstance() => create();
-  static $pb.PbList<StartRecordingResponse> createRepeated() =>
-      $pb.PbList<StartRecordingResponse>();
+  StartRecordingResponse createEmptyInstance() => StartRecordingResponse._();
   @$core.pragma('dart2js:noInline')
   static StartRecordingResponse getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<StartRecordingResponse>(create);
+      $pb.GeneratedMessage.$_defaultFor<StartRecordingResponse>(
+          StartRecordingResponse.$_createMessage);
   static StartRecordingResponse? _defaultInstance;
 }
 
@@ -653,7 +662,7 @@ class CloseRequest extends $pb.GeneratedMessage {
     $0.SessionId? sessionId,
     $0.SiteKey? siteKey,
   }) {
-    final result = create();
+    final result = CloseRequest._();
     if (sessionId != null) result.sessionId = sessionId;
     if (siteKey != null) result.siteKey = siteKey;
     return result;
@@ -663,24 +672,24 @@ class CloseRequest extends $pb.GeneratedMessage {
 
   factory CloseRequest.fromBuffer($core.List<$core.int> data,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(data, registry);
+      CloseRequest()..mergeFromBuffer(data, registry);
   factory CloseRequest.fromJson($core.String json,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(json, registry);
+      CloseRequest()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'CloseRequest',
       package:
           const $pb.PackageName(_omitMessageNames ? '' : 'pixeltrace.coord.v1'),
-      createEmptyInstance: create)
+      createEmptyInstance: CloseRequest.$_createMessage)
     ..aOM<$0.SessionId>(1, _omitFieldNames ? '' : 'sessionId',
-        subBuilder: $0.SessionId.create)
+        subBuilder: $0.SessionId.$_createMessage)
     ..aOM<$0.SiteKey>(2, _omitFieldNames ? '' : 'siteKey',
-        subBuilder: $0.SiteKey.create)
+        subBuilder: $0.SiteKey.$_createMessage)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  CloseRequest clone() => CloseRequest()..mergeFromMessage(this);
+  CloseRequest clone() => deepCopy();
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   CloseRequest copyWith(void Function(CloseRequest) updates) =>
       super.copyWith((message) => updates(message as CloseRequest))
@@ -690,14 +699,15 @@ class CloseRequest extends $pb.GeneratedMessage {
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
+  @$core.Deprecated('Use CloseRequest() / CloseRequest.new instead')
   static CloseRequest create() => CloseRequest._();
+  static $pb.GeneratedMessage $_createMessage() => CloseRequest._();
   @$core.override
-  CloseRequest createEmptyInstance() => create();
-  static $pb.PbList<CloseRequest> createRepeated() =>
-      $pb.PbList<CloseRequest>();
+  CloseRequest createEmptyInstance() => CloseRequest._();
   @$core.pragma('dart2js:noInline')
-  static CloseRequest getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<CloseRequest>(create);
+  static CloseRequest getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<CloseRequest>(
+          CloseRequest.$_createMessage);
   static CloseRequest? _defaultInstance;
 
   /// The session_id returned in IngestSession.
@@ -727,26 +737,26 @@ class CloseRequest extends $pb.GeneratedMessage {
 
 /// Response to a close request.
 class CloseResponse extends $pb.GeneratedMessage {
-  factory CloseResponse() => create();
+  factory CloseResponse() => CloseResponse._();
 
   CloseResponse._();
 
   factory CloseResponse.fromBuffer($core.List<$core.int> data,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(data, registry);
+      CloseResponse()..mergeFromBuffer(data, registry);
   factory CloseResponse.fromJson($core.String json,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(json, registry);
+      CloseResponse()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'CloseResponse',
       package:
           const $pb.PackageName(_omitMessageNames ? '' : 'pixeltrace.coord.v1'),
-      createEmptyInstance: create)
+      createEmptyInstance: CloseResponse.$_createMessage)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  CloseResponse clone() => CloseResponse()..mergeFromMessage(this);
+  CloseResponse clone() => deepCopy();
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   CloseResponse copyWith(void Function(CloseResponse) updates) =>
       super.copyWith((message) => updates(message as CloseResponse))
@@ -756,14 +766,15 @@ class CloseResponse extends $pb.GeneratedMessage {
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
+  @$core.Deprecated('Use CloseResponse() / CloseResponse.new instead')
   static CloseResponse create() => CloseResponse._();
+  static $pb.GeneratedMessage $_createMessage() => CloseResponse._();
   @$core.override
-  CloseResponse createEmptyInstance() => create();
-  static $pb.PbList<CloseResponse> createRepeated() =>
-      $pb.PbList<CloseResponse>();
+  CloseResponse createEmptyInstance() => CloseResponse._();
   @$core.pragma('dart2js:noInline')
-  static CloseResponse getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<CloseResponse>(create);
+  static CloseResponse getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<CloseResponse>(
+          CloseResponse.$_createMessage);
   static CloseResponse? _defaultInstance;
 }
 
@@ -774,7 +785,7 @@ class BeginUploadRequest extends $pb.GeneratedMessage {
     $0.SessionId? sessionId,
     $0.SessionPublisherInfo? clientInfo,
   }) {
-    final result = create();
+    final result = BeginUploadRequest._();
     if (siteKey != null) result.siteKey = siteKey;
     if (sessionId != null) result.sessionId = sessionId;
     if (clientInfo != null) result.clientInfo = clientInfo;
@@ -785,26 +796,26 @@ class BeginUploadRequest extends $pb.GeneratedMessage {
 
   factory BeginUploadRequest.fromBuffer($core.List<$core.int> data,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(data, registry);
+      BeginUploadRequest()..mergeFromBuffer(data, registry);
   factory BeginUploadRequest.fromJson($core.String json,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(json, registry);
+      BeginUploadRequest()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'BeginUploadRequest',
       package:
           const $pb.PackageName(_omitMessageNames ? '' : 'pixeltrace.coord.v1'),
-      createEmptyInstance: create)
+      createEmptyInstance: BeginUploadRequest.$_createMessage)
     ..aOM<$0.SiteKey>(1, _omitFieldNames ? '' : 'siteKey',
-        subBuilder: $0.SiteKey.create)
+        subBuilder: $0.SiteKey.$_createMessage)
     ..aOM<$0.SessionId>(2, _omitFieldNames ? '' : 'sessionId',
-        subBuilder: $0.SessionId.create)
+        subBuilder: $0.SessionId.$_createMessage)
     ..aOM<$0.SessionPublisherInfo>(3, _omitFieldNames ? '' : 'clientInfo',
-        subBuilder: $0.SessionPublisherInfo.create)
+        subBuilder: $0.SessionPublisherInfo.$_createMessage)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  BeginUploadRequest clone() => BeginUploadRequest()..mergeFromMessage(this);
+  BeginUploadRequest clone() => deepCopy();
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   BeginUploadRequest copyWith(void Function(BeginUploadRequest) updates) =>
       super.copyWith((message) => updates(message as BeginUploadRequest))
@@ -814,14 +825,15 @@ class BeginUploadRequest extends $pb.GeneratedMessage {
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
+  @$core.Deprecated('Use BeginUploadRequest() / BeginUploadRequest.new instead')
   static BeginUploadRequest create() => BeginUploadRequest._();
+  static $pb.GeneratedMessage $_createMessage() => BeginUploadRequest._();
   @$core.override
-  BeginUploadRequest createEmptyInstance() => create();
-  static $pb.PbList<BeginUploadRequest> createRepeated() =>
-      $pb.PbList<BeginUploadRequest>();
+  BeginUploadRequest createEmptyInstance() => BeginUploadRequest._();
   @$core.pragma('dart2js:noInline')
   static BeginUploadRequest getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<BeginUploadRequest>(create);
+      $pb.GeneratedMessage.$_defaultFor<BeginUploadRequest>(
+          BeginUploadRequest.$_createMessage);
   static BeginUploadRequest? _defaultInstance;
 
   @$pb.TagNumber(1)
@@ -866,7 +878,7 @@ class BeginUploadResponse extends $pb.GeneratedMessage {
     $core.String? uploadUrl,
     SessionLimits? limits,
   }) {
-    final result = create();
+    final result = BeginUploadResponse._();
     if (sessionId != null) result.sessionId = sessionId;
     if (uploadUrl != null) result.uploadUrl = uploadUrl;
     if (limits != null) result.limits = limits;
@@ -877,25 +889,25 @@ class BeginUploadResponse extends $pb.GeneratedMessage {
 
   factory BeginUploadResponse.fromBuffer($core.List<$core.int> data,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(data, registry);
+      BeginUploadResponse()..mergeFromBuffer(data, registry);
   factory BeginUploadResponse.fromJson($core.String json,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(json, registry);
+      BeginUploadResponse()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'BeginUploadResponse',
       package:
           const $pb.PackageName(_omitMessageNames ? '' : 'pixeltrace.coord.v1'),
-      createEmptyInstance: create)
+      createEmptyInstance: BeginUploadResponse.$_createMessage)
     ..aOM<$0.SessionId>(1, _omitFieldNames ? '' : 'sessionId',
-        subBuilder: $0.SessionId.create)
+        subBuilder: $0.SessionId.$_createMessage)
     ..aOS(2, _omitFieldNames ? '' : 'uploadUrl')
     ..aOM<SessionLimits>(3, _omitFieldNames ? '' : 'limits',
-        subBuilder: SessionLimits.create)
+        subBuilder: SessionLimits.$_createMessage)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  BeginUploadResponse clone() => BeginUploadResponse()..mergeFromMessage(this);
+  BeginUploadResponse clone() => deepCopy();
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   BeginUploadResponse copyWith(void Function(BeginUploadResponse) updates) =>
       super.copyWith((message) => updates(message as BeginUploadResponse))
@@ -905,14 +917,16 @@ class BeginUploadResponse extends $pb.GeneratedMessage {
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
+  @$core
+      .Deprecated('Use BeginUploadResponse() / BeginUploadResponse.new instead')
   static BeginUploadResponse create() => BeginUploadResponse._();
+  static $pb.GeneratedMessage $_createMessage() => BeginUploadResponse._();
   @$core.override
-  BeginUploadResponse createEmptyInstance() => create();
-  static $pb.PbList<BeginUploadResponse> createRepeated() =>
-      $pb.PbList<BeginUploadResponse>();
+  BeginUploadResponse createEmptyInstance() => BeginUploadResponse._();
   @$core.pragma('dart2js:noInline')
   static BeginUploadResponse getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<BeginUploadResponse>(create);
+      $pb.GeneratedMessage.$_defaultFor<BeginUploadResponse>(
+          BeginUploadResponse.$_createMessage);
   static BeginUploadResponse? _defaultInstance;
 
   @$pb.TagNumber(1)
@@ -955,7 +969,7 @@ class FinishUploadRequest extends $pb.GeneratedMessage {
     $0.SessionId? sessionId,
     $0.SiteKey? siteKey,
   }) {
-    final result = create();
+    final result = FinishUploadRequest._();
     if (sessionId != null) result.sessionId = sessionId;
     if (siteKey != null) result.siteKey = siteKey;
     return result;
@@ -965,24 +979,24 @@ class FinishUploadRequest extends $pb.GeneratedMessage {
 
   factory FinishUploadRequest.fromBuffer($core.List<$core.int> data,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(data, registry);
+      FinishUploadRequest()..mergeFromBuffer(data, registry);
   factory FinishUploadRequest.fromJson($core.String json,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(json, registry);
+      FinishUploadRequest()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'FinishUploadRequest',
       package:
           const $pb.PackageName(_omitMessageNames ? '' : 'pixeltrace.coord.v1'),
-      createEmptyInstance: create)
+      createEmptyInstance: FinishUploadRequest.$_createMessage)
     ..aOM<$0.SessionId>(1, _omitFieldNames ? '' : 'sessionId',
-        subBuilder: $0.SessionId.create)
+        subBuilder: $0.SessionId.$_createMessage)
     ..aOM<$0.SiteKey>(2, _omitFieldNames ? '' : 'siteKey',
-        subBuilder: $0.SiteKey.create)
+        subBuilder: $0.SiteKey.$_createMessage)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  FinishUploadRequest clone() => FinishUploadRequest()..mergeFromMessage(this);
+  FinishUploadRequest clone() => deepCopy();
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   FinishUploadRequest copyWith(void Function(FinishUploadRequest) updates) =>
       super.copyWith((message) => updates(message as FinishUploadRequest))
@@ -992,14 +1006,16 @@ class FinishUploadRequest extends $pb.GeneratedMessage {
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
+  @$core
+      .Deprecated('Use FinishUploadRequest() / FinishUploadRequest.new instead')
   static FinishUploadRequest create() => FinishUploadRequest._();
+  static $pb.GeneratedMessage $_createMessage() => FinishUploadRequest._();
   @$core.override
-  FinishUploadRequest createEmptyInstance() => create();
-  static $pb.PbList<FinishUploadRequest> createRepeated() =>
-      $pb.PbList<FinishUploadRequest>();
+  FinishUploadRequest createEmptyInstance() => FinishUploadRequest._();
   @$core.pragma('dart2js:noInline')
   static FinishUploadRequest getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<FinishUploadRequest>(create);
+      $pb.GeneratedMessage.$_defaultFor<FinishUploadRequest>(
+          FinishUploadRequest.$_createMessage);
   static FinishUploadRequest? _defaultInstance;
 
   @$pb.TagNumber(1)
@@ -1027,27 +1043,26 @@ class FinishUploadRequest extends $pb.GeneratedMessage {
 
 /// Response to a finish-upload request.
 class FinishUploadResponse extends $pb.GeneratedMessage {
-  factory FinishUploadResponse() => create();
+  factory FinishUploadResponse() => FinishUploadResponse._();
 
   FinishUploadResponse._();
 
   factory FinishUploadResponse.fromBuffer($core.List<$core.int> data,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(data, registry);
+      FinishUploadResponse()..mergeFromBuffer(data, registry);
   factory FinishUploadResponse.fromJson($core.String json,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(json, registry);
+      FinishUploadResponse()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'FinishUploadResponse',
       package:
           const $pb.PackageName(_omitMessageNames ? '' : 'pixeltrace.coord.v1'),
-      createEmptyInstance: create)
+      createEmptyInstance: FinishUploadResponse.$_createMessage)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  FinishUploadResponse clone() =>
-      FinishUploadResponse()..mergeFromMessage(this);
+  FinishUploadResponse clone() => deepCopy();
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   FinishUploadResponse copyWith(void Function(FinishUploadResponse) updates) =>
       super.copyWith((message) => updates(message as FinishUploadResponse))
@@ -1057,14 +1072,16 @@ class FinishUploadResponse extends $pb.GeneratedMessage {
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
+  @$core.Deprecated(
+      'Use FinishUploadResponse() / FinishUploadResponse.new instead')
   static FinishUploadResponse create() => FinishUploadResponse._();
+  static $pb.GeneratedMessage $_createMessage() => FinishUploadResponse._();
   @$core.override
-  FinishUploadResponse createEmptyInstance() => create();
-  static $pb.PbList<FinishUploadResponse> createRepeated() =>
-      $pb.PbList<FinishUploadResponse>();
+  FinishUploadResponse createEmptyInstance() => FinishUploadResponse._();
   @$core.pragma('dart2js:noInline')
   static FinishUploadResponse getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<FinishUploadResponse>(create);
+      $pb.GeneratedMessage.$_defaultFor<FinishUploadResponse>(
+          FinishUploadResponse.$_createMessage);
   static FinishUploadResponse? _defaultInstance;
 }
 
@@ -1078,7 +1095,7 @@ class SessionLimits extends $pb.GeneratedMessage {
     $core.int? idleTimeoutSeconds,
     $core.int? discardUnderSeconds,
   }) {
-    final result = create();
+    final result = SessionLimits._();
     if (maxSessionSeconds != null) result.maxSessionSeconds = maxSessionSeconds;
     if (idleTimeoutSeconds != null)
       result.idleTimeoutSeconds = idleTimeoutSeconds;
@@ -1091,26 +1108,26 @@ class SessionLimits extends $pb.GeneratedMessage {
 
   factory SessionLimits.fromBuffer($core.List<$core.int> data,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(data, registry);
+      SessionLimits()..mergeFromBuffer(data, registry);
   factory SessionLimits.fromJson($core.String json,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(json, registry);
+      SessionLimits()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'SessionLimits',
       package:
           const $pb.PackageName(_omitMessageNames ? '' : 'pixeltrace.coord.v1'),
-      createEmptyInstance: create)
-    ..a<$core.int>(
-        1, _omitFieldNames ? '' : 'maxSessionSeconds', $pb.PbFieldType.OU3)
-    ..a<$core.int>(
-        2, _omitFieldNames ? '' : 'idleTimeoutSeconds', $pb.PbFieldType.OU3)
-    ..a<$core.int>(
-        3, _omitFieldNames ? '' : 'discardUnderSeconds', $pb.PbFieldType.OU3)
+      createEmptyInstance: SessionLimits.$_createMessage)
+    ..aI(1, _omitFieldNames ? '' : 'maxSessionSeconds',
+        fieldType: $pb.PbFieldType.OU3)
+    ..aI(2, _omitFieldNames ? '' : 'idleTimeoutSeconds',
+        fieldType: $pb.PbFieldType.OU3)
+    ..aI(3, _omitFieldNames ? '' : 'discardUnderSeconds',
+        fieldType: $pb.PbFieldType.OU3)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  SessionLimits clone() => SessionLimits()..mergeFromMessage(this);
+  SessionLimits clone() => deepCopy();
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   SessionLimits copyWith(void Function(SessionLimits) updates) =>
       super.copyWith((message) => updates(message as SessionLimits))
@@ -1120,14 +1137,15 @@ class SessionLimits extends $pb.GeneratedMessage {
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
+  @$core.Deprecated('Use SessionLimits() / SessionLimits.new instead')
   static SessionLimits create() => SessionLimits._();
+  static $pb.GeneratedMessage $_createMessage() => SessionLimits._();
   @$core.override
-  SessionLimits createEmptyInstance() => create();
-  static $pb.PbList<SessionLimits> createRepeated() =>
-      $pb.PbList<SessionLimits>();
+  SessionLimits createEmptyInstance() => SessionLimits._();
   @$core.pragma('dart2js:noInline')
-  static SessionLimits getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<SessionLimits>(create);
+  static SessionLimits getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<SessionLimits>(
+          SessionLimits.$_createMessage);
   static SessionLimits? _defaultInstance;
 
   /// How long the session may record before it is finalized.

@@ -8,7 +8,7 @@
 // ignore_for_file: constant_identifier_names
 // ignore_for_file: curly_braces_in_flow_control_structures
 // ignore_for_file: deprecated_member_use_from_same_package, library_prefixes
-// ignore_for_file: non_constant_identifier_names
+// ignore_for_file: non_constant_identifier_names, prefer_relative_imports
 
 import 'dart:core' as $core;
 
@@ -22,7 +22,7 @@ class PageRequest extends $pb.GeneratedMessage {
     $core.int? pageSize,
     $core.String? pageToken,
   }) {
-    final result = create();
+    final result = PageRequest._();
     if (pageSize != null) result.pageSize = pageSize;
     if (pageToken != null) result.pageToken = pageToken;
     return result;
@@ -32,22 +32,22 @@ class PageRequest extends $pb.GeneratedMessage {
 
   factory PageRequest.fromBuffer($core.List<$core.int> data,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(data, registry);
+      PageRequest()..mergeFromBuffer(data, registry);
   factory PageRequest.fromJson($core.String json,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(json, registry);
+      PageRequest()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'PageRequest',
       package:
           const $pb.PackageName(_omitMessageNames ? '' : 'pixeltrace.mgmt.v1'),
-      createEmptyInstance: create)
-    ..a<$core.int>(1, _omitFieldNames ? '' : 'pageSize', $pb.PbFieldType.O3)
+      createEmptyInstance: PageRequest.$_createMessage)
+    ..aI(1, _omitFieldNames ? '' : 'pageSize')
     ..aOS(2, _omitFieldNames ? '' : 'pageToken')
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  PageRequest clone() => PageRequest()..mergeFromMessage(this);
+  PageRequest clone() => deepCopy();
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   PageRequest copyWith(void Function(PageRequest) updates) =>
       super.copyWith((message) => updates(message as PageRequest))
@@ -57,13 +57,15 @@ class PageRequest extends $pb.GeneratedMessage {
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
+  @$core.Deprecated('Use PageRequest() / PageRequest.new instead')
   static PageRequest create() => PageRequest._();
+  static $pb.GeneratedMessage $_createMessage() => PageRequest._();
   @$core.override
-  PageRequest createEmptyInstance() => create();
-  static $pb.PbList<PageRequest> createRepeated() => $pb.PbList<PageRequest>();
+  PageRequest createEmptyInstance() => PageRequest._();
   @$core.pragma('dart2js:noInline')
-  static PageRequest getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<PageRequest>(create);
+  static PageRequest getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<PageRequest>(
+          PageRequest.$_createMessage);
   static PageRequest? _defaultInstance;
 
   /// Maximum number of items to return. The server may return fewer.
@@ -94,7 +96,7 @@ class PageResponse extends $pb.GeneratedMessage {
   factory PageResponse({
     $core.String? nextPageToken,
   }) {
-    final result = create();
+    final result = PageResponse._();
     if (nextPageToken != null) result.nextPageToken = nextPageToken;
     return result;
   }
@@ -103,21 +105,21 @@ class PageResponse extends $pb.GeneratedMessage {
 
   factory PageResponse.fromBuffer($core.List<$core.int> data,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(data, registry);
+      PageResponse()..mergeFromBuffer(data, registry);
   factory PageResponse.fromJson($core.String json,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(json, registry);
+      PageResponse()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'PageResponse',
       package:
           const $pb.PackageName(_omitMessageNames ? '' : 'pixeltrace.mgmt.v1'),
-      createEmptyInstance: create)
+      createEmptyInstance: PageResponse.$_createMessage)
     ..aOS(1, _omitFieldNames ? '' : 'nextPageToken')
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  PageResponse clone() => PageResponse()..mergeFromMessage(this);
+  PageResponse clone() => deepCopy();
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   PageResponse copyWith(void Function(PageResponse) updates) =>
       super.copyWith((message) => updates(message as PageResponse))
@@ -127,14 +129,15 @@ class PageResponse extends $pb.GeneratedMessage {
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
+  @$core.Deprecated('Use PageResponse() / PageResponse.new instead')
   static PageResponse create() => PageResponse._();
+  static $pb.GeneratedMessage $_createMessage() => PageResponse._();
   @$core.override
-  PageResponse createEmptyInstance() => create();
-  static $pb.PbList<PageResponse> createRepeated() =>
-      $pb.PbList<PageResponse>();
+  PageResponse createEmptyInstance() => PageResponse._();
   @$core.pragma('dart2js:noInline')
-  static PageResponse getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<PageResponse>(create);
+  static PageResponse getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<PageResponse>(
+          PageResponse.$_createMessage);
   static PageResponse? _defaultInstance;
 
   /// Token to pass as PageRequest.page_token to fetch the next page. Empty

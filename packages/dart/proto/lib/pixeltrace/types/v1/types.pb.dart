@@ -8,7 +8,7 @@
 // ignore_for_file: constant_identifier_names
 // ignore_for_file: curly_braces_in_flow_control_structures
 // ignore_for_file: deprecated_member_use_from_same_package, library_prefixes
-// ignore_for_file: non_constant_identifier_names
+// ignore_for_file: non_constant_identifier_names, prefer_relative_imports
 
 import 'dart:core' as $core;
 
@@ -21,7 +21,7 @@ class SiteKey extends $pb.GeneratedMessage {
   factory SiteKey({
     $core.String? key,
   }) {
-    final result = create();
+    final result = SiteKey._();
     if (key != null) result.key = key;
     return result;
   }
@@ -30,21 +30,21 @@ class SiteKey extends $pb.GeneratedMessage {
 
   factory SiteKey.fromBuffer($core.List<$core.int> data,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(data, registry);
+      SiteKey()..mergeFromBuffer(data, registry);
   factory SiteKey.fromJson($core.String json,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(json, registry);
+      SiteKey()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'SiteKey',
       package:
           const $pb.PackageName(_omitMessageNames ? '' : 'pixeltrace.types.v1'),
-      createEmptyInstance: create)
+      createEmptyInstance: SiteKey.$_createMessage)
     ..aOS(1, _omitFieldNames ? '' : 'key')
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  SiteKey clone() => SiteKey()..mergeFromMessage(this);
+  SiteKey clone() => deepCopy();
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   SiteKey copyWith(void Function(SiteKey) updates) =>
       super.copyWith((message) => updates(message as SiteKey)) as SiteKey;
@@ -53,13 +53,14 @@ class SiteKey extends $pb.GeneratedMessage {
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
+  @$core.Deprecated('Use SiteKey() / SiteKey.new instead')
   static SiteKey create() => SiteKey._();
+  static $pb.GeneratedMessage $_createMessage() => SiteKey._();
   @$core.override
-  SiteKey createEmptyInstance() => create();
-  static $pb.PbList<SiteKey> createRepeated() => $pb.PbList<SiteKey>();
+  SiteKey createEmptyInstance() => SiteKey._();
   @$core.pragma('dart2js:noInline')
-  static SiteKey getDefault() =>
-      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<SiteKey>(create);
+  static SiteKey getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<SiteKey>(SiteKey.$_createMessage);
   static SiteKey? _defaultInstance;
 
   @$pb.TagNumber(1)
@@ -77,7 +78,7 @@ class SessionId extends $pb.GeneratedMessage {
   factory SessionId({
     $core.String? id,
   }) {
-    final result = create();
+    final result = SessionId._();
     if (id != null) result.id = id;
     return result;
   }
@@ -86,21 +87,21 @@ class SessionId extends $pb.GeneratedMessage {
 
   factory SessionId.fromBuffer($core.List<$core.int> data,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(data, registry);
+      SessionId()..mergeFromBuffer(data, registry);
   factory SessionId.fromJson($core.String json,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(json, registry);
+      SessionId()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'SessionId',
       package:
           const $pb.PackageName(_omitMessageNames ? '' : 'pixeltrace.types.v1'),
-      createEmptyInstance: create)
+      createEmptyInstance: SessionId.$_createMessage)
     ..aOS(1, _omitFieldNames ? '' : 'id')
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  SessionId clone() => SessionId()..mergeFromMessage(this);
+  SessionId clone() => deepCopy();
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   SessionId copyWith(void Function(SessionId) updates) =>
       super.copyWith((message) => updates(message as SessionId)) as SessionId;
@@ -109,13 +110,14 @@ class SessionId extends $pb.GeneratedMessage {
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
+  @$core.Deprecated('Use SessionId() / SessionId.new instead')
   static SessionId create() => SessionId._();
+  static $pb.GeneratedMessage $_createMessage() => SessionId._();
   @$core.override
-  SessionId createEmptyInstance() => create();
-  static $pb.PbList<SessionId> createRepeated() => $pb.PbList<SessionId>();
+  SessionId createEmptyInstance() => SessionId._();
   @$core.pragma('dart2js:noInline')
-  static SessionId getDefault() =>
-      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<SessionId>(create);
+  static SessionId getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<SessionId>(SessionId.$_createMessage);
   static SessionId? _defaultInstance;
 
   @$pb.TagNumber(1)
@@ -133,7 +135,7 @@ class UserId extends $pb.GeneratedMessage {
   factory UserId({
     $core.String? id,
   }) {
-    final result = create();
+    final result = UserId._();
     if (id != null) result.id = id;
     return result;
   }
@@ -142,21 +144,21 @@ class UserId extends $pb.GeneratedMessage {
 
   factory UserId.fromBuffer($core.List<$core.int> data,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(data, registry);
+      UserId()..mergeFromBuffer(data, registry);
   factory UserId.fromJson($core.String json,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(json, registry);
+      UserId()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'UserId',
       package:
           const $pb.PackageName(_omitMessageNames ? '' : 'pixeltrace.types.v1'),
-      createEmptyInstance: create)
+      createEmptyInstance: UserId.$_createMessage)
     ..aOS(1, _omitFieldNames ? '' : 'id')
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  UserId clone() => UserId()..mergeFromMessage(this);
+  UserId clone() => deepCopy();
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   UserId copyWith(void Function(UserId) updates) =>
       super.copyWith((message) => updates(message as UserId)) as UserId;
@@ -165,13 +167,14 @@ class UserId extends $pb.GeneratedMessage {
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
+  @$core.Deprecated('Use UserId() / UserId.new instead')
   static UserId create() => UserId._();
+  static $pb.GeneratedMessage $_createMessage() => UserId._();
   @$core.override
-  UserId createEmptyInstance() => create();
-  static $pb.PbList<UserId> createRepeated() => $pb.PbList<UserId>();
+  UserId createEmptyInstance() => UserId._();
   @$core.pragma('dart2js:noInline')
-  static UserId getDefault() =>
-      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<UserId>(create);
+  static UserId getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<UserId>(UserId.$_createMessage);
   static UserId? _defaultInstance;
 
   @$pb.TagNumber(1)
@@ -189,7 +192,7 @@ class ProjectId extends $pb.GeneratedMessage {
   factory ProjectId({
     $core.String? id,
   }) {
-    final result = create();
+    final result = ProjectId._();
     if (id != null) result.id = id;
     return result;
   }
@@ -198,21 +201,21 @@ class ProjectId extends $pb.GeneratedMessage {
 
   factory ProjectId.fromBuffer($core.List<$core.int> data,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(data, registry);
+      ProjectId()..mergeFromBuffer(data, registry);
   factory ProjectId.fromJson($core.String json,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(json, registry);
+      ProjectId()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'ProjectId',
       package:
           const $pb.PackageName(_omitMessageNames ? '' : 'pixeltrace.types.v1'),
-      createEmptyInstance: create)
+      createEmptyInstance: ProjectId.$_createMessage)
     ..aOS(1, _omitFieldNames ? '' : 'id')
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  ProjectId clone() => ProjectId()..mergeFromMessage(this);
+  ProjectId clone() => deepCopy();
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   ProjectId copyWith(void Function(ProjectId) updates) =>
       super.copyWith((message) => updates(message as ProjectId)) as ProjectId;
@@ -221,13 +224,14 @@ class ProjectId extends $pb.GeneratedMessage {
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
+  @$core.Deprecated('Use ProjectId() / ProjectId.new instead')
   static ProjectId create() => ProjectId._();
+  static $pb.GeneratedMessage $_createMessage() => ProjectId._();
   @$core.override
-  ProjectId createEmptyInstance() => create();
-  static $pb.PbList<ProjectId> createRepeated() => $pb.PbList<ProjectId>();
+  ProjectId createEmptyInstance() => ProjectId._();
   @$core.pragma('dart2js:noInline')
-  static ProjectId getDefault() =>
-      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ProjectId>(create);
+  static ProjectId getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<ProjectId>(ProjectId.$_createMessage);
   static ProjectId? _defaultInstance;
 
   @$pb.TagNumber(1)
@@ -245,7 +249,7 @@ class ProjectTagId extends $pb.GeneratedMessage {
   factory ProjectTagId({
     $core.String? id,
   }) {
-    final result = create();
+    final result = ProjectTagId._();
     if (id != null) result.id = id;
     return result;
   }
@@ -254,21 +258,21 @@ class ProjectTagId extends $pb.GeneratedMessage {
 
   factory ProjectTagId.fromBuffer($core.List<$core.int> data,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(data, registry);
+      ProjectTagId()..mergeFromBuffer(data, registry);
   factory ProjectTagId.fromJson($core.String json,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(json, registry);
+      ProjectTagId()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'ProjectTagId',
       package:
           const $pb.PackageName(_omitMessageNames ? '' : 'pixeltrace.types.v1'),
-      createEmptyInstance: create)
+      createEmptyInstance: ProjectTagId.$_createMessage)
     ..aOS(1, _omitFieldNames ? '' : 'id')
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  ProjectTagId clone() => ProjectTagId()..mergeFromMessage(this);
+  ProjectTagId clone() => deepCopy();
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   ProjectTagId copyWith(void Function(ProjectTagId) updates) =>
       super.copyWith((message) => updates(message as ProjectTagId))
@@ -278,14 +282,15 @@ class ProjectTagId extends $pb.GeneratedMessage {
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
+  @$core.Deprecated('Use ProjectTagId() / ProjectTagId.new instead')
   static ProjectTagId create() => ProjectTagId._();
+  static $pb.GeneratedMessage $_createMessage() => ProjectTagId._();
   @$core.override
-  ProjectTagId createEmptyInstance() => create();
-  static $pb.PbList<ProjectTagId> createRepeated() =>
-      $pb.PbList<ProjectTagId>();
+  ProjectTagId createEmptyInstance() => ProjectTagId._();
   @$core.pragma('dart2js:noInline')
-  static ProjectTagId getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<ProjectTagId>(create);
+  static ProjectTagId getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ProjectTagId>(
+          ProjectTagId.$_createMessage);
   static ProjectTagId? _defaultInstance;
 
   @$pb.TagNumber(1)
@@ -303,7 +308,7 @@ class OrganizationId extends $pb.GeneratedMessage {
   factory OrganizationId({
     $core.String? id,
   }) {
-    final result = create();
+    final result = OrganizationId._();
     if (id != null) result.id = id;
     return result;
   }
@@ -312,21 +317,21 @@ class OrganizationId extends $pb.GeneratedMessage {
 
   factory OrganizationId.fromBuffer($core.List<$core.int> data,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(data, registry);
+      OrganizationId()..mergeFromBuffer(data, registry);
   factory OrganizationId.fromJson($core.String json,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(json, registry);
+      OrganizationId()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'OrganizationId',
       package:
           const $pb.PackageName(_omitMessageNames ? '' : 'pixeltrace.types.v1'),
-      createEmptyInstance: create)
+      createEmptyInstance: OrganizationId.$_createMessage)
     ..aOS(1, _omitFieldNames ? '' : 'id')
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  OrganizationId clone() => OrganizationId()..mergeFromMessage(this);
+  OrganizationId clone() => deepCopy();
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   OrganizationId copyWith(void Function(OrganizationId) updates) =>
       super.copyWith((message) => updates(message as OrganizationId))
@@ -336,14 +341,15 @@ class OrganizationId extends $pb.GeneratedMessage {
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
+  @$core.Deprecated('Use OrganizationId() / OrganizationId.new instead')
   static OrganizationId create() => OrganizationId._();
+  static $pb.GeneratedMessage $_createMessage() => OrganizationId._();
   @$core.override
-  OrganizationId createEmptyInstance() => create();
-  static $pb.PbList<OrganizationId> createRepeated() =>
-      $pb.PbList<OrganizationId>();
+  OrganizationId createEmptyInstance() => OrganizationId._();
   @$core.pragma('dart2js:noInline')
-  static OrganizationId getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<OrganizationId>(create);
+  static OrganizationId getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<OrganizationId>(
+          OrganizationId.$_createMessage);
   static OrganizationId? _defaultInstance;
 
   @$pb.TagNumber(1)
@@ -362,7 +368,7 @@ class SessionPublisherInfo extends $pb.GeneratedMessage {
   factory SessionPublisherInfo({
     $core.String? referrer,
   }) {
-    final result = create();
+    final result = SessionPublisherInfo._();
     if (referrer != null) result.referrer = referrer;
     return result;
   }
@@ -371,22 +377,21 @@ class SessionPublisherInfo extends $pb.GeneratedMessage {
 
   factory SessionPublisherInfo.fromBuffer($core.List<$core.int> data,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(data, registry);
+      SessionPublisherInfo()..mergeFromBuffer(data, registry);
   factory SessionPublisherInfo.fromJson($core.String json,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(json, registry);
+      SessionPublisherInfo()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'SessionPublisherInfo',
       package:
           const $pb.PackageName(_omitMessageNames ? '' : 'pixeltrace.types.v1'),
-      createEmptyInstance: create)
+      createEmptyInstance: SessionPublisherInfo.$_createMessage)
     ..aOS(1, _omitFieldNames ? '' : 'referrer')
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  SessionPublisherInfo clone() =>
-      SessionPublisherInfo()..mergeFromMessage(this);
+  SessionPublisherInfo clone() => deepCopy();
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   SessionPublisherInfo copyWith(void Function(SessionPublisherInfo) updates) =>
       super.copyWith((message) => updates(message as SessionPublisherInfo))
@@ -396,14 +401,16 @@ class SessionPublisherInfo extends $pb.GeneratedMessage {
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
+  @$core.Deprecated(
+      'Use SessionPublisherInfo() / SessionPublisherInfo.new instead')
   static SessionPublisherInfo create() => SessionPublisherInfo._();
+  static $pb.GeneratedMessage $_createMessage() => SessionPublisherInfo._();
   @$core.override
-  SessionPublisherInfo createEmptyInstance() => create();
-  static $pb.PbList<SessionPublisherInfo> createRepeated() =>
-      $pb.PbList<SessionPublisherInfo>();
+  SessionPublisherInfo createEmptyInstance() => SessionPublisherInfo._();
   @$core.pragma('dart2js:noInline')
   static SessionPublisherInfo getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<SessionPublisherInfo>(create);
+      $pb.GeneratedMessage.$_defaultFor<SessionPublisherInfo>(
+          SessionPublisherInfo.$_createMessage);
   static SessionPublisherInfo? _defaultInstance;
 
   /// The document.referrer value at session start.

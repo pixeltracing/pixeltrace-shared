@@ -9,7 +9,7 @@
 // ignore_for_file: curly_braces_in_flow_control_structures
 // ignore_for_file: deprecated_member_use_from_same_package
 // ignore_for_file: implementation_imports, library_prefixes
-// ignore_for_file: non_constant_identifier_names
+// ignore_for_file: non_constant_identifier_names, prefer_relative_imports
 
 import 'dart:core' as $core;
 
@@ -113,7 +113,7 @@ class Timestamp extends $pb.GeneratedMessage with $mixin.TimestampMixin {
     $fixnum.Int64? seconds,
     $core.int? nanos,
   }) {
-    final result = create();
+    final result = Timestamp._();
     if (seconds != null) result.seconds = seconds;
     if (nanos != null) result.nanos = nanos;
     return result;
@@ -123,24 +123,23 @@ class Timestamp extends $pb.GeneratedMessage with $mixin.TimestampMixin {
 
   factory Timestamp.fromBuffer($core.List<$core.int> data,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(data, registry);
+      Timestamp()..mergeFromBuffer(data, registry);
   factory Timestamp.fromJson($core.String json,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(json, registry);
+      Timestamp()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'Timestamp',
       package:
           const $pb.PackageName(_omitMessageNames ? '' : 'google.protobuf'),
-      createEmptyInstance: create,
-      toProto3Json: $mixin.TimestampMixin.toProto3JsonHelper,
-      fromProto3Json: $mixin.TimestampMixin.fromProto3JsonHelper)
+      createEmptyInstance: Timestamp.$_createMessage,
+      wellKnownType: $mixin.WellKnownType.timestamp)
     ..aInt64(1, _omitFieldNames ? '' : 'seconds')
-    ..a<$core.int>(2, _omitFieldNames ? '' : 'nanos', $pb.PbFieldType.O3)
+    ..aI(2, _omitFieldNames ? '' : 'nanos')
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  Timestamp clone() => Timestamp()..mergeFromMessage(this);
+  Timestamp clone() => deepCopy();
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   Timestamp copyWith(void Function(Timestamp) updates) =>
       super.copyWith((message) => updates(message as Timestamp)) as Timestamp;
@@ -149,13 +148,14 @@ class Timestamp extends $pb.GeneratedMessage with $mixin.TimestampMixin {
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
+  @$core.Deprecated('Use Timestamp() / Timestamp.new instead')
   static Timestamp create() => Timestamp._();
+  static $pb.GeneratedMessage $_createMessage() => Timestamp._();
   @$core.override
-  Timestamp createEmptyInstance() => create();
-  static $pb.PbList<Timestamp> createRepeated() => $pb.PbList<Timestamp>();
+  Timestamp createEmptyInstance() => Timestamp._();
   @$core.pragma('dart2js:noInline')
-  static Timestamp getDefault() =>
-      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Timestamp>(create);
+  static Timestamp getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<Timestamp>(Timestamp.$_createMessage);
   static Timestamp? _defaultInstance;
 
   /// Represents seconds of UTC time since Unix epoch 1970-01-01T00:00:00Z. Must

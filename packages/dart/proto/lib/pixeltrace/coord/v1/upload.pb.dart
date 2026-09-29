@@ -8,7 +8,7 @@
 // ignore_for_file: constant_identifier_names
 // ignore_for_file: curly_braces_in_flow_control_structures
 // ignore_for_file: deprecated_member_use_from_same_package, library_prefixes
-// ignore_for_file: non_constant_identifier_names
+// ignore_for_file: non_constant_identifier_names, prefer_relative_imports
 
 import 'dart:core' as $core;
 
@@ -30,7 +30,7 @@ class UploadFrame extends $pb.GeneratedMessage {
     MediaFragment? fragment,
     EndOfUpload? end,
   }) {
-    final result = create();
+    final result = UploadFrame._();
     if (init != null) result.init = init;
     if (fragment != null) result.fragment = fragment;
     if (end != null) result.end = end;
@@ -41,10 +41,10 @@ class UploadFrame extends $pb.GeneratedMessage {
 
   factory UploadFrame.fromBuffer($core.List<$core.int> data,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(data, registry);
+      UploadFrame()..mergeFromBuffer(data, registry);
   factory UploadFrame.fromJson($core.String json,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(json, registry);
+      UploadFrame()..mergeFromJson(json, registry);
 
   static const $core.Map<$core.int, UploadFrame_Frame> _UploadFrame_FrameByTag =
       {
@@ -57,18 +57,18 @@ class UploadFrame extends $pb.GeneratedMessage {
       _omitMessageNames ? '' : 'UploadFrame',
       package:
           const $pb.PackageName(_omitMessageNames ? '' : 'pixeltrace.coord.v1'),
-      createEmptyInstance: create)
+      createEmptyInstance: UploadFrame.$_createMessage)
     ..oo(0, [1, 2, 3])
     ..aOM<InitSegment>(1, _omitFieldNames ? '' : 'init',
-        subBuilder: InitSegment.create)
+        subBuilder: InitSegment.$_createMessage)
     ..aOM<MediaFragment>(2, _omitFieldNames ? '' : 'fragment',
-        subBuilder: MediaFragment.create)
+        subBuilder: MediaFragment.$_createMessage)
     ..aOM<EndOfUpload>(3, _omitFieldNames ? '' : 'end',
-        subBuilder: EndOfUpload.create)
+        subBuilder: EndOfUpload.$_createMessage)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  UploadFrame clone() => UploadFrame()..mergeFromMessage(this);
+  UploadFrame clone() => deepCopy();
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   UploadFrame copyWith(void Function(UploadFrame) updates) =>
       super.copyWith((message) => updates(message as UploadFrame))
@@ -78,16 +78,24 @@ class UploadFrame extends $pb.GeneratedMessage {
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
+  @$core.Deprecated('Use UploadFrame() / UploadFrame.new instead')
   static UploadFrame create() => UploadFrame._();
+  static $pb.GeneratedMessage $_createMessage() => UploadFrame._();
   @$core.override
-  UploadFrame createEmptyInstance() => create();
-  static $pb.PbList<UploadFrame> createRepeated() => $pb.PbList<UploadFrame>();
+  UploadFrame createEmptyInstance() => UploadFrame._();
   @$core.pragma('dart2js:noInline')
-  static UploadFrame getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<UploadFrame>(create);
+  static UploadFrame getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<UploadFrame>(
+          UploadFrame.$_createMessage);
   static UploadFrame? _defaultInstance;
 
+  @$pb.TagNumber(1)
+  @$pb.TagNumber(2)
+  @$pb.TagNumber(3)
   UploadFrame_Frame whichFrame() => _UploadFrame_FrameByTag[$_whichOneof(0)]!;
+  @$pb.TagNumber(1)
+  @$pb.TagNumber(2)
+  @$pb.TagNumber(3)
   void clearFrame() => $_clearField($_whichOneof(0));
 
   @$pb.TagNumber(1)
@@ -135,7 +143,7 @@ class InitSegment extends $pb.GeneratedMessage {
     $core.int? height,
     $core.int? protocolVersion,
   }) {
-    final result = create();
+    final result = InitSegment._();
     if (data != null) result.data = data;
     if (codecs != null) result.codecs = codecs;
     if (width != null) result.width = width;
@@ -148,27 +156,27 @@ class InitSegment extends $pb.GeneratedMessage {
 
   factory InitSegment.fromBuffer($core.List<$core.int> data,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(data, registry);
+      InitSegment()..mergeFromBuffer(data, registry);
   factory InitSegment.fromJson($core.String json,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(json, registry);
+      InitSegment()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'InitSegment',
       package:
           const $pb.PackageName(_omitMessageNames ? '' : 'pixeltrace.coord.v1'),
-      createEmptyInstance: create)
+      createEmptyInstance: InitSegment.$_createMessage)
     ..a<$core.List<$core.int>>(
         1, _omitFieldNames ? '' : 'data', $pb.PbFieldType.OY)
     ..aOS(2, _omitFieldNames ? '' : 'codecs')
-    ..a<$core.int>(3, _omitFieldNames ? '' : 'width', $pb.PbFieldType.OU3)
-    ..a<$core.int>(4, _omitFieldNames ? '' : 'height', $pb.PbFieldType.OU3)
-    ..a<$core.int>(
-        5, _omitFieldNames ? '' : 'protocolVersion', $pb.PbFieldType.OU3)
+    ..aI(3, _omitFieldNames ? '' : 'width', fieldType: $pb.PbFieldType.OU3)
+    ..aI(4, _omitFieldNames ? '' : 'height', fieldType: $pb.PbFieldType.OU3)
+    ..aI(5, _omitFieldNames ? '' : 'protocolVersion',
+        fieldType: $pb.PbFieldType.OU3)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  InitSegment clone() => InitSegment()..mergeFromMessage(this);
+  InitSegment clone() => deepCopy();
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   InitSegment copyWith(void Function(InitSegment) updates) =>
       super.copyWith((message) => updates(message as InitSegment))
@@ -178,13 +186,15 @@ class InitSegment extends $pb.GeneratedMessage {
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
+  @$core.Deprecated('Use InitSegment() / InitSegment.new instead')
   static InitSegment create() => InitSegment._();
+  static $pb.GeneratedMessage $_createMessage() => InitSegment._();
   @$core.override
-  InitSegment createEmptyInstance() => create();
-  static $pb.PbList<InitSegment> createRepeated() => $pb.PbList<InitSegment>();
+  InitSegment createEmptyInstance() => InitSegment._();
   @$core.pragma('dart2js:noInline')
-  static InitSegment getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<InitSegment>(create);
+  static InitSegment getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<InitSegment>(
+          InitSegment.$_createMessage);
   static InitSegment? _defaultInstance;
 
   @$pb.TagNumber(1)
@@ -251,7 +261,7 @@ class MediaFragment extends $pb.GeneratedMessage {
     $core.List<$core.int>? data,
     $core.Iterable<ChunkFact>? chunks,
   }) {
-    final result = create();
+    final result = MediaFragment._();
     if (sequence != null) result.sequence = sequence;
     if (partIndex != null) result.partIndex = partIndex;
     if (partCount != null) result.partCount = partCount;
@@ -266,31 +276,31 @@ class MediaFragment extends $pb.GeneratedMessage {
 
   factory MediaFragment.fromBuffer($core.List<$core.int> data,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(data, registry);
+      MediaFragment()..mergeFromBuffer(data, registry);
   factory MediaFragment.fromJson($core.String json,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(json, registry);
+      MediaFragment()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'MediaFragment',
       package:
           const $pb.PackageName(_omitMessageNames ? '' : 'pixeltrace.coord.v1'),
-      createEmptyInstance: create)
+      createEmptyInstance: MediaFragment.$_createMessage)
     ..a<$fixnum.Int64>(
         1, _omitFieldNames ? '' : 'sequence', $pb.PbFieldType.OU6,
         defaultOrMaker: $fixnum.Int64.ZERO)
-    ..a<$core.int>(2, _omitFieldNames ? '' : 'partIndex', $pb.PbFieldType.OU3)
-    ..a<$core.int>(3, _omitFieldNames ? '' : 'partCount', $pb.PbFieldType.OU3)
+    ..aI(2, _omitFieldNames ? '' : 'partIndex', fieldType: $pb.PbFieldType.OU3)
+    ..aI(3, _omitFieldNames ? '' : 'partCount', fieldType: $pb.PbFieldType.OU3)
     ..aOB(4, _omitFieldNames ? '' : 'keyframe')
-    ..a<$core.int>(5, _omitFieldNames ? '' : 'durationMs', $pb.PbFieldType.OU3)
+    ..aI(5, _omitFieldNames ? '' : 'durationMs', fieldType: $pb.PbFieldType.OU3)
     ..a<$core.List<$core.int>>(
         6, _omitFieldNames ? '' : 'data', $pb.PbFieldType.OY)
-    ..pc<ChunkFact>(7, _omitFieldNames ? '' : 'chunks', $pb.PbFieldType.PM,
-        subBuilder: ChunkFact.create)
+    ..pPM<ChunkFact>(7, _omitFieldNames ? '' : 'chunks',
+        subBuilder: ChunkFact.$_createMessage)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  MediaFragment clone() => MediaFragment()..mergeFromMessage(this);
+  MediaFragment clone() => deepCopy();
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   MediaFragment copyWith(void Function(MediaFragment) updates) =>
       super.copyWith((message) => updates(message as MediaFragment))
@@ -300,14 +310,15 @@ class MediaFragment extends $pb.GeneratedMessage {
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
+  @$core.Deprecated('Use MediaFragment() / MediaFragment.new instead')
   static MediaFragment create() => MediaFragment._();
+  static $pb.GeneratedMessage $_createMessage() => MediaFragment._();
   @$core.override
-  MediaFragment createEmptyInstance() => create();
-  static $pb.PbList<MediaFragment> createRepeated() =>
-      $pb.PbList<MediaFragment>();
+  MediaFragment createEmptyInstance() => MediaFragment._();
   @$core.pragma('dart2js:noInline')
-  static MediaFragment getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<MediaFragment>(create);
+  static MediaFragment getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<MediaFragment>(
+          MediaFragment.$_createMessage);
   static MediaFragment? _defaultInstance;
 
   /// Client-assigned, strictly increasing within a session, so a resume can be
@@ -384,7 +395,7 @@ class ChunkFact extends $pb.GeneratedMessage {
     $core.int? bytes,
     $core.bool? keyframe,
   }) {
-    final result = create();
+    final result = ChunkFact._();
     if (offsetMs != null) result.offsetMs = offsetMs;
     if (bytes != null) result.bytes = bytes;
     if (keyframe != null) result.keyframe = keyframe;
@@ -395,23 +406,23 @@ class ChunkFact extends $pb.GeneratedMessage {
 
   factory ChunkFact.fromBuffer($core.List<$core.int> data,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(data, registry);
+      ChunkFact()..mergeFromBuffer(data, registry);
   factory ChunkFact.fromJson($core.String json,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(json, registry);
+      ChunkFact()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'ChunkFact',
       package:
           const $pb.PackageName(_omitMessageNames ? '' : 'pixeltrace.coord.v1'),
-      createEmptyInstance: create)
-    ..a<$core.int>(1, _omitFieldNames ? '' : 'offsetMs', $pb.PbFieldType.OU3)
-    ..a<$core.int>(2, _omitFieldNames ? '' : 'bytes', $pb.PbFieldType.OU3)
+      createEmptyInstance: ChunkFact.$_createMessage)
+    ..aI(1, _omitFieldNames ? '' : 'offsetMs', fieldType: $pb.PbFieldType.OU3)
+    ..aI(2, _omitFieldNames ? '' : 'bytes', fieldType: $pb.PbFieldType.OU3)
     ..aOB(3, _omitFieldNames ? '' : 'keyframe')
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  ChunkFact clone() => ChunkFact()..mergeFromMessage(this);
+  ChunkFact clone() => deepCopy();
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   ChunkFact copyWith(void Function(ChunkFact) updates) =>
       super.copyWith((message) => updates(message as ChunkFact)) as ChunkFact;
@@ -420,13 +431,14 @@ class ChunkFact extends $pb.GeneratedMessage {
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
+  @$core.Deprecated('Use ChunkFact() / ChunkFact.new instead')
   static ChunkFact create() => ChunkFact._();
+  static $pb.GeneratedMessage $_createMessage() => ChunkFact._();
   @$core.override
-  ChunkFact createEmptyInstance() => create();
-  static $pb.PbList<ChunkFact> createRepeated() => $pb.PbList<ChunkFact>();
+  ChunkFact createEmptyInstance() => ChunkFact._();
   @$core.pragma('dart2js:noInline')
-  static ChunkFact getDefault() =>
-      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ChunkFact>(create);
+  static ChunkFact getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<ChunkFact>(ChunkFact.$_createMessage);
   static ChunkFact? _defaultInstance;
 
   /// Presentation offset from the fragment's start, in ms.
@@ -463,7 +475,7 @@ class EndOfUpload extends $pb.GeneratedMessage {
   factory EndOfUpload({
     EndOfUpload_Reason? reason,
   }) {
-    final result = create();
+    final result = EndOfUpload._();
     if (reason != null) result.reason = reason;
     return result;
   }
@@ -472,25 +484,22 @@ class EndOfUpload extends $pb.GeneratedMessage {
 
   factory EndOfUpload.fromBuffer($core.List<$core.int> data,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(data, registry);
+      EndOfUpload()..mergeFromBuffer(data, registry);
   factory EndOfUpload.fromJson($core.String json,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(json, registry);
+      EndOfUpload()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'EndOfUpload',
       package:
           const $pb.PackageName(_omitMessageNames ? '' : 'pixeltrace.coord.v1'),
-      createEmptyInstance: create)
-    ..e<EndOfUpload_Reason>(
-        1, _omitFieldNames ? '' : 'reason', $pb.PbFieldType.OE,
-        defaultOrMaker: EndOfUpload_Reason.UNSPECIFIED,
-        valueOf: EndOfUpload_Reason.valueOf,
+      createEmptyInstance: EndOfUpload.$_createMessage)
+    ..aE<EndOfUpload_Reason>(1, _omitFieldNames ? '' : 'reason',
         enumValues: EndOfUpload_Reason.values)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  EndOfUpload clone() => EndOfUpload()..mergeFromMessage(this);
+  EndOfUpload clone() => deepCopy();
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   EndOfUpload copyWith(void Function(EndOfUpload) updates) =>
       super.copyWith((message) => updates(message as EndOfUpload))
@@ -500,13 +509,15 @@ class EndOfUpload extends $pb.GeneratedMessage {
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
+  @$core.Deprecated('Use EndOfUpload() / EndOfUpload.new instead')
   static EndOfUpload create() => EndOfUpload._();
+  static $pb.GeneratedMessage $_createMessage() => EndOfUpload._();
   @$core.override
-  EndOfUpload createEmptyInstance() => create();
-  static $pb.PbList<EndOfUpload> createRepeated() => $pb.PbList<EndOfUpload>();
+  EndOfUpload createEmptyInstance() => EndOfUpload._();
   @$core.pragma('dart2js:noInline')
-  static EndOfUpload getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<EndOfUpload>(create);
+  static EndOfUpload getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<EndOfUpload>(
+          EndOfUpload.$_createMessage);
   static EndOfUpload? _defaultInstance;
 
   @$pb.TagNumber(1)
@@ -527,7 +538,7 @@ class UploadControlFrame extends $pb.GeneratedMessage {
     FragmentAck? ack,
     KeyframeRequest? keyframeRequest,
   }) {
-    final result = create();
+    final result = UploadControlFrame._();
     if (ack != null) result.ack = ack;
     if (keyframeRequest != null) result.keyframeRequest = keyframeRequest;
     return result;
@@ -537,10 +548,10 @@ class UploadControlFrame extends $pb.GeneratedMessage {
 
   factory UploadControlFrame.fromBuffer($core.List<$core.int> data,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(data, registry);
+      UploadControlFrame()..mergeFromBuffer(data, registry);
   factory UploadControlFrame.fromJson($core.String json,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(json, registry);
+      UploadControlFrame()..mergeFromJson(json, registry);
 
   static const $core.Map<$core.int, UploadControlFrame_Frame>
       _UploadControlFrame_FrameByTag = {
@@ -552,16 +563,16 @@ class UploadControlFrame extends $pb.GeneratedMessage {
       _omitMessageNames ? '' : 'UploadControlFrame',
       package:
           const $pb.PackageName(_omitMessageNames ? '' : 'pixeltrace.coord.v1'),
-      createEmptyInstance: create)
+      createEmptyInstance: UploadControlFrame.$_createMessage)
     ..oo(0, [1, 2])
     ..aOM<FragmentAck>(1, _omitFieldNames ? '' : 'ack',
-        subBuilder: FragmentAck.create)
+        subBuilder: FragmentAck.$_createMessage)
     ..aOM<KeyframeRequest>(2, _omitFieldNames ? '' : 'keyframeRequest',
-        subBuilder: KeyframeRequest.create)
+        subBuilder: KeyframeRequest.$_createMessage)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  UploadControlFrame clone() => UploadControlFrame()..mergeFromMessage(this);
+  UploadControlFrame clone() => deepCopy();
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   UploadControlFrame copyWith(void Function(UploadControlFrame) updates) =>
       super.copyWith((message) => updates(message as UploadControlFrame))
@@ -571,18 +582,23 @@ class UploadControlFrame extends $pb.GeneratedMessage {
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
+  @$core.Deprecated('Use UploadControlFrame() / UploadControlFrame.new instead')
   static UploadControlFrame create() => UploadControlFrame._();
+  static $pb.GeneratedMessage $_createMessage() => UploadControlFrame._();
   @$core.override
-  UploadControlFrame createEmptyInstance() => create();
-  static $pb.PbList<UploadControlFrame> createRepeated() =>
-      $pb.PbList<UploadControlFrame>();
+  UploadControlFrame createEmptyInstance() => UploadControlFrame._();
   @$core.pragma('dart2js:noInline')
   static UploadControlFrame getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<UploadControlFrame>(create);
+      $pb.GeneratedMessage.$_defaultFor<UploadControlFrame>(
+          UploadControlFrame.$_createMessage);
   static UploadControlFrame? _defaultInstance;
 
+  @$pb.TagNumber(1)
+  @$pb.TagNumber(2)
   UploadControlFrame_Frame whichFrame() =>
       _UploadControlFrame_FrameByTag[$_whichOneof(0)]!;
+  @$pb.TagNumber(1)
+  @$pb.TagNumber(2)
   void clearFrame() => $_clearField($_whichOneof(0));
 
   @$pb.TagNumber(1)
@@ -613,7 +629,7 @@ class FragmentAck extends $pb.GeneratedMessage {
   factory FragmentAck({
     $fixnum.Int64? sequence,
   }) {
-    final result = create();
+    final result = FragmentAck._();
     if (sequence != null) result.sequence = sequence;
     return result;
   }
@@ -622,23 +638,23 @@ class FragmentAck extends $pb.GeneratedMessage {
 
   factory FragmentAck.fromBuffer($core.List<$core.int> data,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(data, registry);
+      FragmentAck()..mergeFromBuffer(data, registry);
   factory FragmentAck.fromJson($core.String json,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(json, registry);
+      FragmentAck()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'FragmentAck',
       package:
           const $pb.PackageName(_omitMessageNames ? '' : 'pixeltrace.coord.v1'),
-      createEmptyInstance: create)
+      createEmptyInstance: FragmentAck.$_createMessage)
     ..a<$fixnum.Int64>(
         1, _omitFieldNames ? '' : 'sequence', $pb.PbFieldType.OU6,
         defaultOrMaker: $fixnum.Int64.ZERO)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  FragmentAck clone() => FragmentAck()..mergeFromMessage(this);
+  FragmentAck clone() => deepCopy();
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   FragmentAck copyWith(void Function(FragmentAck) updates) =>
       super.copyWith((message) => updates(message as FragmentAck))
@@ -648,13 +664,15 @@ class FragmentAck extends $pb.GeneratedMessage {
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
+  @$core.Deprecated('Use FragmentAck() / FragmentAck.new instead')
   static FragmentAck create() => FragmentAck._();
+  static $pb.GeneratedMessage $_createMessage() => FragmentAck._();
   @$core.override
-  FragmentAck createEmptyInstance() => create();
-  static $pb.PbList<FragmentAck> createRepeated() => $pb.PbList<FragmentAck>();
+  FragmentAck createEmptyInstance() => FragmentAck._();
   @$core.pragma('dart2js:noInline')
-  static FragmentAck getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<FragmentAck>(create);
+  static FragmentAck getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<FragmentAck>(
+          FragmentAck.$_createMessage);
   static FragmentAck? _defaultInstance;
 
   @$pb.TagNumber(1)
@@ -672,7 +690,7 @@ class KeyframeRequest extends $pb.GeneratedMessage {
   factory KeyframeRequest({
     KeyframeRequest_Reason? reason,
   }) {
-    final result = create();
+    final result = KeyframeRequest._();
     if (reason != null) result.reason = reason;
     return result;
   }
@@ -681,25 +699,22 @@ class KeyframeRequest extends $pb.GeneratedMessage {
 
   factory KeyframeRequest.fromBuffer($core.List<$core.int> data,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(data, registry);
+      KeyframeRequest()..mergeFromBuffer(data, registry);
   factory KeyframeRequest.fromJson($core.String json,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(json, registry);
+      KeyframeRequest()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'KeyframeRequest',
       package:
           const $pb.PackageName(_omitMessageNames ? '' : 'pixeltrace.coord.v1'),
-      createEmptyInstance: create)
-    ..e<KeyframeRequest_Reason>(
-        1, _omitFieldNames ? '' : 'reason', $pb.PbFieldType.OE,
-        defaultOrMaker: KeyframeRequest_Reason.UNSPECIFIED,
-        valueOf: KeyframeRequest_Reason.valueOf,
+      createEmptyInstance: KeyframeRequest.$_createMessage)
+    ..aE<KeyframeRequest_Reason>(1, _omitFieldNames ? '' : 'reason',
         enumValues: KeyframeRequest_Reason.values)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  KeyframeRequest clone() => KeyframeRequest()..mergeFromMessage(this);
+  KeyframeRequest clone() => deepCopy();
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   KeyframeRequest copyWith(void Function(KeyframeRequest) updates) =>
       super.copyWith((message) => updates(message as KeyframeRequest))
@@ -709,14 +724,15 @@ class KeyframeRequest extends $pb.GeneratedMessage {
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
+  @$core.Deprecated('Use KeyframeRequest() / KeyframeRequest.new instead')
   static KeyframeRequest create() => KeyframeRequest._();
+  static $pb.GeneratedMessage $_createMessage() => KeyframeRequest._();
   @$core.override
-  KeyframeRequest createEmptyInstance() => create();
-  static $pb.PbList<KeyframeRequest> createRepeated() =>
-      $pb.PbList<KeyframeRequest>();
+  KeyframeRequest createEmptyInstance() => KeyframeRequest._();
   @$core.pragma('dart2js:noInline')
-  static KeyframeRequest getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<KeyframeRequest>(create);
+  static KeyframeRequest getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<KeyframeRequest>(
+          KeyframeRequest.$_createMessage);
   static KeyframeRequest? _defaultInstance;
 
   @$pb.TagNumber(1)
@@ -737,7 +753,7 @@ class LiveViewFrame extends $pb.GeneratedMessage {
     InitSegment? init,
     MediaFragment? fragment,
   }) {
-    final result = create();
+    final result = LiveViewFrame._();
     if (init != null) result.init = init;
     if (fragment != null) result.fragment = fragment;
     return result;
@@ -747,10 +763,10 @@ class LiveViewFrame extends $pb.GeneratedMessage {
 
   factory LiveViewFrame.fromBuffer($core.List<$core.int> data,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(data, registry);
+      LiveViewFrame()..mergeFromBuffer(data, registry);
   factory LiveViewFrame.fromJson($core.String json,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(json, registry);
+      LiveViewFrame()..mergeFromJson(json, registry);
 
   static const $core.Map<$core.int, LiveViewFrame_Frame>
       _LiveViewFrame_FrameByTag = {
@@ -762,16 +778,16 @@ class LiveViewFrame extends $pb.GeneratedMessage {
       _omitMessageNames ? '' : 'LiveViewFrame',
       package:
           const $pb.PackageName(_omitMessageNames ? '' : 'pixeltrace.coord.v1'),
-      createEmptyInstance: create)
+      createEmptyInstance: LiveViewFrame.$_createMessage)
     ..oo(0, [1, 2])
     ..aOM<InitSegment>(1, _omitFieldNames ? '' : 'init',
-        subBuilder: InitSegment.create)
+        subBuilder: InitSegment.$_createMessage)
     ..aOM<MediaFragment>(2, _omitFieldNames ? '' : 'fragment',
-        subBuilder: MediaFragment.create)
+        subBuilder: MediaFragment.$_createMessage)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  LiveViewFrame clone() => LiveViewFrame()..mergeFromMessage(this);
+  LiveViewFrame clone() => deepCopy();
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   LiveViewFrame copyWith(void Function(LiveViewFrame) updates) =>
       super.copyWith((message) => updates(message as LiveViewFrame))
@@ -781,18 +797,23 @@ class LiveViewFrame extends $pb.GeneratedMessage {
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
+  @$core.Deprecated('Use LiveViewFrame() / LiveViewFrame.new instead')
   static LiveViewFrame create() => LiveViewFrame._();
+  static $pb.GeneratedMessage $_createMessage() => LiveViewFrame._();
   @$core.override
-  LiveViewFrame createEmptyInstance() => create();
-  static $pb.PbList<LiveViewFrame> createRepeated() =>
-      $pb.PbList<LiveViewFrame>();
+  LiveViewFrame createEmptyInstance() => LiveViewFrame._();
   @$core.pragma('dart2js:noInline')
-  static LiveViewFrame getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<LiveViewFrame>(create);
+  static LiveViewFrame getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<LiveViewFrame>(
+          LiveViewFrame.$_createMessage);
   static LiveViewFrame? _defaultInstance;
 
+  @$pb.TagNumber(1)
+  @$pb.TagNumber(2)
   LiveViewFrame_Frame whichFrame() =>
       _LiveViewFrame_FrameByTag[$_whichOneof(0)]!;
+  @$pb.TagNumber(1)
+  @$pb.TagNumber(2)
   void clearFrame() => $_clearField($_whichOneof(0));
 
   @$pb.TagNumber(1)

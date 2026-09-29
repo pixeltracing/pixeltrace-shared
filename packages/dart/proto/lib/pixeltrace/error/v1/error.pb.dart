@@ -8,7 +8,7 @@
 // ignore_for_file: constant_identifier_names
 // ignore_for_file: curly_braces_in_flow_control_structures
 // ignore_for_file: deprecated_member_use_from_same_package, library_prefixes
-// ignore_for_file: non_constant_identifier_names
+// ignore_for_file: non_constant_identifier_names, prefer_relative_imports
 
 import 'dart:core' as $core;
 
@@ -27,7 +27,7 @@ class MethodErrors extends $pb.GeneratedMessage {
   factory MethodErrors({
     $core.Iterable<ErrorReason>? reasons,
   }) {
-    final result = create();
+    final result = MethodErrors._();
     if (reasons != null) result.reasons.addAll(reasons);
     return result;
   }
@@ -36,16 +36,16 @@ class MethodErrors extends $pb.GeneratedMessage {
 
   factory MethodErrors.fromBuffer($core.List<$core.int> data,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(data, registry);
+      MethodErrors()..mergeFromBuffer(data, registry);
   factory MethodErrors.fromJson($core.String json,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(json, registry);
+      MethodErrors()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'MethodErrors',
       package:
           const $pb.PackageName(_omitMessageNames ? '' : 'pixeltrace.error.v1'),
-      createEmptyInstance: create)
+      createEmptyInstance: MethodErrors.$_createMessage)
     ..pc<ErrorReason>(1, _omitFieldNames ? '' : 'reasons', $pb.PbFieldType.KE,
         valueOf: ErrorReason.valueOf,
         enumValues: ErrorReason.values,
@@ -53,7 +53,7 @@ class MethodErrors extends $pb.GeneratedMessage {
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  MethodErrors clone() => MethodErrors()..mergeFromMessage(this);
+  MethodErrors clone() => deepCopy();
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   MethodErrors copyWith(void Function(MethodErrors) updates) =>
       super.copyWith((message) => updates(message as MethodErrors))
@@ -63,14 +63,15 @@ class MethodErrors extends $pb.GeneratedMessage {
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
+  @$core.Deprecated('Use MethodErrors() / MethodErrors.new instead')
   static MethodErrors create() => MethodErrors._();
+  static $pb.GeneratedMessage $_createMessage() => MethodErrors._();
   @$core.override
-  MethodErrors createEmptyInstance() => create();
-  static $pb.PbList<MethodErrors> createRepeated() =>
-      $pb.PbList<MethodErrors>();
+  MethodErrors createEmptyInstance() => MethodErrors._();
   @$core.pragma('dart2js:noInline')
-  static MethodErrors getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<MethodErrors>(create);
+  static MethodErrors getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<MethodErrors>(
+          MethodErrors.$_createMessage);
   static MethodErrors? _defaultInstance;
 
   @$pb.TagNumber(1)
@@ -84,7 +85,7 @@ class Error {
       50001,
       $pb.PbFieldType.OM,
       defaultOrMaker: MethodErrors.getDefault,
-      subBuilder: MethodErrors.create);
+      subBuilder: MethodErrors.$_createMessage);
   static final canonicalCode = $pb.Extension<$0.Code>(
       _omitMessageNames ? '' : 'google.protobuf.EnumValueOptions',
       _omitFieldNames ? '' : 'canonicalCode',

@@ -9,7 +9,7 @@
 // ignore_for_file: curly_braces_in_flow_control_structures
 // ignore_for_file: deprecated_member_use_from_same_package
 // ignore_for_file: implementation_imports, library_prefixes
-// ignore_for_file: non_constant_identifier_names
+// ignore_for_file: non_constant_identifier_names, prefer_relative_imports
 
 import 'dart:core' as $core;
 
@@ -82,7 +82,7 @@ class Duration extends $pb.GeneratedMessage with $mixin.DurationMixin {
     $fixnum.Int64? seconds,
     $core.int? nanos,
   }) {
-    final result = create();
+    final result = Duration._();
     if (seconds != null) result.seconds = seconds;
     if (nanos != null) result.nanos = nanos;
     return result;
@@ -92,24 +92,23 @@ class Duration extends $pb.GeneratedMessage with $mixin.DurationMixin {
 
   factory Duration.fromBuffer($core.List<$core.int> data,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(data, registry);
+      Duration()..mergeFromBuffer(data, registry);
   factory Duration.fromJson($core.String json,
           [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(json, registry);
+      Duration()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'Duration',
       package:
           const $pb.PackageName(_omitMessageNames ? '' : 'google.protobuf'),
-      createEmptyInstance: create,
-      toProto3Json: $mixin.DurationMixin.toProto3JsonHelper,
-      fromProto3Json: $mixin.DurationMixin.fromProto3JsonHelper)
+      createEmptyInstance: Duration.$_createMessage,
+      wellKnownType: $mixin.WellKnownType.duration)
     ..aInt64(1, _omitFieldNames ? '' : 'seconds')
-    ..a<$core.int>(2, _omitFieldNames ? '' : 'nanos', $pb.PbFieldType.O3)
+    ..aI(2, _omitFieldNames ? '' : 'nanos')
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  Duration clone() => Duration()..mergeFromMessage(this);
+  Duration clone() => deepCopy();
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   Duration copyWith(void Function(Duration) updates) =>
       super.copyWith((message) => updates(message as Duration)) as Duration;
@@ -118,13 +117,14 @@ class Duration extends $pb.GeneratedMessage with $mixin.DurationMixin {
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
+  @$core.Deprecated('Use Duration() / Duration.new instead')
   static Duration create() => Duration._();
+  static $pb.GeneratedMessage $_createMessage() => Duration._();
   @$core.override
-  Duration createEmptyInstance() => create();
-  static $pb.PbList<Duration> createRepeated() => $pb.PbList<Duration>();
+  Duration createEmptyInstance() => Duration._();
   @$core.pragma('dart2js:noInline')
-  static Duration getDefault() =>
-      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Duration>(create);
+  static Duration getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<Duration>(Duration.$_createMessage);
   static Duration? _defaultInstance;
 
   /// Signed seconds of the span of time. Must be from -315,576,000,000
