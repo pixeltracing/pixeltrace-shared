@@ -36,7 +36,7 @@
     "prepack": "pnpm run build"
   },
   "dependencies": {
-    "@bufbuild/protobuf": "^2.12.1",
+    "@bufbuild/protobuf": "^2.15.0",
     "@connectrpc/connect": "^2.1.2",
     "@pixeltrace/authz": "workspace:*",
     "@pixeltrace/schema": "workspace:*",
