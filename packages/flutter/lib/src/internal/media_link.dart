@@ -189,9 +189,8 @@ class MediaLink extends EventWorkQueue<MediaLinkState, MediaLinkEvent> {
         _surface.source = r.source;
         return null;
 
-      // Should never happen but in production we let it slide - the worst
-      // outcome is resource leakage or similar, which seems preferable to e.g.
-      // terminating the session.
+      // Unreachable by design. Release builds ignore it rather than end the
+      // session, since the worst outcome is a resource leak.
       default:
         assert(false, 'unhandled state transition ($state, $event)');
         log.fine('$debugName: ignoring unhandled ($state, $event)');
@@ -209,7 +208,7 @@ class MediaLink extends EventWorkQueue<MediaLinkState, MediaLinkEvent> {
   }
 
   /// Translates a page signal into the appropriate event. To avoid racy state
-  /// changes, this function simply emit events for the regular work queue to
+  /// changes, this function simply emits events for the regular work queue to
   /// handle.
   void _onPageStateChanged(PageState page) {
     switch (page) {

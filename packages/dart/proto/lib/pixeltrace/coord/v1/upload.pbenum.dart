@@ -22,9 +22,10 @@ class EndOfUpload_Reason extends $pb.ProtobufEnum {
   static const EndOfUpload_Reason COMPLETE =
       EndOfUpload_Reason._(1, _omitEnumNames ? '' : 'COMPLETE');
 
-  /// The page is going away with fragments still unsent. Flush and sleep, as
-  /// for a socket that closed without an end frame; the idle timeout
-  /// finalizes if nobody resumes.
+  /// The page is going away with fragments still unsent. The server flushes
+  /// what it has and holds the session open for a resume, as for a socket that
+  /// closed without an end frame; the idle timeout finalizes it if nobody
+  /// resumes.
   static const EndOfUpload_Reason PAGE_HIDDEN =
       EndOfUpload_Reason._(2, _omitEnumNames ? '' : 'PAGE_HIDDEN');
 

@@ -18,7 +18,7 @@ Future<String> buildOfferSdp(web.RTCPeerConnection pc) async {
   return offerSdp;
 }
 
-/// Blocks until [pc] reaches a steady state, bounded by [timeout].
+/// Completes when [pc] reaches a steady state, bounded by [timeout].
 Future<RtcConnectResult> waitForConnection(
   web.RTCPeerConnection pc, {
   Duration timeout = const Duration(seconds: 10),
@@ -67,7 +67,7 @@ Future<void> waitForIceGathering(
   final onStateChangeJs = onStateChange.toJS;
   pc.addEventListener('icegatheringstatechange', onStateChangeJs);
   try {
-    // If we time out, we still may have a partial list of ice candidates, so
+    // If we time out, we still may have a partial list of ICE candidates, so
     // it's worth proceeding.
     await completer.future.timeout(timeout, onTimeout: () {});
   } finally {

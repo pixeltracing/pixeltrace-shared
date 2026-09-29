@@ -81,7 +81,7 @@ extension type SessionServiceClient(connectlib.Transport _transport) {
     );
   }
 
-  /// The WebCodecs upload path: BeginUpload authorizes and provisions a session,
+  /// The WebCodecs upload path: BeginUpload authorizes and provisions a session;
   /// the client then streams fragments over the returned upload URL.
   Future<pixeltracecoordv1session.BeginUploadResponse> beginUpload(
     pixeltracecoordv1session.BeginUploadRequest input, {

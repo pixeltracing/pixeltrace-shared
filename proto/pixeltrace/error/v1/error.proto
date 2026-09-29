@@ -19,7 +19,8 @@ message MethodErrors {
   repeated ErrorReason reasons = 1;
 }
 
-// extension field numbers in reserved 50000-99999 range for exts
+// Extension field numbers use the 50000-99999 range reserved for
+// organization-internal use.
 
 extend google.protobuf.MethodOptions {
   MethodErrors errors = 50001;

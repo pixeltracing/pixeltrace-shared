@@ -1,5 +1,5 @@
 {
-  "name": "pixeltrace-flutter",
+  "name": "pixeltrace-shared",
   "dockerFile": "Dockerfile",
   "remoteUser": "ubuntu",
   "mounts": [

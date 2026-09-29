@@ -4,7 +4,7 @@ import 'package:meta/meta.dart';
 
 import 'errors.dart';
 
-/// A simple state machine with a event-queue execution model. Events are
+/// A simple state machine with an event-queue execution model. Events are
 /// non-reentrant and queued if the machine is currently busy.
 ///
 /// Subclasses implement the transition table via [handle].

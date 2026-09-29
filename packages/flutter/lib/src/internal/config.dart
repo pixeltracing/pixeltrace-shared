@@ -21,7 +21,7 @@ enum PixeltraceTransport {
   webcodecs,
 }
 
-/// Configuration for the service
+/// Where and how the SDK connects to Pixeltrace.
 class PixeltraceServiceConfig {
   /// The project's site key that will receive this traffic.
   final String projectKey;
@@ -71,7 +71,7 @@ class PixeltraceCaptureConfig {
   /// When true, Pixeltrace capture is enabled even in [kDebugMode].
   final bool captureInDebugMode;
 
-  /// Whether or not Pixeltrace is enabled.
+  /// Whether capture is active, accounting for [captureInDebugMode].
   bool get enabled => captureEnabled && (!kDebugMode || captureInDebugMode);
 
   const PixeltraceCaptureConfig({

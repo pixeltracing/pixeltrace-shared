@@ -91,16 +91,16 @@ class WebrtcConnection implements PixeltraceConnection {
   }
 
   /// establish() is the main chunk of work to actually start sending frames to
-  /// pixeltrace remote. The phases are:
+  /// the Pixeltrace ingest service. The phases are:
   ///
   /// - Capture canvas stream and init peer connection
-  /// - Set up video track and make the actual connection to pixeltrace remote
-  /// - Tell pixeltrace to start recording the frames it's now receiving.
+  /// - Set up video track and connect to the Pixeltrace ingest service
+  /// - Tell Pixeltrace to start recording the frames it's now receiving.
   ///
   /// On error, each phase is responsible for cleaning up its own resources and
   /// the resources allocated by previous phases. If this function returns
   /// successfully (i.e. does not throw), then frames are being sent to
-  /// pixeltrace and recorded.
+  /// Pixeltrace and recorded.
   @override
   Future<void> establish(PixeltraceVideoSource source) async {
     // At this point we're connected, but have not requested recording to start.
@@ -169,11 +169,8 @@ class WebrtcConnection implements PixeltraceConnection {
     try {
       newStream = _captureStream(source);
     } catch (_) {
-      // Failed to capture new source -> terminate the current recording
-      // session. This seems somewhat intuitive because someone has asked us to
-      // swap to capture something else, meaning the previous one is no longer
-      // the intended surface to capture. This also terminates the session on
-      // the remote.
+      // The caller asked to capture something else, so the old surface is no
+      // longer wanted: end the session, remotely too.
       await close();
       rethrow;
     }
@@ -488,7 +485,7 @@ class WebrtcConnection implements PixeltraceConnection {
 
     final track = tracks.first;
 
-    /// Our content is currently always assumed to be as sharp, detail-heavy.
+    // App UI is sharp and detail-heavy, so hint the encoder accordingly.
     track.contentHint = 'detail';
     return track;
   }

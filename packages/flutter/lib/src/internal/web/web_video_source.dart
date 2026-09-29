@@ -24,7 +24,7 @@ Future<PixeltraceVideoSource> captureFlutterView(
   final canvas = await _awaitFlutterCanvas();
   if (canvas == null) {
     throw PixeltraceCaptureException(
-      message: 'failed to find flutter <canvas>',
+      message: 'failed to find the Flutter <canvas>',
     );
   }
   return WebVideoSource(canvas, fps: fps);
@@ -109,7 +109,7 @@ void _syncCanvasObservation(web.MutationObserver observer) {
   }
 }
 
-/// The shadow root of each Flutter `flt-glass-pane`, which is where flutter
+/// The shadow root of each Flutter `flt-glass-pane`, which is where Flutter
 /// mounts its `<canvas>` elements.
 Iterable<web.ShadowRoot> _glassPaneShadowRoots() sync* {
   final panes = web.document.querySelectorAll('flt-glass-pane');

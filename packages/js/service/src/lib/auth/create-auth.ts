@@ -172,7 +172,7 @@ function acceptInvitationUrl(
 type UserWithPersonalOrg = User & { personalOrgId?: string | null };
 
 /** The slug of `userId`'s personal org. Deterministic from the user id so that
- * requests w.r.t. to a user's personal org are idempotent. */
+ * requests with respect to a user's personal org are idempotent. */
 function personalOrgSlug(userId: string): string {
   return slugify(`personal-${userId}`);
 }

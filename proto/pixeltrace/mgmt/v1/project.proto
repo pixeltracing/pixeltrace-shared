@@ -425,7 +425,7 @@ message ProjectTagProps {
     // the project when compared case-insensitively.
     string label = 1;
 
-    // The color this tag renders in. Required, even if custom_hex.
+    // The color this tag renders in. Required, even when custom_hex is set.
     ProjectTagColor color = 2;
 
     // An exact color to render instead of the palette slot, as lowercase
@@ -580,15 +580,15 @@ message Session {
     // Immutable attributes of this session.
     SessionAttributes attributes = 7;
 
-    // Whether the calling user has seen this session. Per-user state, since one
-    // user's "seen" state does not influence another's.
+    // Whether the calling user has seen this session (per-user).
     bool seen = 8;
 
     // How the session's media reaches a live viewer.
     LiveTransport live_transport = 9;
 }
 
-// Which path a session's live media travels, and so which viewer the app opens.
+// Which path a session's live media travels, and so which live viewer a client
+// should use.
 enum LiveTransport {
     LIVE_TRANSPORT_UNSPECIFIED = 0;
     // Published into the media relay (SFU); watched over WebRTC.
@@ -607,7 +607,7 @@ message SessionTagUpdate {
     repeated pixeltrace.types.v1.ProjectTagId remove = 2;
 }
 
-// The non-mutable bag of attributes associated with a particular session.
+// Immutable attributes of a session.
 message SessionAttributes {
     // When the session began recording.
     google.protobuf.Timestamp started_at = 1;
@@ -636,7 +636,7 @@ message SessionAttributes {
     // The raw User-Agent header, kept verbatim.
     string user_agent = 9;
 
-    // [One sample of] the client-to-edge TCP round-trip time in milliseconds.
+    // A single sample of the client-to-edge TCP round-trip time, in milliseconds.
     optional uint32 client_tcp_rtt_ms = 10;
 
     // When the session was deleted, if it has been.
@@ -670,6 +670,8 @@ message ListSessionsRequest {
     // returns every session, each annotated with Session.seen.
     bool unseen_only = 3;
 
+    // Return only sessions carrying at least one of these tags. Empty matches
+    // every session.
     repeated pixeltrace.types.v1.ProjectTagId tag_ids = 4;
 }
 
@@ -812,8 +814,7 @@ message MarkAllSessionsSeenRequest {
 }
 
 // Response to a mark-all-sessions-seen request. There is deliberately no
-// mark-all-unseen: seen state is stored as a per-user bitset over the project's
-// sessions, in which "all seen" is a constant-size run but "all unseen" is not.
+// mark-all-unseen.
 message MarkAllSessionsSeenResponse {
     // The unseen count after the mark. Zero, absent a concurrent recording.
     UnseenSessionCount unseen = 1;

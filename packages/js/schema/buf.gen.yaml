@@ -2,8 +2,8 @@
 # (../../../proto) into src/gen. Run via `pnpm run generate`.
 #
 # protobuf-es output is plain ESM with a single small runtime dependency
-# (@bufbuild/protobuf), no native modules — ideal for Cloudflare Workers and
-# browser bundles alike.
+# (@bufbuild/protobuf) and no native modules, so it runs in edge runtimes and
+# browsers.
 version: v2
 inputs:
   - directory: ../../../proto

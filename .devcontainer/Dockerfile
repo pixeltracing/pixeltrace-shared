@@ -25,7 +25,7 @@ RUN ARCH="$(dpkg --print-architecture)" \
 ENV PATH="/usr/local/go/bin:/home/ubuntu/go/bin:${PATH}"
 ENV GOPATH="/home/ubuntu/go"
 
-# Protobuf tooling: buf CLI + the protoc-gen-go plugin buf invokes.
+# buf CLI
 RUN ARCH="$(uname -m)" \
     && curl -fsSL "https://github.com/bufbuild/buf/releases/download/v${BUF_VERSION}/buf-$(uname -s)-${ARCH}" \
         -o /usr/local/bin/buf \

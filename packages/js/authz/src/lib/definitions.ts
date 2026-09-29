@@ -367,7 +367,7 @@ export function withProjectRole(
 }
 
 /**
- * The principals's org-level role in `orgId`, or null if they hold no
+ * The principal's org-level role in `orgId`, or null if they hold no
  * membership there.
  */
 export function orgRoleOf(principal: Principal, orgId: OrgId): Role | null {

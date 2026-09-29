@@ -198,7 +198,7 @@ void main() {
         time.flushMicrotasks();
 
         conn.reestablishError = const PixeltraceServiceException(
-          message: 'reestablish blew up',
+          message: 'reestablish failed',
         );
         conn.emit(PixeltraceConnectionState.failed);
         time.flushMicrotasks();
@@ -268,7 +268,7 @@ void main() {
           final before = [...conn.calls];
 
           // There is no media path to swap on, so the new source is only
-          // recorded — and it is the one coming back has to carry.
+          // recorded, and the resume must carry it.
           link.rebind(_source(60));
           time.flushMicrotasks();
           expect(conn.calls, before);
@@ -331,7 +331,7 @@ void main() {
 
       // Pause is best-effort: the session survives it server-side either way.
       conn.pauseError = const PixeltraceServiceException(
-        message: 'pause blew up',
+        message: 'pause failed',
       );
       watchers.page.signals.leaving(restorable: true);
       await pumpEventQueue();
@@ -387,7 +387,7 @@ void main() {
 
       conn.stalled = true;
       conn.reestablishError = const PixeltraceServiceException(
-        message: 'reestablish blew up',
+        message: 'reestablish failed',
       );
       watchers.page.signals.connectivityRestored();
       await pumpEventQueue();
@@ -433,18 +433,15 @@ void main() {
       expect(conn.calls, ['prepare', 'establish', 'pause']);
     });
 
-    test(
-      'an unload sends session closed beacon and disposes the link',
-      () async {
-        final link = await connected();
+    test('an unload sends a close beacon and disposes the link', () async {
+      final link = await connected();
 
-        watchers.page.signals.leaving(restorable: false);
-        await pumpEventQueue();
-        expect(conn.calls, ['prepare', 'establish', 'beaconClose', 'dispose']);
-        expect(link.state, MediaLinkState.disposed);
-        expect(conn.hasListeners, isFalse);
-      },
-    );
+      watchers.page.signals.leaving(restorable: false);
+      await pumpEventQueue();
+      expect(conn.calls, ['prepare', 'establish', 'beaconClose', 'dispose']);
+      expect(link.state, MediaLinkState.disposed);
+      expect(conn.hasListeners, isFalse);
+    });
 
     test('disposing the link stops watching the platform', () async {
       final link = await connected();

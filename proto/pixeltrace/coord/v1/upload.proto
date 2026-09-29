@@ -25,8 +25,8 @@ message InitSegment {
   bytes data = 1;
 
   // RFC 6381 codec string, e.g. "avc1.64001f". The playlist emits it, and a
-  // viewer needs it to open a SourceBuffer. Reported rather than parsed out of
-  // `moov`, which nothing on the server is equipped to do.
+  // viewer needs it to open a SourceBuffer. Reported by the client so the
+  // server need not parse `moov`.
   string codecs = 2;
 
   // Encoded frame size, in pixels.
@@ -80,9 +80,10 @@ message EndOfUpload {
     UNSPECIFIED = 0;
     // Finalize now: everything this session recorded has been sent.
     COMPLETE = 1;
-    // The page is going away with fragments still unsent. Flush and sleep, as
-    // for a socket that closed without an end frame; the idle timeout
-    // finalizes if nobody resumes.
+    // The page is going away with fragments still unsent. The server flushes
+    // what it has and holds the session open for a resume, as for a socket that
+    // closed without an end frame; the idle timeout finalizes it if nobody
+    // resumes.
     PAGE_HIDDEN = 2;
   }
 

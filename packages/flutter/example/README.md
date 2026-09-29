@@ -1,6 +1,6 @@
 # pixeltrace_flutter example
 
-A minimal app that streams its UI to Pixeltrace cloud by wrapping itself in a
+A minimal app that streams its UI to Pixeltrace by wrapping itself in a
 [`Pixeltrace`] widget. See [`lib/main.dart`](lib/main.dart) for the integration.
 
 ## Running

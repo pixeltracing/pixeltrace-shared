@@ -135,7 +135,7 @@ class ThrowingConnection extends FakeConnection {
   final Object error;
 
   ThrowingConnection([
-    this.error = const PixeltraceServiceException(message: 'establish blew up'),
+    this.error = const PixeltraceServiceException(message: 'establish failed'),
   ]);
 
   @override

@@ -567,7 +567,7 @@ export function runProjectServiceContract(
     }
 
     // Signs up a new owner and returns their session, personal org, and a
-    // handler context acting as that owner..
+    // handler context acting as that owner.
     async function initOwner(): Promise<{
       sess: TestSession;
       org: OrgId;
@@ -2707,7 +2707,7 @@ export function runProjectServiceContract(
       });
 
       it("refuses to clear a project whose media is not the platform's to delete", async () => {
-        // A customer-owned bucket is currently unsupported to clear
+        // Clearing a customer-owned bucket is not currently supported.
         const { org, hctx } = await initOwner();
         const proj = await createProj(hctx, org, StorageBackend.BYOB);
         const id = toProjectId(proj.id!.id);

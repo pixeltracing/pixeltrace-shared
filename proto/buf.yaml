@@ -9,12 +9,12 @@ lint:
   use:
     - STANDARD
   except:
-    # We don't prefix enum values with the enum name (CODE_UNSPECIFIED). That
-    # rule guards against proto3's C++ scope-leak collision, but we only target
-    # TS/Go/Dart (no such hazard), and the prefix uglifies the generated
-    # identifiers in those languages. This also subsumes ENUM_ZERO_VALUE_SUFFIX,
-    # whose only remaining ask is the same prefix — our zero values already
-    # carry the UNSPECIFIED intent (e.g. `UNSPECIFIED = 0`).
+    # Enum values are siblings of their enum, so a value name must be unique
+    # across the top-level enums of a package; the compiler rejects a duplicate
+    # regardless of target language. Top-level enums sharing a package are
+    # prefixed for that reason. Nested enums, and ErrorReason (alone in its
+    # package), use bare values such as `UNSPECIFIED = 0`, which these two
+    # rules would otherwise reject.
     - ENUM_VALUE_PREFIX
     - ENUM_ZERO_VALUE_SUFFIX
 breaking:

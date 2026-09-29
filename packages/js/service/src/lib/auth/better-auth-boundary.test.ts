@@ -15,7 +15,7 @@ import { resolveAuthContext } from "./interceptor.js";
 import { makeBetterAuthMembershipPorts } from "../membership/better_auth_port.js";
 
 // This file contains tests for role data coming from Better Auth, which stores
-// roles as free-form, comma-delimted strings. The roles must be resolved into
+// roles as free-form, comma-delimited strings. The roles must be resolved into
 // our authz model and fail closed on anything we don't recognize.
 
 function fakeAuth(opts: {

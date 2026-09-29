@@ -1,6 +1,6 @@
-# pixeltrace.dev communication interface
+# Pixeltrace protobuf schema
 
-This repository contains the protobuf definitions of the interfaces used for
+This directory contains the protobuf definitions of the interfaces used for
 communication between major Pixeltrace subsystems.
 
 ## Namespaces
@@ -13,12 +13,12 @@ namespace is versioned independently.
 The media coordination layer consists of the services responsible for:
 
 - negotiation of media ingestion
-- allocating serverside resources necessary to receive media
+- allocating server-side resources necessary to receive media
 - routing incoming media to the service that remuxes to persistent storage
 
 ### `pixeltrace.data`: the media data layer
 
-### `pixeltrace.mgmt`: the user management layer
+### `pixeltrace.mgmt`: the management layer
 
 ### Support / common
 

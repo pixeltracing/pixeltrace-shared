@@ -40,7 +40,7 @@ export function maskSelector(
   return (field) => selected.has(field.name);
 }
 
-/** Returns s if nonempty, or ifEmpty if... empty.  */
+/** Returns `s` trimmed, or `ifEmpty` if the trimmed string is empty. */
 export function stringOr(s: string, ifEmpty: string): string {
   const trimmed = s.trim();
   return trimmed === "" ? ifEmpty : trimmed;

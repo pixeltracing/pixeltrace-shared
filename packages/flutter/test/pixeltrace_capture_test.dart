@@ -203,19 +203,19 @@ void main() {
     testWidgets('errors reach FlutterError with no sink of the host\'s', (
       tester,
     ) async {
-      install(ThrowingConnection(StateError('establish blew up')));
+      install(ThrowingConnection(StateError('establish failed')));
       await tester.pumpWidget(_testRoot());
       await tester.pumpAndSettle();
 
       final error = tester.takeException();
       expect(error, isA<StateError>());
-      expect((error as StateError).message, 'establish blew up');
+      expect((error as StateError).message, 'establish failed');
     });
 
     // A sink owns everything the SDK raises, not just our own error types
     for (final error in <Object>[
-      const PixeltraceServiceException(message: 'establish blew up'),
-      StateError('establish blew up'),
+      const PixeltraceServiceException(message: 'establish failed'),
+      StateError('establish failed'),
     ]) {
       testWidgets('a configured sink receives a ${error.runtimeType}', (
         tester,
@@ -242,9 +242,7 @@ void main() {
 
       // Same destination, so the session is not rebuilt. The rate change is what
       // provokes the failure.
-      conn.swapError = const PixeltraceServiceException(
-        message: 'swap blew up',
-      );
+      conn.swapError = const PixeltraceServiceException(message: 'swap failed');
       await tester.pumpWidget(
         _testRoot(
           errorSink: second,

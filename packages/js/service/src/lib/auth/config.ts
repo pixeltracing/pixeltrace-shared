@@ -12,7 +12,7 @@ export interface AuthConfig {
   baseURL?: string;
   /** Public base URL of the frontend, e.g. `https://app.pixeltrace.dev`. */
   frontendURL?: string;
-  /** Origins permitted to call the auth endpoints . */
+  /** Origins permitted to call the auth endpoints. */
   trustedOrigins?: string[];
   /** If non-null, the domain for cross-subdomain cookies, e.g. `.domain.com`. */
   sharedDomain?: string;

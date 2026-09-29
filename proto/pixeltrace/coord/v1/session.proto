@@ -15,7 +15,7 @@ service SessionService {
   rpc StartRecording(StartRecordingRequest) returns (StartRecordingResponse);
   rpc Close(CloseRequest) returns (CloseResponse);
 
-  // The WebCodecs upload path: BeginUpload authorizes and provisions a session,
+  // The WebCodecs upload path: BeginUpload authorizes and provisions a session;
   // the client then streams fragments over the returned upload URL.
   rpc BeginUpload(BeginUploadRequest) returns (BeginUploadResponse);
   rpc FinishUpload(FinishUploadRequest) returns (FinishUploadResponse);
@@ -24,7 +24,7 @@ service SessionService {
 // Request for any pre-offer configuration a client may need before it can build
 // an SDP offer.
 message PrepareRequest {
-  // Identifier of project this traffic will belong to.
+  // Site key of the project this traffic belongs to.
   pixeltrace.types.v1.SiteKey site_key = 1;
 }
 
@@ -48,9 +48,9 @@ message IceServer {
   string credential = 3;
 }
 
-// Request to establish a connection to the tracing endpoint.
+// Request to establish an ingest session.
 message EstablishRequest {
-  // Identifier of project to receive this traffic.
+  // Site key of the project this traffic belongs to.
   pixeltrace.types.v1.SiteKey site_key = 1;
 
   // The client's WebRTC SDP offer.
@@ -63,7 +63,7 @@ message EstablishRequest {
   pixeltrace.types.v1.SessionPublisherInfo client_info = 4;
 }
 
-// Response to a tracing establish request.
+// Response to an establish request.
 message EstablishResponse {
   // The established ingest session.
   IngestSession session = 1;

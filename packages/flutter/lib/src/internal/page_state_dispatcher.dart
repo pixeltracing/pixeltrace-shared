@@ -12,7 +12,7 @@ enum PageState {
   /// Alive but backgrounded (not visible).
   dozing,
 
-  /// Cached including main-mem snapshot, but not alive (e.g. in browser bfcache).
+  /// Suspended in memory, not running (e.g. in the browser's bfcache).
   /// The page may be awoken again, or may not. An unloaded event might happen
   /// after this, or may not.
   frozen,

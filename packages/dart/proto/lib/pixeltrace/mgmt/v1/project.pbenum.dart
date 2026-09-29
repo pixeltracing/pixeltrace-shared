@@ -97,7 +97,8 @@ class ProjectTagColor extends $pb.ProtobufEnum {
   const ProjectTagColor._(super.value, super.name);
 }
 
-/// Which path a session's live media travels, and so which viewer the app opens.
+/// Which path a session's live media travels, and so which live viewer a client
+/// should use.
 class LiveTransport extends $pb.ProtobufEnum {
   static const LiveTransport LIVE_TRANSPORT_UNSPECIFIED =
       LiveTransport._(0, _omitEnumNames ? '' : 'LIVE_TRANSPORT_UNSPECIFIED');

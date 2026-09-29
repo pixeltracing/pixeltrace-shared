@@ -52,7 +52,7 @@ export async function createMembership(
   const { orgId, userId } = requireKey(req.key);
 
   // Authorize before touching the store to prevent user-existence and
-  // user-is-member oracle.
+  // user-is-member oracles.
   const grant = requireGrant(
     principal,
     "membership.create",
@@ -257,8 +257,9 @@ function requireKey(key: MembershipKey | undefined): {
 /**
  * Removes an owner membership while upholding the org-owner invariant: an
  * organization must always retain at least one owner. `revoke` authorizes the
- * removal; `revert` authorizes putting the owner back.revert`) and fails, so the
- * org is never left ownerless.
+ * removal; `revert` authorizes putting the owner back. If a concurrent removal
+ * takes the last owner first, this reinstates the owner (via `revert`) and
+ * fails, so the org is never left ownerless.
  */
 async function removeOrgOwner(
   orgId: OrgId,
@@ -275,7 +276,7 @@ async function removeOrgOwner(
   const deleted = await memberships.deleteMembership(revoke, headers);
 
   // Check again after the deletion if there are now zero owners, and revert if
-  // so. This catches a race where sole two owners of an org each remove
+  // so. This catches a race where the only two owners of an org each remove
   // themselves simultaneously, so they each pass the first owner count check at
   // the same time.
   if (deleted && (await memberships.countOwners(orgId, headers)) === 0) {
@@ -286,7 +287,7 @@ async function removeOrgOwner(
 }
 
 /**
- * Demotes an owner while upholding invariant that the last owner cannot be
+ * Demotes an owner while upholding the invariant that the last owner cannot be
  * removed.
  */
 async function demoteOrgOwner(

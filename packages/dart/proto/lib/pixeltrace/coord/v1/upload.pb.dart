@@ -207,8 +207,8 @@ class InitSegment extends $pb.GeneratedMessage {
   void clearData() => $_clearField(1);
 
   /// RFC 6381 codec string, e.g. "avc1.64001f". The playlist emits it, and a
-  /// viewer needs it to open a SourceBuffer. Reported rather than parsed out of
-  /// `moov`, which nothing on the server is equipped to do.
+  /// viewer needs it to open a SourceBuffer. Reported by the client so the
+  /// server need not parse `moov`.
   @$pb.TagNumber(2)
   $core.String get codecs => $_getSZ(1);
   @$pb.TagNumber(2)

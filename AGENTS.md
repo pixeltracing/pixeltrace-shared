@@ -1,4 +1,4 @@
-# AI Agent directives for pixeltrace-app
+# AI Agent directives for pixeltrace-shared
 
 Whenever you are making edits to the codebase(s) in this repo, follow the guidelines in this file unless there is a very good reason not to do so.
 
@@ -34,4 +34,4 @@ In general, you should withhold all comments until you are done making changes. 
 
 ## Dependencies
 
-A dependency can be taken if it handles significant complexity outside of the core competence of this repo. A dependency should not be taken if it be implemented in less than, say, 100 lines of code.
+A dependency can be taken if it handles significant complexity outside of the core competence of this repo. A dependency should not be taken if it can be implemented in fewer than, say, 100 lines of code.

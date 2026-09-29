@@ -89,7 +89,7 @@ class CreateOrganizationRequest extends $pb.GeneratedMessage {
   OrganizationProps ensureProps() => $_ensure(0);
 }
 
-/// Response to a create-org request.
+/// Response to a create-organization request.
 class CreateOrganizationResponse extends $pb.GeneratedMessage {
   factory CreateOrganizationResponse({
     $0.OrganizationId? id,

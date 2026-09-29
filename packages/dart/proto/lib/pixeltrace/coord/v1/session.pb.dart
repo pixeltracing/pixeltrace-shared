@@ -70,7 +70,7 @@ class PrepareRequest extends $pb.GeneratedMessage {
           PrepareRequest.$_createMessage);
   static PrepareRequest? _defaultInstance;
 
-  /// Identifier of project this traffic will belong to.
+  /// Site key of the project this traffic belongs to.
   @$pb.TagNumber(1)
   $0.SiteKey get siteKey => $_getN(0);
   @$pb.TagNumber(1)
@@ -218,7 +218,7 @@ class IceServer extends $pb.GeneratedMessage {
   void clearCredential() => $_clearField(3);
 }
 
-/// Request to establish a connection to the tracing endpoint.
+/// Request to establish an ingest session.
 class EstablishRequest extends $pb.GeneratedMessage {
   factory EstablishRequest({
     $0.SiteKey? siteKey,
@@ -280,7 +280,7 @@ class EstablishRequest extends $pb.GeneratedMessage {
           EstablishRequest.$_createMessage);
   static EstablishRequest? _defaultInstance;
 
-  /// Identifier of project to receive this traffic.
+  /// Site key of the project this traffic belongs to.
   @$pb.TagNumber(1)
   $0.SiteKey get siteKey => $_getN(0);
   @$pb.TagNumber(1)
@@ -329,7 +329,7 @@ class EstablishRequest extends $pb.GeneratedMessage {
   $0.SessionPublisherInfo ensureClientInfo() => $_ensure(3);
 }
 
-/// Response to a tracing establish request.
+/// Response to an establish request.
 class EstablishResponse extends $pb.GeneratedMessage {
   factory EstablishResponse({
     IngestSession? session,
@@ -1213,7 +1213,7 @@ class SessionServiceApi {
       _client.invoke<CloseResponse>(
           ctx, 'SessionService', 'Close', request, CloseResponse());
 
-  /// The WebCodecs upload path: BeginUpload authorizes and provisions a session,
+  /// The WebCodecs upload path: BeginUpload authorizes and provisions a session;
   /// the client then streams fragments over the returned upload URL.
   $async.Future<BeginUploadResponse> beginUpload(
           $pb.ClientContext? ctx, BeginUploadRequest request) =>

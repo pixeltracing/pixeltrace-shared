@@ -11,5 +11,5 @@ Requires the [`buf`](https://buf.build) CLI and the Dart SDK on your `PATH`:
 ./generate.sh
 ```
 
-This regenerates `lib/google` and `lib/pixeltrace` contents from the proto
-module.
+This regenerates `lib/google` and `lib/pixeltrace` contents from the
+repository's top-level `proto/` directory.

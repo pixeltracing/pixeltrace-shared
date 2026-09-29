@@ -2582,7 +2582,7 @@ class ProjectTagProps extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   void clearLabel() => $_clearField(1);
 
-  /// The color this tag renders in. Required, even if custom_hex.
+  /// The color this tag renders in. Required, even when custom_hex is set.
   @$pb.TagNumber(2)
   ProjectTagColor get color => $_getN(1);
   @$pb.TagNumber(2)
@@ -3713,8 +3713,7 @@ class Session extends $pb.GeneratedMessage {
   @$pb.TagNumber(7)
   SessionAttributes ensureAttributes() => $_ensure(6);
 
-  /// Whether the calling user has seen this session. Per-user state, since one
-  /// user's "seen" state does not influence another's.
+  /// Whether the calling user has seen this session (per-user).
   @$pb.TagNumber(8)
   $core.bool get seen => $_getBF(7);
   @$pb.TagNumber(8)
@@ -3848,7 +3847,7 @@ class SessionTagUpdate extends $pb.GeneratedMessage {
   $pb.PbList<$0.ProjectTagId> get remove => $_getList(1);
 }
 
-/// The non-mutable bag of attributes associated with a particular session.
+/// Immutable attributes of a session.
 class SessionAttributes extends $pb.GeneratedMessage {
   factory SessionAttributes({
     $3.Timestamp? startedAt,
@@ -4034,7 +4033,7 @@ class SessionAttributes extends $pb.GeneratedMessage {
   @$pb.TagNumber(9)
   void clearUserAgent() => $_clearField(9);
 
-  /// [One sample of] the client-to-edge TCP round-trip time in milliseconds.
+  /// A single sample of the client-to-edge TCP round-trip time, in milliseconds.
   @$pb.TagNumber(10)
   $core.int get clientTcpRttMs => $_getIZ(9);
   @$pb.TagNumber(10)
@@ -4231,6 +4230,8 @@ class ListSessionsRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   void clearUnseenOnly() => $_clearField(3);
 
+  /// Return only sessions carrying at least one of these tags. Empty matches
+  /// every session.
   @$pb.TagNumber(4)
   $pb.PbList<$0.ProjectTagId> get tagIds => $_getList(3);
 }
@@ -5465,8 +5466,7 @@ class MarkAllSessionsSeenRequest extends $pb.GeneratedMessage {
 }
 
 /// Response to a mark-all-sessions-seen request. There is deliberately no
-/// mark-all-unseen: seen state is stored as a per-user bitset over the project's
-/// sessions, in which "all seen" is a constant-size run but "all unseen" is not.
+/// mark-all-unseen.
 class MarkAllSessionsSeenResponse extends $pb.GeneratedMessage {
   factory MarkAllSessionsSeenResponse({
     UnseenSessionCount? unseen,

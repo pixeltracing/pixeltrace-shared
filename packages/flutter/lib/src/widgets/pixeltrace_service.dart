@@ -9,7 +9,7 @@ class PixeltraceService extends StatelessWidget {
   /// Where the subtree records to.
   final PixeltraceServiceConfig config;
 
-  /// Where SDK reports errors to.
+  /// Where the SDK reports errors.
   final PixeltraceErrorSink errorSink;
 
   /// The subtree that will be recorded.

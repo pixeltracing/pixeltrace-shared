@@ -491,7 +491,7 @@ describe("project membership management", () => {
   });
 });
 
-describe("predefined grants matches the explicit allow-lists", () => {
+describe("predefined grants match the explicit allow-lists", () => {
   for (const role of kRoles) {
     it(`${role}'s grant set equals its expected allow-list`, () => {
       const actual = [...kGrants[role]].sort();

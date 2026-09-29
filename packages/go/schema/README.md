@@ -1,4 +1,4 @@
-# pixeltrace.dev Go schema
+# Pixeltrace Go schema
 
 Go definitions for the Pixeltrace protobuf schema.
 
@@ -25,7 +25,7 @@ _ = proto.Unmarshal(body, &req)
 
 ## Development
 
-The generated sources (`gen/`) are not committed — regenerate them from the
+The generated sources (`gen/`) are not committed; regenerate them from the
 proto source. Requires `buf` and the `protoc-gen-go` plugin on PATH:
 
 ```sh

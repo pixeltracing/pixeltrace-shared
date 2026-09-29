@@ -54,7 +54,6 @@ export async function createOrganization(
   const name = stringOr(props.name, "New organization");
 
   // Org creation has no authz component (since permissions are org-scoped).
-  // Eventually we may have an entitlements check instead.
   const org = await createWithUniqueSlug(
     ports,
     name,
@@ -86,8 +85,7 @@ async function createWithUniqueSlug(
     }
   }
 
-  // Every suffix we tried was already taken. Client should probably just retry
-  // the request.
+  // Every suffix tried was taken; the request is safe to retry.
   throw new ConnectError(
     `could not allocate a unique slug for organization "${name}"`,
     Code.Aborted,

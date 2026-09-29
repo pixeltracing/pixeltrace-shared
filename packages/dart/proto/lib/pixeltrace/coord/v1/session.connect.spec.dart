@@ -43,7 +43,7 @@ abstract final class SessionService {
     pixeltracecoordv1session.CloseResponse.new,
   );
 
-  /// The WebCodecs upload path: BeginUpload authorizes and provisions a session,
+  /// The WebCodecs upload path: BeginUpload authorizes and provisions a session;
   /// the client then streams fragments over the returned upload URL.
   static const beginUpload = connectlib.Spec(
     '/$name/BeginUpload',

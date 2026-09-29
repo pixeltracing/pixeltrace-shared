@@ -29,7 +29,7 @@ message CreateOrganizationRequest {
     OrganizationProps props = 1;
 }
 
-// Response to a create-org request.
+// Response to a create-organization request.
 message CreateOrganizationResponse {
     // Id of the newly created organization.
     pixeltrace.types.v1.OrganizationId id = 1;

@@ -10,7 +10,7 @@ import 'pixeltrace_service.dart';
 
 /// Drop this beneath a `PixeltraceService` ancestor to capture the app's
 /// Flutter view. Capture occurs asynchronously, in the background, and
-/// typically there is a few seconds delay before recording starts. Recording
+/// recording typically starts after a delay of a few seconds. Recording
 /// stops when disabled, or when removed from the tree.
 class PixeltraceCapture extends StatefulWidget {
   final PixeltraceCaptureConfig config;

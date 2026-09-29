@@ -6,7 +6,7 @@
 #   SHARED_REF         the shared commit SHA to build against
 #   CORRELATION_ID     opaque id, echoed in the run name so we can find our run
 
-# Deliberately no `set -x`: a little paranoia never hurt
+# No `set -x`: it would echo the token into public logs.
 set -euo pipefail
 
 : "${GH_TOKEN:?GH_TOKEN is required}"
@@ -44,6 +44,6 @@ echo "hosted verify: tracking run: ${run_url}"
 if gh run watch "${run_id}" --repo "${repo}" --interval 15 --exit-status >/dev/null 2>&1; then
   echo "hosted verify: success"
 else
-  echo "hosted verify: failure — run: ${run_url}" >&2
+  echo "hosted verify: failure, run: ${run_url}" >&2
   exit 1
 fi

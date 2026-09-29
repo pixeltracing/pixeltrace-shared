@@ -5,7 +5,7 @@ import 'package:logging/logging.dart' show Logger;
 
 final log = Logger('pixeltrace');
 
-/// Where the SDK reports things that it raises.
+/// Receives errors raised by the SDK.
 abstract class PixeltraceErrorSink {
   const PixeltraceErrorSink();
 
@@ -43,7 +43,7 @@ class NullErrorSink extends PixeltraceErrorSink {
   void report(Object error, StackTrace stack) {}
 }
 
-/// Catches errors on [future] so a failure won't surface in user's app as an
+/// Catches errors on [future] so a failure won't surface in the host app as an
 /// unhandled error. Use in place of plain `unawaited`.
 void unawaitedCatchErr(
   Future<void>? future, {
