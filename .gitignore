@@ -6,6 +6,7 @@
 *.log
 .history
 .idea/
+*.iml
 .DS_Store
 
 .pnpm-store/

@@ -5,9 +5,6 @@ homepage: https://pixeltrace.dev/
 repository: https://github.com/pixeltracing/pixeltrace-shared/tree/main/packages/dart/proto
 issue_tracker: https://github.com/pixeltracing/pixeltrace-shared/issues
 
-# Disable pub.dev publishing for now.
-publish_to: none
-
 environment:
   sdk: ^3.11.4
 
