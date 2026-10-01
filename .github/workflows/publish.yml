@@ -1,0 +1,54 @@
+name: Publish to pub.dev
+
+on:
+  push:
+    tags:
+      - "pixeltrace-proto-v*"
+      - "pixeltrace-rtc-v*"
+      - "pixeltrace-flutter-v*"
+
+permissions:
+  contents: read
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment: pub.dev
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - name: Resolve package directory
+        id: pkg
+        run: |
+          case "${GITHUB_REF_NAME}" in
+            pixeltrace-proto-v*) dir=packages/dart/proto ;;
+            pixeltrace-rtc-v*) dir=packages/dart/rtc ;;
+            pixeltrace-flutter-v*) dir=packages/flutter ;;
+            *) echo "unrecognized tag: ${GITHUB_REF_NAME}" >&2; exit 1 ;;
+          esac
+          echo "dir=${dir}" >> "${GITHUB_OUTPUT}"
+
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+      - uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2 # v2
+        with:
+          channel: stable
+          cache: true # Flutter SDK
+          pub-cache: true # pub package cache
+
+      - name: Install dependencies
+        run: flutter pub get
+        working-directory: ${{ steps.pkg.outputs.dir }}
+
+      - name: Run tests
+        if: hashFiles(format('{0}/test/**', steps.pkg.outputs.dir)) != ''
+        run: flutter test
+        working-directory: ${{ steps.pkg.outputs.dir }}
+
+      # This exchanges the GitHub token for a pub.dev credential.
+      - uses: dart-lang/setup-dart@6afc89df92d6eb3834022f73cd65adc8cdfcb92d # v1.8.1
+
+      - name: Publish
+        run: flutter pub publish --force
+        working-directory: ${{ steps.pkg.outputs.dir }}
