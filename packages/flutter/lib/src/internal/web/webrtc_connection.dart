@@ -8,7 +8,7 @@ import 'package:connectrpc/web.dart';
 import 'package:pixeltrace_proto/pixeltrace/coord/v1/session.connect.client.dart';
 import 'package:pixeltrace_proto/pixeltrace/coord/v1/session.pb.dart';
 import 'package:pixeltrace_proto/pixeltrace/types/v1/types.pb.dart';
-import 'package:pixeltrace_rtc/web.dart';
+import 'package:pixeltrace_rtc/pixeltrace_rtc.dart';
 import 'package:web/web.dart' as web;
 
 import '../../video_source.dart';

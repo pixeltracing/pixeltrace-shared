@@ -6,7 +6,7 @@ import 'dart:js_interop';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:pixeltrace_flutter/src/internal/web/sender_stats.dart';
-import 'package:pixeltrace_rtc/web.dart';
+import 'package:pixeltrace_rtc/pixeltrace_rtc.dart';
 import 'package:web/web.dart' as web;
 
 /// Connects a sender carrying [track] to a local receiver, returning the sender

@@ -1,0 +1,2 @@
+# Local-dev only; the paths would not resolve for someone copying the example.
+pubspec_overrides.yaml
