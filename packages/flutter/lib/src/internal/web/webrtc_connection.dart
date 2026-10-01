@@ -110,7 +110,7 @@ class WebrtcConnection implements PixeltraceConnection {
     _listenForUnload();
 
     try {
-      await _startRecording(session.sessionId);
+      await _startRecording(session);
     } catch (_) {
       await close();
       rethrow;
@@ -135,7 +135,7 @@ class WebrtcConnection implements PixeltraceConnection {
     // attempt another resume.
     _Session resumed;
     try {
-      resumed = await _openSession(source, resume: sess.sessionId);
+      resumed = await _openSession(source, resume: sess);
     } on _SessionEnded {
       // The server already finalized it (e.g. it sat idle past the timeout), so
       // there is nothing to rejoin: carry on as a new session instead.
@@ -145,7 +145,7 @@ class WebrtcConnection implements PixeltraceConnection {
     _connected = resumed;
 
     try {
-      await _startRecording(resumed.sessionId);
+      await _startRecording(resumed);
     } catch (_) {
       // Unlike a first connect, this must not close the session: it is the
       // recording being rejoined, and closing would finalize it. Drop the media
@@ -212,7 +212,7 @@ class WebrtcConnection implements PixeltraceConnection {
     log.fine('closing ingest session ${sess.sessionId.id}');
     try {
       sess.close();
-      await _closeRemote(sess.sessionId);
+      await _closeRemote(sess.sessionId, sess.sessionToken);
     } catch (_) {
       // close is always best-effort
     }
@@ -264,6 +264,7 @@ class WebrtcConnection implements PixeltraceConnection {
     try {
       final body =
           'session_id=${Uri.encodeQueryComponent(sess.sessionId.id)}'
+          '&session_token=${Uri.encodeQueryComponent(sess.sessionToken.token)}'
           '&site_key=${Uri.encodeQueryComponent(config.projectKey)}';
       web.window.navigator.sendBeacon(_beaconCloseUrl, body.toJS);
     } catch (_) {
@@ -292,7 +293,7 @@ class WebrtcConnection implements PixeltraceConnection {
   /// that media path with the ingest API, returning the session it belongs to.
   Future<_Session> _openSession(
     PixeltraceVideoSource source, {
-    SessionId? resume,
+    _Session? resume,
   }) async {
     final stream = _captureStream(source);
 
@@ -319,9 +320,10 @@ class WebrtcConnection implements PixeltraceConnection {
       final transceiver = _addVideoTransceiver(pc);
       final sender = transceiver.sender;
       await sender.replaceTrack(_getVideoTrack(stream)).toDart;
-      final sessionId = await _negotiate(pc, resume: resume);
+      final session = await _negotiate(pc, resume: resume);
       return _Session(
-        sessionId: sessionId,
+        sessionId: session.sessionId,
+        sessionToken: session.sessionToken,
         pc: pc,
         sender: sender,
         stream: stream,
@@ -334,11 +336,11 @@ class WebrtcConnection implements PixeltraceConnection {
   }
 
   /// Negotiates the session with the ingest API and blocks until a working
-  /// media path is found, returning the assigned session id or throwing if
-  /// there was an error.
-  Future<SessionId> _negotiate(
+  /// media path is found, returning the assigned session or throwing if there
+  /// was an error.
+  Future<IngestSession> _negotiate(
     web.RTCPeerConnection pc, {
-    SessionId? resume,
+    _Session? resume,
   }) async {
     EstablishResponse response;
     try {
@@ -347,7 +349,8 @@ class WebrtcConnection implements PixeltraceConnection {
         EstablishRequest(
           siteKey: SiteKey(key: config.projectKey),
           sdpOffer: SessionDescription(sdp: offerSdp),
-          sessionId: resume,
+          sessionId: resume?.sessionId,
+          sessionToken: resume?.sessionToken,
           clientInfo: SessionPublisherInfo(referrer: web.document.referrer),
         ),
       );
@@ -379,11 +382,14 @@ class WebrtcConnection implements PixeltraceConnection {
         );
       }
 
-      return response.session.sessionId;
+      return response.session;
     } catch (_) {
       // Only release the session if it was a new one.
       if (resume == null) {
-        await _closeRemote(response.session.sessionId);
+        await _closeRemote(
+          response.session.sessionId,
+          response.session.sessionToken,
+        );
       }
       rethrow;
     }
@@ -424,11 +430,12 @@ class WebrtcConnection implements PixeltraceConnection {
     });
   }
 
-  Future<void> _startRecording(SessionId sessionId) async {
+  Future<void> _startRecording(_Session sess) async {
     try {
       await _rpc.startRecording(
         StartRecordingRequest(
-          sessionId: sessionId,
+          sessionId: sess.sessionId,
+          sessionToken: sess.sessionToken,
           siteKey: SiteKey(key: config.projectKey),
         ),
       );
@@ -437,11 +444,12 @@ class WebrtcConnection implements PixeltraceConnection {
     }
   }
 
-  Future<void> _closeRemote(SessionId sessionId) async {
+  Future<void> _closeRemote(SessionId sessionId, SessionToken token) async {
     try {
       await _rpc.close(
         CloseRequest(
           sessionId: sessionId,
+          sessionToken: token,
           siteKey: SiteKey(key: config.projectKey),
         ),
       );
@@ -576,10 +584,11 @@ class WebrtcConnection implements PixeltraceConnection {
 
 /// An active recording session.
 ///
-/// [stream] changes when the caller swaps in new media. The id, connection, and
-/// sender outlive that, since a swap does not renegotiate.
+/// [stream] changes when the caller swaps in new media. The id, token,
+/// connection, and sender outlive that, since a swap does not renegotiate.
 class _Session {
   final SessionId sessionId;
+  final SessionToken sessionToken;
   final web.RTCPeerConnection pc;
   final web.RTCRtpSender sender;
 
@@ -589,6 +598,7 @@ class _Session {
 
   _Session({
     required this.sessionId,
+    required this.sessionToken,
     required this.pc,
     required this.sender,
     required this.stream,
