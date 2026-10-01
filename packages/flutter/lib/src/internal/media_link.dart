@@ -20,8 +20,8 @@ class MediaLink extends EventWorkQueue<MediaLinkState, MediaLinkEvent> {
 
   MediaLink({
     required this.config,
-    PixeltraceErrorSink sink = const DefaultErrorSink(),
-  }) : super(MediaLinkState.idle, debugName: 'media-link', sink: sink) {
+    super.sink = const DefaultErrorSink(),
+  }) : super(MediaLinkState.idle, debugName: 'media-link') {
     _pageState = PageStateDispatcher(sink: _onPageStateChanged);
     _surface = SurfaceDispatcher(sink: _onSurfaceReplaced);
   }
