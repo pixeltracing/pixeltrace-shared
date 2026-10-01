@@ -1,6 +1,6 @@
 ## 0.0.2
 
-* Depend on `pixeltrace_rtc` 0.0.2.
+* Depend on `pixeltrace_proto` 0.0.2 and `pixeltrace_rtc` 0.0.2.
 
 ## 0.0.1
 

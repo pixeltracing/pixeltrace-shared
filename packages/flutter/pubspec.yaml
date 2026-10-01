@@ -15,7 +15,7 @@ dependencies:
     sdk: flutter
   logging: ^1.3.0
   meta: ^1.17.0
-  pixeltrace_proto: ^0.0.1
+  pixeltrace_proto: ^0.0.2
   pixeltrace_rtc: ^0.0.2
   web: ^1.1.1
 
