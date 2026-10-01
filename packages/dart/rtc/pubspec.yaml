@@ -1,6 +1,6 @@
 name: pixeltrace_rtc
 description: "Shared WebRTC helpers for Pixeltrace."
-version: 0.0.1
+version: 0.0.2
 homepage: https://pixeltrace.dev/
 repository: https://github.com/pixeltracing/pixeltrace-shared/tree/main/packages/dart/rtc
 issue_tracker: https://github.com/pixeltracing/pixeltrace-shared/issues
