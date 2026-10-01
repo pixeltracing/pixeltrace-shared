@@ -9,7 +9,7 @@ cd "$(dirname "$0")"
 
 dart pub get
 rm -rf lib/google lib/pixeltrace
-buf generate --include-imports --include-wkt ../../../proto
+buf generate --include-imports ../../../proto
 
 # The generated code imports a library `as connect` for its runtime import. We
 # have a 'Connect' proto method, which the Dart generator emits as a binding
