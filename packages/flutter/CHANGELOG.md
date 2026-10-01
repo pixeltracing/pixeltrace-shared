@@ -1,3 +1,9 @@
+## 0.0.3
+
+* Send the session token the ingest service now requires on every call after
+  the first `Establish`, and in the close beacon. Earlier versions are rejected
+  by the service.
+
 ## 0.0.2
 
 * Depend on `pixeltrace_proto` 0.0.2 and `pixeltrace_rtc` 0.0.2.

@@ -1,6 +1,6 @@
 name: pixeltrace_flutter
 description: "Session recording for Flutter web apps."
-version: 0.0.2
+version: 0.0.3
 homepage: https://pixeltrace.dev/
 repository: https://github.com/pixeltracing/pixeltrace-shared/tree/main/packages/flutter
 issue_tracker: https://github.com/pixeltracing/pixeltrace-shared/issues
