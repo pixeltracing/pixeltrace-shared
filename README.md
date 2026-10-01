@@ -6,24 +6,24 @@ Repository for public-facing Pixeltrace packages.
 
 ### packages/dart/proto
 
-Update CHANGELOG.md for new version number. Then:
+Bump `version` in pubspec.yaml and add a matching CHANGELOG.md entry. Then:
 
 ```bash
-git tag pixeltrace-proto-vX.Y.Z && git push origin !$
+t=pixeltrace-proto-vX.Y.Z; git tag $t && git push origin $t
 ```
 
 ### packages/dart/rtc
 
-Update CHANGELOG.md for new version number. Then:
+Bump `version` in pubspec.yaml and add a matching CHANGELOG.md entry. Then:
 
 ```bash
-git tag pixeltrace-rtc-vX.Y.Z && git push origin !$
+t=pixeltrace-rtc-vX.Y.Z; git tag $t && git push origin $t
 ```
 
 ### packages/flutter
 
-Update CHANGELOG.md for new version number. Then:
+Bump `version` in pubspec.yaml and add a matching CHANGELOG.md entry. Then:
 
 ```bash
-git tag pixeltrace-flutter-vX.Y.Z && git push origin !$
+t=pixeltrace-flutter-vX.Y.Z; git tag $t && git push origin $t
 ```
