@@ -1,5 +1,0 @@
-dependency_overrides:
-  pixeltrace_proto:
-    path: ../../dart/proto
-  pixeltrace_rtc:
-    path: ../../dart/rtc

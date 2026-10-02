@@ -1,6 +1,0 @@
-# dev happens against the sibling packages
-dependency_overrides:
-  pixeltrace_proto:
-    path: ../dart/proto
-  pixeltrace_rtc:
-    path: ../dart/rtc

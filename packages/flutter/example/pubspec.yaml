@@ -10,8 +10,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  pixeltrace_flutter:
-    path: ../
+  pixeltrace_flutter: ^0.0.2
 
 dev_dependencies:
   flutter_test:
