@@ -1,12 +1,13 @@
-FROM ghcr.io/cirruslabs/flutter:3.41.6
+FROM ubuntu:24.04
 
+ARG FLUTTER_VERSION=3.47.6
 ARG NODE_MAJOR=22
 ARG GO_VERSION=1.26.4
 ARG BUF_VERSION=1.71.0
 ARG PROTOC_GEN_GO_VERSION=v1.36.11
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
-        sudo ca-certificates curl gnupg git \
+        sudo ca-certificates curl gnupg git unzip xz-utils zip \
     && rm -rf /var/lib/apt/lists/* \
     && echo "ubuntu ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers.d/ubuntu \
     && chmod 0440 /etc/sudoers.d/ubuntu
@@ -31,8 +32,10 @@ RUN ARCH="$(uname -m)" \
         -o /usr/local/bin/buf \
     && chmod +x /usr/local/bin/buf
 
-RUN chown -R ubuntu:ubuntu /sdks/flutter && \
-    git config --global --add safe.directory /sdks/flutter
+RUN git clone --depth 1 --branch "${FLUTTER_VERSION}" https://github.com/flutter/flutter.git /sdks/flutter \
+    && git -C /sdks/flutter checkout -b stable \
+    && chown -R ubuntu:ubuntu /sdks/flutter
+ENV PATH="/sdks/flutter/bin:${PATH}"
 
 USER ubuntu
 
