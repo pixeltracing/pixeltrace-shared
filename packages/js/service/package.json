@@ -40,7 +40,7 @@
     "@connectrpc/connect": "^2.1.2",
     "@pixeltrace/authz": "workspace:*",
     "@pixeltrace/schema": "workspace:*",
-    "better-auth": "^1.6.23",
+    "better-auth": "^1.7.7",
     "kysely": "^0.29.2"
   },
   "devDependencies": {
