@@ -65,7 +65,25 @@ export function createAuth(config: AuthConfig): Auth {
   return buildAuth(config);
 }
 
+/** The MCP resource each instance was built for; see {@link mcpResourceOf}. */
+const kMcpResources = new WeakMap<Auth, string>();
+
+/** The MCP protected-resource identifier `auth` issues access tokens for. */
+export function mcpResourceOf(auth: Auth): string {
+  const resource = kMcpResources.get(auth);
+  if (!resource) {
+    throw new Error("auth instance was not built by createAuth");
+  }
+  return resource;
+}
+
 function buildAuth(config: AuthConfig): AuthInstance {
+  const auth = buildAuthInstance(config);
+  kMcpResources.set(auth, mcpResource(config.mcpOrigin));
+  return auth;
+}
+
+function buildAuthInstance(config: AuthConfig): AuthInstance {
   const options = coreOptions(config);
   const { frontendURL } = config;
   return betterAuth({

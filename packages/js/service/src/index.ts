@@ -5,6 +5,8 @@ export {
   handleBetterAuthReq,
   handleOAuthDiscoveryReq,
 } from "./lib/auth/entrypoint.js";
+export { handleMcpReq } from "./lib/mcp/handler.js";
+export { kMcpPath } from "./lib/mcp/constants.js";
 export { kAuth, kAuthContext, requireAuth } from "./lib/auth/context.js";
 export type { AuthContext } from "./lib/auth/context.js";
 export { resolveAuthContext } from "./lib/auth/interceptor.js";
