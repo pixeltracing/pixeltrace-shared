@@ -1,17 +1,21 @@
 /**
  * Access policy for the Better Auth routes a backend mounts under
- * `/api/auth/*`.
+ * `/api/auth/*`, and for the OAuth discovery documents it serves at the host
+ * root.
  *
  * We layer our own RBAC on top of Better Auth; most routes are therefore
  * disallowed, to ensure auth-related actions go through the front door (our
  * handlers).
  */
 
+import { kMcpPath } from "../mcp/constants.js";
+
 const kUrlPrefix = "/api/auth";
 
 /**
  * Routes allowed to reach the Better Auth handler: the normal sign-up, sign-in,
- * and account-recovery (password reset, email verification) flows. Paths are
+ * and account-recovery (password reset, email verification) flows, and the
+ * OAuth authorization server an MCP client signs in through. Paths are
  * relative to {@link kUrlPrefix}.
  */
 const kAllowedRoutes: ReadonlySet<string> = new Set<string>([
@@ -26,6 +30,24 @@ const kAllowedRoutes: ReadonlySet<string> = new Set<string>([
   "/send-verification-email",
   "/verify-email",
   "/error",
+  "/oauth2/authorize",
+  "/oauth2/continue", // resumes an authorization after sign-in
+  "/oauth2/public-client", // the consent page reads the client's name
+  "/oauth2/consent",
+  "/oauth2/token",
+  "/oauth2/revoke",
+  "/jwks",
+]);
+
+/**
+ * Host-root discovery documents: RFC 9728 protected resource metadata for the
+ * MCP endpoint (path-suffixed and bare forms), and RFC 8414 authorization
+ * server metadata for the issuer at {@link kUrlPrefix}.
+ */
+const kDiscoveryRoutes: ReadonlySet<string> = new Set<string>([
+  `/.well-known/oauth-protected-resource${kMcpPath}`,
+  "/.well-known/oauth-protected-resource",
+  `/.well-known/oauth-authorization-server${kUrlPrefix}`,
 ]);
 
 /**
@@ -60,6 +82,11 @@ export function isAuthRouteAllowed(pathname: string): boolean {
     return false;
   }
   return isLiteralSegment(route.slice(prefix.length));
+}
+
+/** Whether a request may reach the Better Auth handler as a discovery read. */
+export function isDiscoveryRouteAllowed(pathname: string): boolean {
+  return kDiscoveryRoutes.has(normalizePath(pathname));
 }
 
 /**

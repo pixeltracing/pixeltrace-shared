@@ -1,8 +1,8 @@
 import { memoryAdapter, type MemoryDB } from "better-auth/adapters/memory";
 import { describe, expect, it } from "vitest";
 import { createAuth, type Auth } from "./create-auth.js";
-import { handleBetterAuthReq } from "./entrypoint.js";
-import { isAuthRouteAllowed } from "./routes.js";
+import { handleBetterAuthReq, handleOAuthDiscoveryReq } from "./entrypoint.js";
+import { isAuthRouteAllowed, isDiscoveryRouteAllowed } from "./routes.js";
 
 /**
  * Signs `email` up with a real Better Auth instance, asks it for a password
@@ -74,6 +74,40 @@ describe("isAuthRouteAllowed", () => {
     }
   });
 
+  it("allows the OAuth authorization server's flow routes", () => {
+    for (const p of [
+      "/api/auth/oauth2/authorize",
+      "/api/auth/oauth2/continue",
+      "/api/auth/oauth2/public-client",
+      "/api/auth/oauth2/consent",
+      "/api/auth/oauth2/token",
+      "/api/auth/oauth2/revoke",
+      "/api/auth/jwks",
+    ]) {
+      expect(isAuthRouteAllowed(p)).toBe(true);
+    }
+  });
+
+  it("denies OAuth client and resource administration", () => {
+    for (const p of [
+      "/api/auth/oauth2/create-client",
+      "/api/auth/oauth2/register",
+      "/api/auth/oauth2/update-client",
+      "/api/auth/oauth2/delete-client",
+      "/api/auth/oauth2/get-clients",
+      "/api/auth/oauth2/client/rotate-secret",
+      "/api/auth/oauth2/public-client-prelogin",
+      "/api/auth/oauth2/introspect",
+      "/api/auth/oauth2/userinfo",
+      "/api/auth/oauth2/update-consent",
+      "/api/auth/admin/oauth2/create-client",
+      "/api/auth/admin/oauth2/resources",
+      "/api/auth/token",
+    ]) {
+      expect(isAuthRouteAllowed(p)).toBe(false);
+    }
+  });
+
   it("allows the error page an OAuth callback redirects to on failure", () => {
     // Better Auth 302s the browser to this page on a failed social callback;
     // it must reach the handler so the real error shows instead of our 403.
@@ -142,6 +176,42 @@ describe("isAuthRouteAllowed", () => {
     ]) {
       expect(isAuthRouteAllowed(p)).toBe(false);
     }
+  });
+});
+
+describe("isDiscoveryRouteAllowed", () => {
+  it("allows the MCP resource and authorization server metadata", () => {
+    for (const p of [
+      "/.well-known/oauth-protected-resource/mcp",
+      "/.well-known/oauth-protected-resource",
+      "/.well-known/oauth-authorization-server/api/auth",
+    ]) {
+      expect(isDiscoveryRouteAllowed(p)).toBe(true);
+    }
+  });
+
+  it("denies other paths", () => {
+    for (const p of [
+      "/.well-known/oauth-authorization-server",
+      "/.well-known/openid-configuration",
+      "/.well-known/oauth-protected-resource/other",
+      "/.well-known/oauth-protected-resource/mcp/../../api/auth/oauth2/create-client",
+      "/api/auth/sign-in/email",
+    ]) {
+      expect(isDiscoveryRouteAllowed(p)).toBe(false);
+    }
+  });
+});
+
+describe("handleOAuthDiscoveryReq", () => {
+  it("answers 404 without reaching the handler for a non-discovery path", async () => {
+    const { auth, handled } = fakeAuth();
+    const resp = await handleOAuthDiscoveryReq(
+      auth,
+      new Request("https://api.example.com/.well-known/security.txt"),
+    );
+    expect(resp.status).toBe(404);
+    expect(handled()).toBe(false);
   });
 });
 

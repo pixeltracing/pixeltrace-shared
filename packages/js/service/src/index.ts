@@ -1,7 +1,10 @@
 // Public entry point for @pixeltrace/service.
 
 export { createAuth, type Auth } from "./lib/auth/create-auth.js";
-export { handleBetterAuthReq } from "./lib/auth/entrypoint.js";
+export {
+  handleBetterAuthReq,
+  handleOAuthDiscoveryReq,
+} from "./lib/auth/entrypoint.js";
 export { kAuth, kAuthContext, requireAuth } from "./lib/auth/context.js";
 export type { AuthContext } from "./lib/auth/context.js";
 export { resolveAuthContext } from "./lib/auth/interceptor.js";
