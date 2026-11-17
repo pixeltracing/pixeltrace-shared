@@ -24,6 +24,7 @@ async function passwordResetLink(email: string): Promise<URL> {
     database: memoryAdapter(db),
     secret: "test-secret-value-that-is-at-least-32-chars",
     baseURL: "http://localhost:3000",
+    mcpOrigin: "http://localhost:3000",
     frontendURL: "http://localhost:5173",
     // The reset link is the only URL in the message; pull it back out of the
     // rendered body.

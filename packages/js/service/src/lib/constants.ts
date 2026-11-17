@@ -8,4 +8,5 @@ export const kProductName = "pixeltrace.dev";
 export enum FrontendRoutes {
   AcceptInvitation = "/accept-invitation",
   EmailVerify = "/email-verify",
+  OAuthAuthorize = "/oauth/authorize",
 }

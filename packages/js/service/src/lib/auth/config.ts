@@ -12,6 +12,11 @@ export interface AuthConfig {
   baseURL?: string;
   /** Public base URL of the frontend, e.g. `https://app.pixeltrace.dev`. */
   frontendURL?: string;
+  /**
+   * Public origin of the MCP server, e.g. `https://mcp.pixeltrace.dev`. The MCP
+   * endpoint is served at `kMcpPath` under it.
+   */
+  mcpOrigin: string;
   /** Origins permitted to call the auth endpoints. */
   trustedOrigins?: string[];
   /** If non-null, the domain for cross-subdomain cookies, e.g. `.domain.com`. */

@@ -11,6 +11,7 @@ function newAuth(secondaryStorage?: AuthConfig["secondaryStorage"]) {
     secondaryStorage,
     secret: "test-secret-value-that-is-at-least-32-chars",
     baseURL: "http://localhost:3000",
+    mcpOrigin: "http://localhost:3000",
   });
 }
 

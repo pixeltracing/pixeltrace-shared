@@ -6,7 +6,9 @@ import {
   type ModelNames,
   type User,
 } from "better-auth";
-import { organization } from "better-auth/plugins";
+import { cimd } from "@better-auth/cimd";
+import { mcp } from "@better-auth/mcp";
+import { jwt, organization } from "better-auth/plugins";
 import { createAccessControl } from "better-auth/plugins/access";
 import {
   adminAc,
@@ -22,6 +24,7 @@ import {
   renderPasswordReset,
 } from "./email.js";
 import { FrontendRoutes, kProductName } from "../constants.js";
+import { kMcpScopes, mcpResource } from "../mcp/constants.js";
 import { slugify } from "../util/util.js";
 
 // Better Auth's organization plugin only ships the roles owner/admin/member, so
@@ -62,10 +65,43 @@ export function createAuth(config: AuthConfig): Auth {
   return buildAuth(config);
 }
 
-function buildAuth(config: AuthConfig) {
+function buildAuth(config: AuthConfig): AuthInstance {
+  const options = coreOptions(config);
+  const { frontendURL } = config;
+  return betterAuth({
+    ...options,
+    plugins: [
+      ...options.plugins,
+      jwt({ disableSettingJwtHeader: true }),
+      mcp({
+        loginPage: frontendUrl(frontendURL, FrontendRoutes.OAuthAuthorize),
+        consentPage: frontendUrl(frontendURL, FrontendRoutes.OAuthAuthorize),
+        resource: mcpResource(config.mcpOrigin),
+        // Claude asks for offline_access, and so gets a refresh token, only
+        // when it is listed here.
+        scopes: [kMcpScopes.read, kMcpScopes.write, "offline_access"],
+        grantTypes: ["authorization_code", "refresh_token"],
+        // Access tokens are verified locally, so a revoked connection keeps
+        // working until its current token expires.
+        accessTokenExpiresIn: 10 * 60,
+      }),
+      cimd({
+        fetchClientMetadataResource: fetchClientMetadata,
+        metadataProfile: "mcp-2026-07-28",
+        isMetadataDocumentUrlAllowed: isAllowedClientMetadataUrl,
+      }),
+    ],
+    // The full inferred type, with the OAuth plugins' endpoints, is too large
+    // for declaration emit. Nothing outside this file calls those endpoints
+    // through `auth.api`, so the instance is typed without them.
+  }) as unknown as AuthInstance;
+}
+
+/** Everything but the OAuth plugins, which {@link buildAuth} adds. */
+function coreOptions(config: AuthConfig) {
   const { sendEmail, frontendURL } = config;
   const emailEnabled = sendEmail !== undefined;
-  return betterAuth({
+  return {
     appName: kProductName,
     database: config.database,
     secondaryStorage: config.secondaryStorage,
@@ -110,6 +146,9 @@ function buildAuth(config: AuthConfig) {
     session: { storeSessionInDatabase: true },
     verification: { storeInDatabase: true },
     rateLimit: { storage: "database" },
+    // The jwt plugin's session-JWT endpoint. A session JWT is signed with the
+    // same keys as an MCP access token, so it must not be obtainable.
+    disabledPaths: ["/token"],
     databaseHooks: {
       session: {
         create: { before: runPreLoginHooks },
@@ -141,7 +180,40 @@ function buildAuth(config: AuthConfig) {
           : undefined,
       }),
     ],
-  });
+  } satisfies BetterAuthOptions;
+}
+
+/**
+ * The only origin whose Client ID Metadata Documents we fetch: only Claude is
+ * supported. Pinning one public origin is what lets
+ * {@link fetchClientMetadata} skip the address checks the CIMD plugin asks a
+ * transport for.
+ */
+const kClientMetadataOrigin = "https://claude.ai";
+
+function isAllowedClientMetadataUrl(url: string | URL): boolean {
+  try {
+    return new URL(url).origin === kClientMetadataOrigin;
+  } catch {
+    return false;
+  }
+}
+
+async function fetchClientMetadata(
+  input: Parameters<typeof fetch>[0],
+  init?: RequestInit,
+): Promise<Response> {
+  const url = input instanceof Request ? input.url : input;
+  if (!isAllowedClientMetadataUrl(url)) {
+    throw new Error(`client metadata fetch refused for ${String(url)}`);
+  }
+  // The plugin asks for `redirect: "error"`; "manual" is used instead because
+  // it behaves the same on every runtime, and a redirect is refused here.
+  const response = await fetch(input, { ...init, redirect: "manual" });
+  if (response.status >= 300 && response.status < 400) {
+    throw new Error(`client metadata fetch redirected (${response.status})`);
+  }
+  return response;
 }
 
 /**
@@ -169,7 +241,14 @@ function acceptInvitationUrl(
   frontendURL: string | undefined,
   invitationId: string,
 ): string {
-  const path = `${FrontendRoutes.AcceptInvitation}/${invitationId}`;
+  return frontendUrl(
+    frontendURL,
+    `${FrontendRoutes.AcceptInvitation}/${invitationId}`,
+  );
+}
+
+/** `path` on the frontend, or bare when no frontend URL is configured. */
+function frontendUrl(frontendURL: string | undefined, path: string): string {
   return frontendURL ? new URL(path, frontendURL).toString() : path;
 }
 
@@ -298,4 +377,6 @@ export type Auth = Omit<AuthInstance, "handler">;
 
 /** The full instance, handler included. Package-internal: only the Better Auth
  * entrypoint may reach the handler. */
-export type AuthInstance = ReturnType<typeof buildAuth>;
+export type AuthInstance = ReturnType<
+  typeof betterAuth<ReturnType<typeof coreOptions>>
+>;

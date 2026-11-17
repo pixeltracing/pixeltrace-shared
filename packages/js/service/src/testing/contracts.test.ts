@@ -9,6 +9,7 @@ async function createSqliteAuth(): Promise<Auth> {
     database: new DatabaseSync(":memory:"),
     secret: "test-secret-value-that-is-at-least-32-chars",
     baseURL: "http://localhost:3000",
+    mcpOrigin: "http://localhost:3000",
   });
   const { runMigrations } = await getMigrations(auth.options);
   await runMigrations();
