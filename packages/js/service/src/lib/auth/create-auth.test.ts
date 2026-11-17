@@ -1,12 +1,14 @@
 import { memoryAdapter, type MemoryDB } from "better-auth/adapters/memory";
 import { beforeEach, describe, expect, it } from "vitest";
+import { type AuthConfig } from "./config.js";
 import { createAuth } from "./create-auth.js";
 
 let db: MemoryDB;
 
-function newAuth() {
+function newAuth(secondaryStorage?: AuthConfig["secondaryStorage"]) {
   return createAuth({
     database: memoryAdapter(db),
+    secondaryStorage,
     secret: "test-secret-value-that-is-at-least-32-chars",
     baseURL: "http://localhost:3000",
   });
@@ -139,5 +141,27 @@ describe("personal org provisioning on signup", () => {
       (m) => m.userId === after.id && m.organizationId === after.personalOrgId,
     );
     expect(ownerRow?.role).toBe("owner");
+  });
+});
+
+describe("session storage", () => {
+  it("writes sessions to the database as well as secondary storage", async () => {
+    const kv = new Map<string, string>();
+    await newAuth({
+      get: (key) => kv.get(key) ?? null,
+      getAndDelete: () => {
+        throw new Error("unreachable with values stored in the database");
+      },
+      increment: () => {
+        throw new Error("unreachable with values stored in the database");
+      },
+      set: (key, value) => void kv.set(key, value),
+      delete: (key) => void kv.delete(key),
+    }).api.signUpEmail({
+      body: { email: "kv@example.com", name: "KV User", password: "abcd1234" },
+    });
+
+    expect(rows("session")).toHaveLength(1);
+    expect(kv.has(row("session").token as string)).toBe(true);
   });
 });

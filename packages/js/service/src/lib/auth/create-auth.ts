@@ -103,6 +103,12 @@ function buildAuth(config: AuthConfig) {
         }
       : undefined,
     socialProviders: config.socialProviders,
+    // With secondary storage configured, sessions and verification values
+    // would otherwise live only there. The OAuth provider requires sessions in
+    // the database, and single-use values (reset tokens, OAuth state and
+    // authorization codes) need the database's atomic consume.
+    session: { storeSessionInDatabase: true },
+    verification: { storeInDatabase: true },
     rateLimit: { storage: "database" },
     databaseHooks: {
       session: {
