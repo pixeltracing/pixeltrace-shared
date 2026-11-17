@@ -120,6 +120,15 @@ async function authorize(cookie: string, challenge: string): Promise<string> {
     `${kFrontend}/oauth/authorize`,
   );
 
+  const client = await serve(
+    new Request(
+      `${kOrigin}/api/auth/oauth2/public-client?client_id=${encodeURIComponent(kClientId)}`,
+      { headers: { cookie } },
+    ),
+  );
+  expect(client.status).toBe(200);
+  expect(await client.json()).toMatchObject({ client_name: "Claude Code" });
+
   const consent = await serve(
     new Request(`${kOrigin}/api/auth/oauth2/consent`, {
       method: "POST",
@@ -226,6 +235,81 @@ describe("MCP OAuth flow", () => {
     const session = await auth.api.getSession({ headers: { cookie } });
     expect(text).toContain(`\\"user_id\\":\\"${session!.user.id}\\"`);
     expect(text).toContain("pixeltrace:read");
+  });
+
+  it("accepts consent on the sign-in redirect's query once the user signs in", async () => {
+    const { verifier, challenge } = pkce();
+    const query = new URLSearchParams({
+      response_type: "code",
+      client_id: kClientId,
+      redirect_uri: kRedirectUri,
+      scope: "pixeltrace:read offline_access",
+      state: "state-2",
+      code_challenge: challenge,
+      code_challenge_method: "S256",
+      resource: kResource,
+    });
+    const authz = await serve(
+      new Request(`${kOrigin}/api/auth/oauth2/authorize?${query}`, {
+        redirect: "manual",
+      }),
+    );
+    expect(authz.status).toBe(302);
+    const loginUrl = new URL(authz.headers.get("location")!);
+    expect(loginUrl.origin + loginUrl.pathname).toBe(
+      `${kFrontend}/oauth/authorize`,
+    );
+
+    const cookie = await signUp();
+    const consent = await serve(
+      new Request(`${kOrigin}/api/auth/oauth2/consent`, {
+        method: "POST",
+        headers: { "content-type": "application/json", origin: kOrigin, cookie },
+        body: JSON.stringify({
+          accept: true,
+          oauth_query: loginUrl.search.slice(1),
+        }),
+      }),
+    );
+    expect(consent.status).toBe(200);
+    const callback = new URL(((await consent.json()) as { url: string }).url);
+    expect(callback.searchParams.get("state")).toBe("state-2");
+    const code = callback.searchParams.get("code")!;
+    expect((await exchange(code, verifier)).status).toBe(200);
+  });
+
+  it("sends a denial back to the client as access_denied", async () => {
+    const cookie = await signUp();
+    const authz = await serve(
+      new Request(
+        `${kOrigin}/api/auth/oauth2/authorize?${new URLSearchParams({
+          response_type: "code",
+          client_id: kClientId,
+          redirect_uri: kRedirectUri,
+          scope: "pixeltrace:read",
+          state: "state-3",
+          code_challenge: pkce().challenge,
+          code_challenge_method: "S256",
+          resource: kResource,
+        })}`,
+        { headers: { cookie }, redirect: "manual" },
+      ),
+    );
+    const consent = await serve(
+      new Request(`${kOrigin}/api/auth/oauth2/consent`, {
+        method: "POST",
+        headers: { "content-type": "application/json", origin: kOrigin, cookie },
+        body: JSON.stringify({
+          accept: false,
+          oauth_query: new URL(authz.headers.get("location")!).search.slice(1),
+        }),
+      }),
+    );
+    expect(consent.status).toBe(200);
+    const callback = new URL(((await consent.json()) as { url: string }).url);
+    expect(callback.origin + callback.pathname).toBe(kRedirectUri);
+    expect(callback.searchParams.get("error")).toBe("access_denied");
+    expect(callback.searchParams.get("state")).toBe("state-3");
   });
 
   it("does not redeem an authorization code twice", async () => {
